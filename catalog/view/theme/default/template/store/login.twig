@@ -1,0 +1,149 @@
+{{ header }}
+<div id="account-login" class="container">
+  <div class="row">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">Customer</h3>
+      </div>
+      <div class="panel-body">
+        <ul class="nav nav-tabs">
+          <li class="{% if login_active %}active{% endif %}"><a href="#tab-history" data-toggle="tab" aria-expanded="true" style="color:#000" >Lgoin</a></li>
+          <li class="{% if login_active %}{% else %}active{% endif %}"><a href="#tab-additional" data-toggle="tab" aria-expanded="false" style="color:#000" >Sign up</a></li>
+        </ul>
+        <div class="tab-content">
+        <div class="tab-pane {% if login_active %}active{% endif %}" id="tab-history">
+          <div id="history">
+            <p style="margin-top:20px; color: #999">{{ text_i_am_returning_customer }}</p>
+            <form action="{{ action }}" method="post" enctype="multipart/form-data">
+              <div class="form-group">
+                <label class="control-label" for="input-email">{{ entry_email }}</label>
+                <input type="text" name="email" value="{{ email }}" placeholder="{{ entry_email }}" id="input-email" class="form-control" />
+              </div>
+              <div class="form-group">
+                <label class="control-label" for="input-password">{{ entry_password }}</label>
+                <input type="password" name="password" value="{{ password }}" placeholder="{{ entry_password }}" id="input-password" class="form-control" />
+                <a href="{{ forgotten }}" style="color:#999; font-size:13px; margin-top:15px;">{{ text_forgotten }}</a></div>
+              <input type="submit" value="{{ button_login }}" class="btn btn-primary" />
+              {% if redirect %}
+              <input type="hidden" name="redirect" value="{{ redirect }}" />
+              {% endif %}
+            </form>
+          </div>
+        </div>
+        <div class="tab-pane {% if login_active %}{% else %}active{% endif %}" id="tab-additional">
+        <!--  <p>{{ text_register }}</p>-->
+        <form action="{{ register }}" method="post" enctype="multipart/form-data">
+          <div id="invite_code" {% if invitationcode %} style="display:none" {% endif %}>
+          <div class="form-group">
+            <label class="control-label" for="input-code" style="margin-top:20px;">Enter Invitation Code</label>
+            <input type="text" name="invitationcode" value="{{ invitationcode }}" placeholder="Invitation Code" id="input-code" class="form-control" />
+            <input type="button" id="button_check_code" style="margin-top:20px;" value="{{ button_continue }}" class="btn btn-primary" />
+          </div>
+          </div>
+          <div id="register" {% if invitationcode %} style="display:block" {% else %} style="display:none" {% endif %} >
+          <p style="margin-top:20px; color: #999"">{{ text_register_account }}</p>
+          {% if error_warning %}
+          <div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}</div>
+          {% endif %}
+          <div class="form-group required">
+            <label class="control-label" for="input-firstname">{{ entry_firstname }}</label>
+            <input type="text" name="firstname" value="{{ firstname }}" placeholder="{{ entry_firstname }}" id="input-firstname" class="form-control" />
+            {% if error_firstname %}
+            <div class="text-danger">{{ error_firstname }}</div>
+            {% endif %} </div>
+          <div class="form-group required">
+            <label class="control-label" for="input-lastname">{{ entry_lastname }}</label>
+            <input type="text" name="lastname" value="{{ lastname }}" placeholder="{{ entry_lastname }}" id="input-lastname" class="form-control" />
+            {% if error_lastname %}
+            <div class="text-danger">{{ error_lastname }}</div>
+            {% endif %} </div>
+          <div class="form-group required">
+            <label class="control-label" for="input-email">{{ entry_email }}</label>
+            <input type="text" name="email" value="{{ email }}" placeholder="{{ entry_email }}" id="input-email" class="form-control" />
+            {% if error_email %}
+            <div class="text-danger">{{ error_email }}</div>
+            {% endif %} </div>
+          <div class="form-group required">
+            <label class="control-label" for="input-password">{{ entry_password }}</label>
+            <input type="password" name="password" value="{{ password }}" placeholder="{{ entry_password }}" id="input-password" class="form-control" />
+            {% if error_password %}
+            <div class="text-danger">{{ error_password }}</div>
+            {% endif %} </div>
+          <div class="form-group required">
+            <label class="control-label" for="input-password">{{ entry_confirm }}</label>
+            <input type="password" name="confirm" value="{{ confirm }}" placeholder="{{ entry_confirm }}" id="input-confirm" class="form-control" />
+            {% if error_confirm %}
+            <div class="text-danger">{{ error_confirm }}</div>
+            {% endif %} </div>
+          {% if text_agree %}
+          <div class="buttons">
+            <div class="pull-right">{{ text_agree }}
+              {% if agree %}
+              <input type="checkbox" name="agree" value="1" checked="checked" />
+              {% else %}
+              <input type="checkbox" name="agree" value="1" />
+              {% endif %}
+              &nbsp;
+              <input type="submit" value="{{ text_save }}" class="btn btn-primary" />
+            </div>
+          </div>
+          {% else %}
+          <div class="buttons">
+            <div class="pull-right">
+              <input type="submit" value="{{ text_register }}" class="btn btn-primary" />
+            </div>
+          </div>
+          {% endif %}
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+</div>
+{{ footer }}
+<style>
+label{
+	color: #555;
+	 font-weight: normal;
+}
+.form-control {
+    box-shadow: none;
+    background: transparent;
+    border: 2px solid rgba(0, 0, 0, 0.1);
+    height: 40px;
+    font-size: 15px;
+    font-weight: 300;
+}
+.text-danger {
+    color: #a94442;
+	font-size:13px;
+}
+.list-inline{
+	display:none;
+}
+
+</style>
+<script type="text/javascript"><!--
+$('#button_check_code').on('click',function(){
+	
+	$.ajax({
+				url: 'index.php?route=store/login/validateCode&code='+$('#input-code').val(),
+				dataType: 'json',
+				success: function(json) {
+					if (json['success']) {
+						$('#invite_code').attr ("style","display:none;");
+						$('#register').attr ("style","display:block;");
+						$('#input-code').val(json['success']);
+					}else{
+						alert('Invitation Code Error!');
+					}
+				},
+				error: function(xhr, ajaxOptions, thrownError) {
+					alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+				}
+			});
+	
+});
+//--></script> 

@@ -1,0 +1,57 @@
+<form id="myCCForm" action="index.php?route=extension/payment/twocheckout/payment/auth" method="post">
+  <input id="token" name="token" type="hidden" value="">
+</form>
+<script type="text/javascript" src="https://www.2checkout.com/checkout/api/2co.min.js"></script> 
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script> 
+<script>
+            // Called when token created successfully.
+            var successCallback = function(data) {
+				//alert(data.response.token.token);
+                var myForm = document.getElementById('myCCForm');
+                myForm.token.value = data.response.token.token;
+                myForm.submit();
+            };
+
+            // Called when token creation fails.
+            var errorCallback = function(data) {
+                if (data.errorCode === 200) {
+                    tokenRequest();
+                } else {
+                    alert(data.errorMsg);
+                }
+            };
+
+            var tokenRequest = function() {
+                // Setup token request arguments
+                var args = {
+                    sellerId:'{{ sellerId }}',
+                    publishableKey:'{{ publishableKey }}',
+                    ccNo: '{{ ccNo }}',
+                    cvv: '{{ cvv }}',
+                    expMonth: '{{ expMonth }}',
+                    expYear: '{{ expYear }}'
+                };
+				//alert('{{ sellerId }}');
+                // Make the token request
+                TCO.requestToken(successCallback, errorCallback, args);
+            };
+
+            $(function() {
+                // Pull in the public encryption key for our environment
+                TCO.loadPubKey('sandbox');
+				//alert(1);
+				setTimeout(tokenRequest,1000);
+				//tokenRequest();
+               /* $("#myCCForm").submit(function(e) {
+                    // Call our token request function
+                    tokenRequest();
+
+                    // Prevent form from submitting
+                    return false;
+                });*/
+            });
+			/*$(window ).load(function() {
+				 TCO.loadPubKey('sandbox');
+				tokenRequest();
+			});*/
+        </script> 

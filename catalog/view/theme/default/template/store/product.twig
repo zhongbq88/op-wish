@@ -1,0 +1,315 @@
+{{ header }} 
+ <!--<div class="alert alert-success alert-dismissible" style="margin-bottom:10px;"><i class="fa fa-check-circle"></i> success 
+        </div>-->
+{% if product %} 
+<!--start-single-->
+<div class="single contact">
+<div class="container">
+<div class="single-main">
+{% set option_row = 1 %}
+<div class="col-md-13 single-main-left">
+<div class="sngl-top">
+<div class="col-md-5 single-top-left">
+<div class="flexslider">
+<div class="flex-viewport" style="overflow: hidden; position: relative;">
+<ul class="slides">
+{% if product.images %}
+<div class="thumb-image"> {% for image in product.images %} <img src="{{ image.pop_image }}" id="image{{ loop.index }}" {% if loop.index==option_row %} style="display:block" {% else %}  style="display: none" {% endif %} data-imagezoom="true" class="img-responsive" alt=""/> {% endfor %} </div>
+{% endif %}
+</div>
+<div id="listBox" class="listBox">
+<ol class="flex-control-nav flex-control-thumbs">
+  {% if product.images %}
+  {% for image in product.images %}
+  <li><img src="{{ image.thumb_image }}" {% if loop.index==option_row %} class="flex-active" {% endif %}  draggable="false" data-index='{{ image.image_pos }}'></li>
+ 
+  {% endfor %}
+  {% endif %}
+</ol>
+</div>
+<ul class="flex-direction-nav">
+  <li class="flex-nav-prev"><a class="flex-prev" href="#">Previous</a></li>
+  <li class="flex-nav-next"><a class="flex-next" href="#">Next</a></li>
+</ul>
+</div>
+<!--<div class="flexslider">
+              <ul class="slides">
+                {% if product.images %}
+                {% for image in product.images %}
+                <li data-thumb="{{ image.thumb_image }}">
+                  <div class="thumb-image"> <img src="{{ image.pop_image }}" data-imagezoom="true" class="img-responsive" alt=""/> </div>
+                </li>
+                {% endfor %}
+                {% endif %}
+              </ul>
+            </div>-->
+</div>
+<div class="col-md-7 single-top-right">
+  <div class="single-para simpleCart_shelfItem">
+    <h2>{{ product.name }}</h2>
+    <h5 class="item_price">$ {% if product.style %} {{ product.style.values[0].price }}  {% endif %}</h5>
+    <div class="available"> {% if product.style %}
+      <div class="form-group" style="float:left; margin-right:20px;" >
+        <label class="control-label">{{ product.style.name }}</label>
+        <select class="form-control" id="select_style" style=" min-width:200px; min-height:35px; padding:5px;" onChange="check(this,0);" >
+          
+          
+                    
+                    
+                   {% for val in product.style.values %}
+                    
+                    
+                    
+          
+          <option value="{{val.price}}">{{val.name}}</option>
+          
+          
+                    
+                    
+                    {% endfor %}
+                  
+                  
+                  
+        
+        </select>
+      </div>
+      {% endif %}
+      {% if product.options %}
+      
+      {% for option in product.options %}
+      <div id="option-body{{ loop.index }}" {% if loop.index==option_row %} style="display:block" {% else %}  style="display: none" {% endif %}>
+      {% if option %}
+      {% for key,opt in option %}
+      <div class="form-group" style="float:left; margin-right:20px;" >
+        <label class="control-label">{{ key }}</label>
+        <select class="form-control" style=" min-width:200px; min-height:35px; padding:5px;" onChange="check(this,1);" >
+          
+          
+                    
+                      
+                   {% for val in opt %}
+                    
+                      
+                    
+          
+          <option value="{{val.price}}">{{val.name}}</option>
+          
+          
+                    
+                      
+                    {% endfor %}
+                  
+                    
+                  
+        
+        </select>
+      </div>
+      {% endfor %}
+      
+      {% endif %} </div>
+    {% endfor %}
+    {% endif %}
+    <!--<div class="form-group" style="float:left; margin-right:20px;">
+      <label class="control-label" for="input-quantity">Qty</label>
+      <input type="text" style="min-width:60px;" name="quantity" value="1" size="2" id="input-quantity" class="form-control">
+    </div>-->
+    <div class="clearfix"> </div>
+  </div>
+  {% if product.tags%}
+  <ul class="tag-men">
+    <li><span>TAG</span> <span class="women1">: {{ product.tags }}</span></li>
+    <!--<li><span>SKU</span> <span class="women1">: CK09</span></li>-->
+  </ul>
+  {% endif %} <a href="javascript:createOrder();" class="add-cart item_add">CREATE ORDER</a>
+  <p>{{ product.des }}</p>
+   <!-- AddThis Button BEGIN -->
+            <!--<div class="addthis_toolbox addthis_default_style" data-url="{{ share }}"><a class="addthis_button_facebook_like" fb:like:layout="button_count"></a> <a class="addthis_button_tweet"></a> <a class="addthis_button_pinterest_pinit"></a> <a class="addthis_counter addthis_pill_style"></a></div>
+            <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-515eeaf54693130e"></script> -->
+            <!-- AddThis Button END --> 
+</div>
+</div>
+<!--<div class="clearfix"> </div>-->
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="des-body" style="display: none;" >
+<div id="input-body" >
+<div class="modal-backdrop in"></div>
+<div id="modal-text" class="modal in" style="display: block;" >
+  <div id="filemanager" class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" style="float:right; margin-left:10px;" data-toggle="tooltip" title="" id="close" class="btn btn-default" data-original-title="Cancel"><i class="fa fa-reply"></i></button>
+        <button type="button" onclick="save();" style="float:right" data-toggle="tooltip" title="" class="btn btn-primary" data-original-title="Save"><i class="fa fa-save"></i></button>
+        <h4 class="modal-title">CREATE ORDER</h4>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-sm-10" id="input-text-body" style="width:100%;">
+            <div class="panel-heading required" style="height:52px;" >
+            
+              <h3 class="panel-title" style="height:52px;" > {{ product.name }}<!--<a  data-toggle="collapse" data-parent="#accordion" 
+				   href="#collapse{{options_array[variant_index]}}" class="accordion-toggle" style="float:left; width:180px; text-decoration:none; margin-top:6px;">
+                <input type="hidden" name="product_id[{{ variant_index }}]" value="{{ product_id }}" />
+                <label class="control-label">{{ product.name }}</label>
+                <i class="fa fa-caret-down" style="margin-left:12px;"></i></a>--> </h3>
+            </div>
+            <div id="collapseOne" data-index ="1" class="panel-collapse collapse in ">
+              <div class="panel-body">
+                <div class="table-responsive">
+                  <table class="table table-bordered table-hover">
+                    <thead>
+                      <tr>
+                        <td class="text-center" ><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', this.checked);" /></td>
+                        <td class="text-center">Image</td>
+                        <td class="text-center">Style</td>
+                        <!--<td class="text-left">{% if sort == 'product' %} <a href="{{ column_product }}" class="{{ order|lower }}">{{ column_product }}</a> {% else %} <a href="{{ sort_product }}">{{ column_product }}</a> {% endif %}</td>-->
+                        <td class="text-center">Size</td>
+                        <td class="text-center">Sale Price</td>
+                        <td class="text-center">MSRP</td>
+                        <td class="text-center">Qty</td>
+                        <!--<td class="text-left">{{ column_quantity }}</td>-->
+                        <!--<td class="text-right" style=" text-align:right">{{ column_action }}</td>-->
+                      </tr>
+                    </thead>
+                    <tbody id="product-order">
+                     <input type="hidden" name="product_id" value="{{ product.product_id }}" />
+                    {% if product.variants %}
+                    {% for variant in product.variants %}
+                    <tr >
+                      <td class="text-center">
+
+                        <input type="checkbox" id="checkbox{{loop.index}}"  name="selected[]"  value="{{ loop.index }}" />
+                      </td>
+                      <td class="text-center"><img src="{{ product.images[variant.image_pos].thumb_image }}" style="width:50px; height:auto;" ></td>
+                      <td class="text-center" style="vertical-align:middle; text-align:center;">{{ variant.option1 }}</td>
+                      <!--<td class="text-left">{{ order.products }}</td>-->
+                      <td class="text-center" style="vertical-align:middle; text-align:center;" >{% if variant.option2 %} {{ variant.option2  }} {% else %} {% if variant.option3 %}{{variant.option3}}{% endif %}{% endif %}</td>
+                      <td class="text-center" style="vertical-align:middle; text-align:center;">{{ variant.price }}</td>
+                      <td class="text-center" style="vertical-align:middle; text-align:center;">{{ variant.compare_at_price }}</td>
+                      <td class="text-center" style="vertical-align:middle; text-align:center;"><input type="text" style="min-width:60px;" name="quantity[]" value="1" size="2" id="input-quantity" ></td>
+                      
+                      <!--<td class="text-left">{{ order.date_modified }}</td>-->
+                     
+                    </tr>
+                    {% endfor %}
+                    
+                    {% endif %}
+                      </tbody>
+                    
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endif %} 
+<!--end-single-->
+<link href="catalog/view/javascript/store/css/style.css" rel="stylesheet" type="text/css" media="all" />
+<!-- FlexSlider --> 
+<script src="catalog/view/javascript/store/js/imagezoom.js"></script> 
+<!--<script defer src="catalog/view/javascript/store/js/jquery.flexslider.js"></script>-->
+<link rel="stylesheet" href="catalog/view/javascript/store/css/flexslider.css" type="text/css" media="screen" />
+<script>
+
+$('#close').on('click', function() {
+    $('#des-body').attr ("style","display:none;");
+    }); 
+	
+function save(){
+	 var selected = $('input[name^=\'selected\']:checked');
+	  if(selected.length<=0){
+		   alert('Please select a product!');
+		   return;
+	  }
+	  $.ajax({
+				url: 'index.php?route=store/product/createorder',
+				type: 'post',
+				data: $('#product-order input[type=\'checkbox\']:checked,#product-order input[type=\'hidden\'],#product-order input[type=\'text\']'),
+				dataType: 'json',
+				success: function(json) {
+					if (json['success']) {
+						//alert(json['success']);
+						window.location.href=json['success'];
+					}
+				},
+				error: function(xhr, ajaxOptions, thrownError) {
+					alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+				}
+			});
+	
+}
+	
+function createOrder(){
+	$('#des-body').attr ("style","display:block;");
+	
+}
+
+var option_row = {{ option_row }};
+
+
+function changeSelected(index){
+	$('#select_style option').eq(index).get(0).selected = true;
+	$('#option-body'+option_row).attr ("style","display:none;");
+	$('#image'+option_row).attr ("style","display:none;");
+	option_row = index+1;
+	$('#option-body'+option_row).attr ("style","display:block;");
+	$('#image'+option_row).attr ("style","display:block;");
+	$('.flex-active').removeClass();
+	$(".flex-control-thumbs img").eq(index).addClass('flex-active');
+	$('.item_price').html('$ '+$('#select_style').get(0).options[index].value);
+}
+
+function check(elem,index) {
+	
+	if(index ==0){
+		changeSelected(elem.selectedIndex);
+	}else{
+		$('.item_price').html('$ '+elem.options[elem.selectedIndex].value);
+	}
+	
+	
+}
+
+$('.flex-control-thumbs img').on('click',function(){
+	
+	var index = parseInt($(this).get(0).getAttribute('data-index'));
+	changeSelected(index);
+
+});
+
+/*$(document).ready(function() {	
+	 var index=0;
+    var length=$(".thumb-image img").length;
+    var i=1;
+	$('.flex-control-thumb').attr('style','width:'+length*145);
+    showImg(index);
+    //关键函数：通过控制i ，来显示图片
+    function showImg(i){
+       /* $(".thumb-image img")
+            .eq(i).stop(true,true).fadeIn(800)
+            .siblings("img").hide();
+         $("#cbtn li")
+            .eq(i).attr ("class","slide active")
+            .siblings().attr ("class","slide ");
+    }
+});
+*/
+						</script>
+<style>
+.thumb-image {
+    width: 100%;
+}
+.flex-direction-nav{
+ 	display:none;
+}
+
+</style>
+{{ footer }}

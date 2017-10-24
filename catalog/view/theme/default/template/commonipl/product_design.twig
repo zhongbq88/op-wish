@@ -1,0 +1,207 @@
+{{ header }}
+
+<div id="product-product" class="container">
+<form id="publish_product_form" name="publish_product_form" method="post" action="index.php?route=commonipl/review" role="form" enctype="multipart/form-data">
+  <input type="hidden" name="product_id" value="{{ product_id }}" />
+  <div id="product"> {% if options %}
+    <h3>{{ text_option }}</h3>
+    <div class="panel-group" id="accordion"> {% for option in options %}
+      
+      {% if option.type == 'select'%}
+      <div class="panel panel-default">
+        <div class="panel-heading {% if option.required %} required {% endif %}" style="height:52px;" >
+          <h4 class="panel-title" style="height:52px;" ><a  data-toggle="collapse" data-parent="#accordion" 
+				   href="#collapse{{options_array[loop.index]}}" class="accordion-toggle" style="float:left; width:180px; text-decoration:none; margin-top:6px;">
+            <label class="control-label">{{variant}} {{ loop.index }}</label>
+            <i class="fa fa-caret-down" style="margin-left:12px;"></i></a>
+            <div>
+              <input type="text" name="variant[{{ option.product_option_id }}]" value="{{ option.name }}{{ loop.index }}" class="form-input" style="height:30px;padding:5px 10px;font-size:12px;line-height:1" placeholder="Enter title" id="input-coupon"  />
+            <div style="float:right;margin-top:-9px;"><div style=" float: left"><img src="http://127.0.0.1:8080/storage/upload/cache/left.jpg-50x50.jpg" style="display:none" id="src-option1-{{ option.product_option_id }}" /></div><div style=" float: left; margin-left:8px;"><img src="http://127.0.0.1:8080/storage/upload/cache/left.jpg-50x50.jpg" id="src-option2-{{ option.product_option_id }}" style="display:none"/></div></div></div>
+          </h4>
+        </div>
+        <div id="collapse{{options_array[loop.index]}}" class="panel-collapse collapse {% if loop.index==1 %}in {% endif %}">
+          <div class="panel-body op{{option.option_id}}">
+          	{% if option.option_image_view %}
+             <div id="select_options_style{{option.product_option_id}}"> 
+             {{ option.option_image_view }}
+             </div>
+             {% else %}
+            <div id="select_options_style{{option.product_option_id}}" style="display:none"></div>
+            <div id="select_options{{option.product_option_id}}">
+              <label class="control-label">{{ option.name }}</label>
+              <div class="row">
+               {% for option_value in option.product_option_value %}
+                <div style="width:388px;float:left; margin-left:15px;">
+                  <div class="product-thumb" > 
+                  {% if option_value.image %}
+                    <div class="image"><a  href="javascript:loadDesignImage({{option_value.option_value_id}},{{ product_id }},{{option.option_id}},{{ option.product_option_id }})"><img src="{{ option_value.image}}" alt="{{ option_value.name}}" title="{{ option_value.name}}" class="img-responsive" /></a></div>
+                    {% endif %}
+                    <div>
+                      <div class="caption">
+                        <h4 ><a href="javascript:loadDesignImage({{option_value.option_value_id}},{{ product_id }},{{option.option_id}},{{ option.product_option_id }})"  style="color:#FFF">{{option_value.name}}</a></h4>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                {% endfor %} 
+                </div>
+            </div>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+      {% endif %}
+      
+      {% endfor %}
+      {% endif %} </div>
+    <div class="button-group" style="margin:0 auto;">
+      <button type="submit" id="button-review" data-loading-text="{{ text_loading }}" class="btn btn-primary btn-lg btn-block" style=" width:auto; text-align:center;">{{ review_and_publish_designs }}</button>
+    </div>
+  </div>
+  
+  </div>
+</div>
+</form>>
+</div>
+<!--<div class="modal-backdrop in"></div>-->
+<script type="text/javascript"><!--
+
+ function loadDesignImage(option_value_id,product_id,option_id,product_option_id){
+	 //alert(option_id);
+	  $.ajax({
+				url: 'index.php?route=commonipl/productdesign/getOption&product_id='+product_id+'&option_value_id='+option_value_id+'&product_option_id='+product_option_id,
+				type: 'get',
+				dataType: 'json',
+				cache: false,
+				contentType: false,
+				processData: false,
+				beforeSend: function() {
+					  //alert(1);
+				},
+				complete: function() {
+					 //alert(2);
+				},
+				success: function(json) {
+					if(json['success']){
+						$('#select_options_style'+product_option_id).html(json['success']);
+						$("#select_options"+product_option_id).attr ("style","display:none;");
+						$('#select_options_style'+product_option_id).attr ("style","display:block;");
+					}
+				},
+				error: function(xhr, ajaxOptions, thrownError) {
+					//alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+				}
+			});
+	}
+	
+	function load_paired_products(product_option_id){
+		//alert(option_id);
+		$("#select_options"+product_option_id).attr ("style","display:block;");
+		$('#select_options_style'+product_option_id).attr ("style","display:none;");
+	}
+	
+	function variant_image(node){
+
+	$('#form-upload').remove();
+
+	$('body').prepend('<form enctype="multipart/form-data" id="form-upload" style="display: none;"><input type="file" name="file" /></form>');
+
+	$('#form-upload input[name=\'file\']').trigger('click');
+
+	if (typeof timer != 'undefined') {
+    	clearInterval(timer);
+	}
+
+	timer = setInterval(function() {
+		if ($('#form-upload input[name=\'file\']').val() != '') {
+			clearInterval(timer);
+			var option_image_id = $(node).get(0).getAttribute("data-id");
+			var product_option_id = $(node).get(0).getAttribute("data-product-option-id");
+			var formData =  new FormData($('#form-upload')[0]);
+			var index = $(node).get(0).getAttribute("data-index");
+			formData.append("src", $(node).get(0).getAttribute("data-src"));
+			formData.append("width", '{{width}}');
+			formData.append("height", '{{height}}');
+			$.ajax({
+				url: 'index.php?route=tool/upload',
+				type: 'post',
+				dataType: 'json',
+				data: formData,
+				cache: false,
+				contentType: false,
+				processData: false,
+				beforeSend: function() {
+					//alert(123);
+					$('#loading'+product_option_id+"_"+option_image_id).attr ("style","display:block;");
+					$('#upload_text'+product_option_id+"_"+option_image_id).text('{{text_loading}}');
+				},
+				complete: function() {
+					//alert(456);
+					
+				},
+				success: function(json) {
+					$('.text-danger').remove();
+
+					if (json['error']) {
+						$('#artwork'+product_option_id+"_"+option_image_id).after('<div class="text-danger" ><font color="red" size="4px" ><strong>' + json['error'] + '</strong></font></div>');
+					}
+
+					if (json['success']) {
+						$('.text-danger').remove();
+						//alert(json['src']+","+json['preimg']+","+json['code']);
+						document.getElementById("src-option"+index+"-"+product_option_id).src = json['src'];
+						$("#src-option"+index+"-"+product_option_id).attr ("style","display:block;");
+						//alert(json['preimg']);
+						if(json['preimg']){
+							//alert(document.getElementById("option_image"+option_image_id));
+							document.getElementById("option_image"+product_option_id+"_"+option_image_id).src = json['viewimg'];
+							//$('#thumbnail'+option_id).attr('href',json['preimg']); 
+							$("#option-img"+product_option_id+"_"+option_image_id).val(json['preimg']);
+						}
+						
+						//$("#src-option"+option_id).attr ("style","float:right;  width: auto; height:35px; display:block;");
+						
+						$("#input-option"+product_option_id+"_"+option_image_id).val(json['code']);
+					}
+		  
+				  $('#loading'+product_option_id+"_"+option_image_id).attr ("style","display:none;");
+				  $('#upload_text'+product_option_id+"_"+option_image_id).text('{{button_upload}}');
+						 
+				},
+				error: function(xhr, ajaxOptions, thrownError) {
+					alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+				}
+			});
+		}
+	}, 500);
+	}
+	
+//--></script> 
+<style>
+.form-control {
+  display: block;
+  width: 100%;
+  height: 34px;
+  padding: 6px 12px;
+  font-size: 14px;
+  line-height: 1.42857143;
+  color: #555;
+  background-color: #fff;
+  background-image: none;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+          box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+  -webkit-transition: border-color ease-in-out .15s, -webkit-box-shadow ease-in-out .15s;
+       -o-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+          transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+}
+.form-control:focus {
+  border-color: #66afe9;
+  outline: 0;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102, 175, 233, .6);
+          box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102, 175, 233, .6);
+}
+</style>
+
+{{ footer }} 

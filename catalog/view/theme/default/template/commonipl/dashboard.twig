@@ -1,0 +1,210 @@
+{{ header }}
+<div id="account-order" class="container">
+<div id="product-product" class="container">
+<div id="product">
+<div class="theme-content">
+  <div class="wpb_row  vc_row-fluid  mk-fullwidth-false add-padding-0 attched-false">
+    <div style="" class="vc_span12 wpb_column column_container ">
+      <div class="mk-shortcode mk-padding-shortcode" style="height:20px"></div>
+      <div class="clearboth"></div>
+      <div id="mk-text-block-221" style=" margin-bottom:0px;text-align: left;" class="mk-text-block  "> {% if success %}
+        <div class="alert alert-success alert-dismissible" style="margin-bottom:10px;"><i class="fa fa-check-circle"></i> {{ success }} </div>
+        {% endif %}
+        <div class="row" id="tips" style="display:none;">
+          <div class="col-md-12">
+            <div class="alert alert-warning">
+              <button type="button" class="close" data-dismiss="alert" aria-label="Close" onclick="RPC('store/dismiss-welcome', {storeId: 481485});"> <span aria-hidden="true">×</span> </button>
+              <p class="text-center" style="padding-top:15px;">
+                <iframe width="560" height="315" src="https://www.youtube.com/embed/-wa_hcb0YlU" frameborder="0" allowfullscreen></iframe>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="clearboth"></div>
+    </div>
+    <div style="background-color:#F8F8F8;border:1px solid #DDD;padding:15px 5px 5px 5px;margin-top:15px; " class="vc_span12 wpb_column column_container "> <b style="margin-left:25px;">{{your_vivajean_profits_orders}}</b>:
+      <div class="wpb_row  vc_row-fluid  mk-fullwidth-false add-padding-0 attched-false" style="margin-top:10px;margin-bottom:20px; padding-left:20px; padding-right:20px;">
+        <div class="vc_span2 wpb_column column_container" style="float:left; width:20%; padding:10px;">
+          <div  class="orderib" data-filter="Pending">
+            <div style=" margin-bottom:10px;text-align: center;font-size:24px"> <i class="mk-moon-file-9"></i> </div>
+            <div style=" margin-bottom:10px;text-align: center;font-size:16px"> {{text_pending}} </div>
+            <div style=" margin-bottom:10px;text-align: center;font-size:32px;"> {{pending}} </div>
+          </div>
+        </div>
+        <div class="vc_span2 wpb_column column_container"  style="float:left; width:20%; padding:10px;">
+          <div  class="orderib" data-filter="InProd">
+            <div style=" margin-bottom:10px;text-align: center;font-size:24px"> <i class="mk-moon-file-9"></i> </div>
+            <div style=" margin-bottom:10px;text-align: center;font-size:16px"> {{text_in_production}} </div>
+            <div style=" margin-bottom:10px;text-align: center;font-size:32px;"> {{in_production}} </div>
+          </div>
+        </div>
+        <div class="vc_span2 wpb_column column_container"  style="float:left; width:20%; padding:10px;">
+          <div  class="orderib" data-filter="Shipped">
+            <div style=" margin-bottom:10px;text-align: center;font-size:24px"> <i class="mk-moon-file-9"></i> </div>
+            <div style=" margin-bottom:10px;text-align: center;font-size:16px"> {{text_shipped}} </div>
+            <div style=" margin-bottom:10px;text-align: center;font-size:32px;"> {{shipped}} </div>
+          </div>
+        </div>
+        <div class="vc_span2 wpb_column column_container"  style="float:left; width:20%; padding:10px;">
+          <div  class="orderib" data-filter="OnHold">
+            <div style=" margin-bottom:10px;text-align: center;font-size:24px"> <i class="mk-moon-file-9"></i> </div>
+            <div style=" margin-bottom:10px;text-align: center;font-size:16px"> {{text_on_hold}} </div>
+            <div style=" margin-bottom:10px;text-align: center;font-size:32px;"> {{on_hold}} </div>
+          </div>
+        </div>
+        <div class="vc_span2 wpb_column column_container"  style="float:left; width:20%; padding:10px;" >
+          <div  class="orderib" data-filter="Cancelled">
+            <div style=" margin-bottom:10px;text-align: center;font-size:24px"> <i class="mk-moon-file-9"></i> </div>
+            <div style=" margin-bottom:10px;text-align: center;font-size:16px"> {{text_cancelled}} </div>
+            <div style=" margin-bottom:10px;text-align: center;font-size:32px;"> {{cancelled}} </div>
+          </div>
+        </div>
+      </div>
+      <b style="margin-left:30px; padding-top:30px;">{{payments_sales}}</b>:
+      <div class="wpb_row  vc_row-fluid  mk-fullwidth-false add-padding-0 attched-false" style="margin-top:10px;margin-bottom:120px; padding-left:10px;">
+        <div style="" class="vc_span1 wpb_column column_container "> &nbsp; </div>
+        <div>
+          <div class="vc_span2 wpb_column column_container"  style=" width:18%; float:left; margin-left:20px" >
+            <div style="background-color:#FFF;border:1px solid #DDD;padding:5px 0 5px 0" >
+              <div style=" margin-bottom:10px;text-align: center;font-size:24px"> <i class="mk-icon-money" style="background-image:url(../image/notepad-117597_640.png)"></i> </div>
+              <div style=" margin-bottom:10px;text-align: center;font-size:16px"> {{text_aug_total}} </div>
+              <div style=" margin-bottom:10px;text-align: center;font-size:24px;"> {{aug_total}} </div>
+            </div>
+          </div>
+          <div class="vc_span2 wpb_column column_container" style=" width:18%; float:left; margin-left:20px" >
+            <div  style="background-color:#FFF;border:1px solid #DDD;padding:5px 0 5px 0">
+              <div style=" margin-bottom:10px;text-align: center;font-size:24px"> <i class="mk-icon-money"></i> </div>
+              <div style=" margin-bottom:10px;text-align: center;font-size:16px"> {{text_aug_charges}} </div>
+              <div style=" margin-bottom:10px;text-align: center;font-size:24px;"> {{aug_charges}} </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="clearboth"></div>
+    </div>
+  </div>
+</div>
+<div id="content" style="margin-top:50px;">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title">{{ text_list }}</h3>
+        </div>
+        <div class="panel-body">
+          <div class="table-responsive">
+            <table class="table table-bordered table-hover">
+              <thead>
+                <tr>
+                  <td class="text-center">{{ column_image }}</td>
+                  <td class="text-center">{{ column_product_name }}</td>
+                  <td class="text-center">{{ column_status }}</td>
+                  <td class="text-center">{{ column_sales}}</td>
+                  <td class="text-center">{{ column_date_added }}</td>
+                  <td class="text-center">{{ column_action }}</td>
+                </tr>
+              </thead>
+              <tbody valign="middle" >
+              
+              {% if products %}
+              {% for product in products %}
+              <tr>
+                <td class="text-center"><img src="{{ product.image }}" style="width: auto; height:100px;" alt="{{ product.name }}" class="img-thumbnail" /></td>
+                <td class="text-center" style="vertical-align:middle; text-align:center;">{{ product.name }}</td>
+                <td class="text-center" style="vertical-align:middle; text-align:center;">{{ product.status }}</td>
+                <td class="text-center" style="vertical-align:middle; text-align:center;">{{ product.sales }}</td>
+                <td class="text-center" style="vertical-align:middle; text-align:center;">{{ product.published_at }}</td>
+                <td class="text-center" style="vertical-align:middle; text-align:center;"> {% if product.view %} <a href="{{ product.view }}" target="_parent" data-toggle="tooltip" title="{{ button_view }}" class="btn btn-primary"><i class="fa fa-eye"></i>{{ button_view }}</a> {% else %}
+                  <div class="btn-group" >
+                    <button type="button" onClick="addproduct();" id="pay{{order.order_id}}"   class="btn btn-success btn-xs" > {{ add_product }}</button>
+                  </div>
+                  <div class="btn-group"  style=" margin-left:20px;"> <a href="{{ product.href }}" target="_parent" data-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fa fa-pencil"></i>{{ button_edit }}</a> </div>
+                  {% endif %} </td>
+              </tr>
+              {% endfor %}
+              {% else %}
+              <tr>
+                <td class="text-center" colspan="8">{{ text_no_results }}</td>
+              </tr>
+              {% endif %}
+                </tbody>
+              
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<style type="text/css">
+    .button-204 {
+                margin-bottom: 100px;
+                margin-top: 0px;
+
+        }
+
+        .button-204 {
+                background-color:#479ccf;
+
+        }
+        
+         .button-204:hover {
+                background-color:#4291c1;
+
+        }
+        .button-204.three-dimension  {
+             box-shadow: 0px 3px 0px 0px #397da6;
+        }
+        .button-204.three-dimension:active  {
+             box-shadow: 0px 1px 0px 0px #397da6;
+        } 
+	.button-204a {
+                margin-bottom: 100px;
+                margin-top: 0px;
+
+        }
+
+        .button-204a {
+                background-color:#FFC300;
+
+        }
+        
+         .button-204a:hover {
+                background-color:#F2BE00;
+
+        }
+        .button-204a.three-dimension  {
+             box-shadow: 0px 3px 0px 0px #D6A800;
+        }
+        .button-204a.three-dimension:active  {
+             box-shadow: 0px 1px 0px 0px #D6A800;
+        }
+	.exp-color {
+		color: #ff0000 !important;
+		
+		}
+	.exp-color2 {
+		color: #ff0000 !important;
+		text-shadow: 0 1px rgba(0, 0, 0, 0.4);
+		}
+		 .orderib{
+			background-color:#FFF;border:1px solid #DDD;padding:5px 0 5px 0
+			}
+	.orderib:hover {
+           background-color: #87CEFA;border:1px solid #DDD;padding:5px 0 5px 0;
+
+        }
+    </style>
+<script type="text/javascript">
+$('.orderib').on('click', function() {
+	window.location.href='index.php?route=commonipl/orders&filter_order_status='+ this.getAttribute('data-filter'); 
+});
+$('.close').on('click', function() {
+	$('#tips').attr('style','display:none');
+});
+function addproduct(){
+	window.location.href='index.php?route=commonipl/category';
+}
+</script> 
+{{ footer }} 

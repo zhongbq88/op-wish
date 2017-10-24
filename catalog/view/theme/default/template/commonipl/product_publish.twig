@@ -1,0 +1,117 @@
+<div id="theme-content" >
+<div class="wpb_row  vc_row-fluid  mk-fullwidth-false add-padding-0 attched-false"   >
+	<div class="vc_span12 wpb_column column_container " >
+
+			<div id="mk-text-block-221" style=" margin-bottom:0px;text-align: left;" class="mk-text-block  ">
+				
+				<b> {{cover}} -  {% if not special %}{{ price }}{% else %}{{ special }}{% endif %} {{each}}</b><br>&nbsp;
+		
+			</div>		
+
+	</div>
+
+<div  style="border:1px solid #CCC;background-color:#F4F4F4;padding:12px; overflow:hidden; " >
+<form id="pubform">
+<div style="float:left; width:70%">
+	<div class="wpb_row  vc_row-fluid  mk-fullwidth-false add-padding-0 attched-false" >
+		<div style="text-align:left" class="vc_span9 wpb_column column_container ">
+			
+
+				<div id="mk-text-block-221" style=" margin-bottom:10px;text-align: left;font-size:22px;font-weight:bold" class="mk-text-block  ">
+					
+					 {{cover}} - {% if not special %}{{ price }}{% else %}{{ special }}{% endif %}
+					
+				</div>
+				<div id="mk-text-block-221" style=" margin-bottom:15px;text-align: left;font-size:12px" class="mk-text-block  ">
+					{{shopify_product_des}}
+				</div>		
+				<div id="mk-text-block-221" style=" margin-bottom:0px;text-align: left;" class="mk-text-block  ">
+					{{product_title}}
+				</div>		
+				<div id="mk-text-block-221" style=" margin-bottom:15px;text-align: left;" class="mk-text-block  ">
+					<input name="pttl" type="text" style="width:500px" value="{{ heading_title }}">
+				</div>		
+				<div id="mk-text-block-221" style=" margin-bottom:0px;text-align: left;" class="mk-text-block  ">
+                {{product_description}}
+					
+				</div>		
+				<div id="mk-text-block-221" style=" margin-bottom:15px;text-align: left;" class="mk-text-block  ">
+					<textarea name="pdsc" style="width:500px;height:100px">{{ description }}</textarea>
+				</div>	
+
+				<div id="mk-text-block-221" style=" margin-bottom:0px;text-align: left;" class="mk-text-block  ">
+                 {{add_to_shopify_collection}}
+					
+				</div>		
+				
+				<div id="mk-text-block-221" style=" margin-bottom:15px;text-align: left;" class="mk-text-block  ">
+					<select name="pcol" style="width:400px"><option value="0">- None -</option><option value="459306312">Home page</option>
+								</select>
+				</div>
+				
+				<div id="mk-text-block-221" style=" margin-bottom:0px;text-align: left;" class="mk-text-block  ">
+					{{add_product_tags}}
+				</div>				
+				<div id="mk-text-block-221" style=" margin-bottom:15px;text-align: left;" class="mk-text-block  ">
+					<input name="ptag" type="text" style="width:500px" placeholder="Comma-separated tags" value="{% for i in 0..tags|length %}{% if i < (tags|length - 1) %}{{ tags[i].tag}},{% else %}{{tags[i].tag}}{% endif %}{% endfor %}">
+				</div>
+				<div id="mk-text-block-221" style=" margin-bottom:0px;text-align: left;" class="mk-text-block  ">
+                {{your_selling_price_for_this_product}}
+					
+				</div>				
+				<div id="mk-text-block-221" style=" margin-bottom:40px;text-align: left;" class="mk-text-block  ">
+					<input name="pspr" type="text" style="width:200px" value="{{ price }}">
+				</div>
+				
+				
+				<div class="mk-button-align fullwidth-button center" style="float:right; margin-right:20%">
+						<a href="index.php?route=shopify/createproduct" id="gopublish"  class="btn btn-primary btn-lg btn-block" >
+						<i class="mk-moon-arrow-right-6"></i>{{publish_product}}</a></div>
+			
+			
+			
+			
+
+		</div>
+        </div>
+		
+	</div>
+
+
+
+<div style="text-align:center; float:right; margin:0 auto;" class="vc_span3 wpb_column column_container ">
+		
+          <ul class="preview-thumbnails" >
+
+          </ul>
+
+	
+		</div>
+</form>
+</div>
+</div>
+</div>
+<!--edit shopify produce end-->、
+<script type="text/javascript">
+$('#gopublish').on('click', function() {
+	$.ajax({
+		url: 'index.php?route=shopify/product/add',
+		type: 'post',
+		data: $('#product-product input[type=\'text\'], #product-product input[type=\'hidden\'],#product-product select,  #product-product textarea'),
+		dataType: 'json',
+		beforeSend: function() {
+			$('#button-cart').button('loading');
+		},
+		complete: function() {
+			$('#button-cart').button('reset');
+		},
+		success: function(json) {
+			//alert(json['success']);
+			
+		},
+        error: function(xhr, ajaxOptions, thrownError) {
+            alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+        }
+	});
+});
+</script> 

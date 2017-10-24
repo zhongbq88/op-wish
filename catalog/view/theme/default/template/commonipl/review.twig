@@ -1,0 +1,246 @@
+{{ header }}
+<div id="loader"></div>
+<div id="product-product" class="container" >
+  <div id="main_contents" class="widget block container row" style="zoom: 1;">
+    <div class="vd_content-section clearfix" style="border:1px solid #CCC;
+border-radius:4px;">
+      <div class="row">
+        <div class="col-sm-12">
+          <div class="panel widget light-widget">
+            <form class="form-horizontal" id="publish_product_form" name="publish_product_form" onsubmit="return create_on_shopify(this)" method="post" action="" role="form" enctype="multipart/form-data">
+              <input type="hidden" name="product_id" value="{{ product_id }}" />
+              <div class="panel-body">
+                <h2 class="mgbt-xs-20">Publish Product</h2>
+                <br>
+                <div class="row">
+                  <div class="col-sm-9">
+                    <div class="form-group">
+                      <label class="col-sm-3 control-label">{{product_title}}</label>
+                      <!-- form-group -->
+                      <div class="col-sm-9 controls">
+                        <div class="row mgbt-xs-0">
+                          <div class="col-xs-9">
+                            <input name="product_title" style="width:640px; padding-left:5px; margin-left:-15px;" id="product_title" placeholder="Enter Product Title" required value="{{title}}" type="text">
+                          </div>
+                          <!-- col-xs-12 --> 
+                        </div>
+                        <!-- row --> 
+                      </div>
+                      <!-- col-sm-10 --> 
+                    </div>
+                    <!-- form-group --> 
+                    
+                    <!-- form-group -->
+                    
+                    <div class="form-group">
+                      <label class="col-sm-3 control-label">{{product_description}}</label>
+                      <div class="col-sm-9 controls">
+                        <div class="row mgbt-xs-0">
+                          <div class="col-xs-13">
+                          <div style="display:none">
+                          <textarea name="product_description" id="input-description"></textarea>
+                         </div>
+                          <div id="edit_des"><p>{{ descriptions }}</p></div>
+                          </div>
+                          <!-- col-xs-12 --> 
+                        </div>
+                        <!-- row --> 
+                      </div>
+                      <!-- col-sm-10 --> 
+                    </div>
+                    <!-- form-group -->
+                    
+                    <div class="form-group">
+                      <label class="col-sm-3 control-label">Collection</label>
+                      
+                      <!-- form-group -->
+                      <div class="col-sm-9 controls">
+                        <div class="row mgbt-xs-0">
+                          <div class="col-xs-9">
+                            <select name="product_pcol" style="width:640px; padding-left:5px; margin-left:-15px;">
+                              <option value="0">- None -</option>
+                              <option value="459306312">Home page</option>
+                            </select>
+                          </div>
+                          <!-- col-xs-12 --> 
+                        </div>
+                        <!-- row --> 
+                      </div>
+                      <!-- col-sm-10 --> 
+                    </div>
+                    <!-- form-group -->
+                    
+                    <div class="form-group">
+                      <label class="col-sm-3 control-label">Tags</label>
+                      
+                      <!-- form-group -->
+                      <div class="col-sm-9 controls">
+                        <div class="row mgbt-xs-0">
+                          <div class="col-xs-9">
+                            <input name="product_tags" style="width:640px; padding-left:5px; margin-left:-15px;" id="product_tags" placeholder="Enter Tags" type="text">
+                          </div>
+                          <!-- col-xs-12 --> 
+                        </div>
+                        <!-- row --> 
+                      </div>
+                      <!-- col-sm-10 --> 
+                    </div>
+                  </div>
+                  <div class="col-sm-3 mgbt-xs-20">
+                    <div class="form-group">
+                      <div class="col-xs-12"> </div>
+                    </div>
+                  </div>
+                  
+                  <!-- col-sm-12 --> 
+                </div>
+                <!-- row --> 
+                
+              </div>
+              {% if variants %}
+              {% for  variant in variants %}
+              <input type="hidden" name="product_id[{{ variant.variant_index}}]" value="{{ variant.product_id }}" />
+              <input type="hidden" name="option_type[{{ variant.variant_index}}]" value="{{ variant.type }}" />
+              <input type="hidden" name="product_image[{{ variant.variant_index}}]" value="{{ variant.image }}" />
+              <input type="hidden" name="product_option_value_id[{{ variant.variant_index}}]" value="{{ variant.option_value_id }}" />
+              <div class="panel-body variant_body" style="border-top: 20px solid #f0f0f0;">
+                <h2 class="mgbt-xs-20"> {{ variant.product_name}} <span class="font-semibold">$ {{ variant.price }}</span> Each </h2>
+                <div class="row">
+                  <div class="col-sm-9">
+                    <div class="form-group">
+                      <label class="col-sm-3 control-label">Variant Title</label>
+                      
+                      <!-- form-group -->
+                      <div class="col-sm-9 controls">
+                        <div class="row mgbt-xs-0">
+                          <div class="col-xs-9">
+                            <input name="variant_title[{{ variant.variant_index}}]" placeholder="Enter Variant Title" required value="{{ variant.name }}" type="text">
+                          </div>
+                          <!-- col-xs-12 --> 
+                        </div>
+                        <!-- row --> 
+                      </div>
+                      <!-- col-sm-10 --> 
+                    </div>
+                    <!-- form-group -->
+                    <div class="form-group price-group default-price-group"> {% if not variant.options %}
+                      <input type="hidden" name="variant_option[{{ variant.variant_index}}][]" value="{{ variant.name }}" />
+                      <input type="hidden" name="each_price[{{ variant.variant_index}}][]" value="{{ variant.price }}" />
+                      <div class="row default0">
+                        <label class="col-md-2 col-md-offset-1 control-label">Default <span class="badge badge-primary"> ${{ variant.price }} each</span></label>
+                        <div class="col-md-3">
+                          <div class="input-group"> <span class="input-group-addon" id="sizing-addon1">Sale Price</span>
+                            <input name="product_price[{{ variant.variant_index}}][]" type="text" class="form-control" placeholder="Price" aria-describedby="sizing-addon1" data-input="product_price" value="{{ variant.product_price }}">
+                          </div>
+                        </div>
+                        <div class="col-md-3">
+                          <div class="input-group"> <span class="input-group-addon" id="sizing-addon1">MSRP</span>
+                            <input name="compare_price[{{ variant.variant_index}}][]" type="text" class="form-control" placeholder="Compare price" aria-describedby="sizing-addon1" data-input="compare_price" value="{{ variant.compare_price }}">
+                          </div>
+                        </div>
+                      </div>
+                      {% else %}
+                      {% for option in variant.options %}
+                      <input type="hidden" name="variant_option[{{ variant.variant_index}}][]" value="{{ option.name }}" />
+                      <input type="hidden" name="each_price[{{ variant.variant_index}}][]" value="{{ option.each_price  }}" />
+                      <div class="form-group price-group">
+                        <div class="row size-price0" >
+                          <label class="col-md-2 col-md-offset-1 control-label">{{ option.name }}  <span class="badge badge-primary">${{ option.each_price }} each</span></label>
+                          <div class="col-md-3">
+                            <div class="input-group"> <span class="input-group-addon" id="sizing-addon1">Sale Price</span>
+                              <input name="product_price[{{ variant.variant_index}}][]" type="text" class="form-control" placeholder="Price" aria-describedby="sizing-addon1" data-input="product_price" value="{{ option.product_price }}">
+                            </div>
+                          </div>
+                          <div class="col-md-3">
+                            <div class="input-group"> <span class="input-group-addon" id="sizing-addon1">MSRP</span>
+                              <input name="compare_price[{{ variant.variant_index}}][]" type="text" class="form-control" placeholder="Compare price" aria-describedby="sizing-addon1" data-input="compare_price" value="{{ option.compare_price }}">
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      {% endfor %}
+                      {% endif %} </div>
+                  </div>
+                  <div class="col-sm-3 mgbt-xs-20">
+                    <div class="form-group">
+                      <div class="col-xs-12">
+                        <div class="mockup-wrapper form-img text-center mgbt-xs-15"> <img class="mockup-img" src="{{ variant.thumbnail }}" style="width:250px; height:auto;"> </div>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <!-- col-sm-12 --> 
+                </div>
+                <!-- row --> 
+                
+              </div>
+              {% endfor %}
+              {% endif %} 
+              <!-- panel-body -->
+              <div class="pd-20">
+                <button class="btn btn-primary vd_btn vd_bg-green vd_white" id="publish_product_btn" name="publish_product_btn" type="button" style="margin-left:15px;" ><i class="icon-ok"></i> Publish Product</button>
+              </div>
+            </form>
+          </div>
+          <!-- Panel Widget --> 
+        </div>
+        <!-- col-sm-12--> 
+      </div>
+      <!-- row --> 
+    </div>
+  </div>
+</div>
+<script type="text/javascript"><!--
+
+$('#publish_product_btn').on('click', function() {
+
+	var i=0,j=0;
+    var myArray=new Array();
+	var hash = false;
+	var myArrayIndex=new Array();
+	$("input[name^=variant_title]").each(function() {
+		var val = $(this).val();
+		if($.inArray(val, myArray)!=-1){
+			hash = true;
+			myArrayIndex[j]=i;
+		}
+		myArray[i] = val;
+		i++;
+	 });
+	 if(hash){
+		alert('Please enter different variant title!');
+		return;
+	 }
+	 $('#input-description').val(editor.txt.html());
+	//var node = this;
+	$.ajax({
+		url: 'index.php?route=commonipl/publishipl',
+		type: 'post',
+		data: $('#product-product input[type=\'text\'], #product-product input[type=\'hidden\'],#product-product select,  #product-product textarea'),
+		dataType: 'json',
+		beforeSend: function() {
+			//$('#gopublish').button('loading');
+			$('#loader').addClass("loader loader-clock is-active");
+		},
+		complete: function() {
+			$('#loader').removeClass();
+			//$('#gopublish').button('reset');
+		},
+		success: function(json) {
+			//alert(json['success']);
+			if (json['success']) {
+				window.location.href="index.php?route=commonipl/dashboard";
+			}
+			
+			
+		},
+        error: function(xhr, ajaxOptions, thrownError) {
+            //alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+        }
+	});
+});
+//--></script>
+<link rel="stylesheet" href="catalog/view/theme/default/stylesheet/css-loader.css">
+<script type="text/javascript" src="catalog/view/javascript/editor/wangEditor.min.js"></script>
+<script type="text/javascript">var E=window.wangEditor;var editor=new E('#edit_des');editor.create();</script>
+{{footer }}

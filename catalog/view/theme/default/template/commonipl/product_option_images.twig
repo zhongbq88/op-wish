@@ -1,0 +1,141 @@
+
+{% if option_images %}
+<!--<h4>{{name}} - ${{price}} {{ text_each }}</h4>-->
+
+<div class="row">
+
+    <div style="width:58%; display:inline-block; float: left; margin-top: 30px; margin-left:15px;">
+    {% if change==1 %}
+        <button type="button" onclick="load_paired_products({{variant_index}},{{ product_option_id }})" class="btn btn-default">Remove/Change Style</button>
+        {% endif %}
+        <div style="margin-top:10px;">
+            {{option_design_desc}}
+        </div>
+    </div>
+    
+    <div style="width: auto; float:right; display:inline-block; border: 1px solid #b8b8b8; text-align: center; margin-right:15px;">
+    
+        {% for option_image in option_images %}
+    	<div>
+         <p id="artwork{{ variant_index }}_{{ option_image.option_image_id }}"><strong>{{option_image.name}}</strong></p>
+
+         <span>
+         <div> 
+         <img style="height:220px" class="option_image" id="option_image{{ variant_index }}_{{ option_image.option_image_id }}" src="{{option_image.image}}" alt="Right Side">
+         </div>
+          <div style="height:12px;">
+         <div style="text-align:center;display:none;" id="loading{{ variant_index }}_{{ option_image.option_image_id }}" ><img src="catalog/view/theme/default/image/loading_h.gif"></div></div>
+         </span>
+
+        <div class="right_btn" style="margin:8px;">
+          <span class="btn btn-success fileinput-button" data-product-option-id="{{ product_option_id }}" data-id="{{ option_image.option_image_id }}" data-src="{{ option_image.image }}" onclick="variant_image(this)" data-variant-index='{{ variant_index }}'  data-index='{{ loop.index }}' > <i class="glyphicon glyphicon-picture"></i>
+              <span id="upload_text{{ variant_index }}_{{ option_image.option_image_id }}">{{button_upload}}</span>
+               <input type="hidden" name="option-img[{{ variant_index }}][{{ option_image.option_image_id }}]" value="" id="option-img{{ variant_index }}_{{ option_image.option_image_id }}" />
+              <input type="hidden" name="option[{{ variant_index }}][{{ option_image.option_image_id }}]" value="" id="input-option{{ variant_index }}_{{ option_image.option_image_id }}" />
+              <input type="button" id="button-upload{{ option_image.option_image_id }}"  data-id="{{ variant_index }}_{{ option_image.option_image_id }}">
+          </span>
+        </div>
+        </div>
+        {% endfor %}
+       
+    </div>
+</div>
+{% endif %}
+<style>
+.btn-default:hover, .btn-default:focus, .btn-default:active, .btn-default.active, .open .dropdown-toggle.btn-default {
+    color: #333;
+    background-color: #ebebeb;
+    border-color: #adadad;
+}
+bootstrap.min.css:7
+.btn:hover, .btn:focus {
+    color: #333;
+    text-decoration: none;
+}
+shopify_app.php…ale=zh&pro…:19
+.fileinput-button {
+    margin: 5px;
+}
+custom_style.cs…d=05082017:163
+.fileinput-button {
+    border: 3px dashed #ccc;
+}
+theme.min.css?blue=1:220
+.btn {
+    padding: 6px 15px;
+}
+jquery.fileupload.css:13
+.fileinput-button {
+    position: relative;
+    overflow: hidden;
+    padding: 30px 60px;
+}
+bootstrap.min.css:7
+.btn-default {
+    color: #333;
+    background-color: #fff;
+    border-color: #ccc;
+}
+bootstrap.min.css:7
+.btn {
+    display: inline-block;
+    padding: 6px 12px;
+    margin-bottom: 0;
+    font-size: 14px;
+    font-weight: normal;
+    line-height: 1.428571429;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    cursor: pointer;
+    background-image: none;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -o-user-select: none;
+    user-select: none;
+}
+bootstrap.min.css:7
+*, *:before, *:after {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+.fileinput-button input {
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 0;
+    opacity: 0;
+    -ms-filter: 'alpha(opacity=0)';
+    font-size: 200px;
+    direction: ltr;
+    cursor: pointer;
+}
+bootstrap.min.css:7
+input[type="file"] {
+    display: block;
+}
+bootstrap.min.css:7
+input, button, select, textarea {
+    font-family: inherit;
+    font-size: inherit;
+    line-height: inherit;
+}
+
+bootstrap.min.css:7
+button, input {
+    line-height: normal;
+}
+.btn-success:active, .btn-success.active, .open .dropdown-toggle.btn-success {
+    background-image: none;
+}
+bootstrap.min.css:7
+.btn-success:hover, .btn-success:focus, .btn-success:active, .btn-success.active, .open .dropdown-toggle.btn-success {
+    color: #fff;
+    background-color: #47a447;
+    border-color: #398439;
+}
+</style>                                

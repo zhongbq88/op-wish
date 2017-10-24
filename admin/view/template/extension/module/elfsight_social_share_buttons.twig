@@ -1,0 +1,40 @@
+{{ header }}{{ column_left }}
+
+<div class="elfsight-portal-embed">
+    <iframe src="{{ url }}"></iframe>    
+</div>
+
+<script>
+    jQuery(function () {
+        window.onmessage = function (e) {
+            if (e.data && e.data.params) {
+                jQuery.ajax({
+                    type: 'POST',
+                    url: '',
+                    data: {
+                        params: e.data.params
+                    },
+                    success: function (response) {
+                    }
+                })
+            }
+        };
+    });
+</script>
+
+<style>
+    .elfsight-portal-embed{
+        position: absolute;
+        margin-left: 235px;
+        width: calc(100% - 235px);
+        height: calc(100% - 45px);
+        overflow: hidden;
+    }
+    
+    .elfsight-portal-embed iframe {
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        border: none;
+    }
+</style>

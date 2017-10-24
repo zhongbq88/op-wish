@@ -1,0 +1,77 @@
+
+<div class="table-responsive">
+                  <table class="table table-bordered table-hover">
+                    <thead>
+                      <tr>
+                        <td style="width: 1px;" class="text-center"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', this.checked);" /></td>
+                        <td class="text-right">{{ column_order_id }}</td>
+                        <td class="text-left">{{ column_customer }}</td>
+                        <!--<td class="text-left">{% if sort == 'product' %} <a href="{{ column_product }}" class="{{ order|lower }}">{{ column_product }}</a> {% else %} <a href="{{ sort_product }}">{{ column_product }}</a> {% endif %}</td>-->
+                        <td class="text-left">{{ column_status }}</td>
+                        <td class="text-right">{{ column_total }}</td>
+                        <td class="text-left">{{ column_date_added }}</td>
+                        <!--<td class="text-left">{{ column_quantity }}</td>-->
+                        <td class="text-right" style=" text-align:right">{{ column_action }}</td>
+                      </tr>
+                    </thead>
+                    <tbody id="order_list">
+                    
+                   
+                    
+{% if orders %}
+                    {% for order in orders %}
+<tr>
+  <td class="text-center"> {% if order.order_id in selected %}
+    <input type="checkbox" id="checkbox{{order.order_id}}" {% if (order.status!='Pending' and order.status!='On-Hold') or  order.total=='$0'   %} disabled {% else %} name="selected[]"  {% endif%} value="{{ order.order_id }}"  />
+    {% else %}
+    <input type="checkbox" id="checkbox{{order.order_id}}" {% if (order.status!='Pending' and order.status!='On-Hold') or order.total=='$0'%} disabled {% else %} name="selected[]"   {% endif%} value="{{ order.order_id }}" />
+    {% endif %}
+    <input type="hidden" name="shipping_code[]" value="{{ order.shipping_code }}" /></td>
+  <td class="text-right">{{ order.shopify_order_id }}</td>
+  <td class="text-left">{{ order.name }}</td>
+  <!--<td class="text-left">{{ order.products }}</td>-->
+  <td class="text-left" id="status{{order.order_id}}" >{{ order.status }} {% if order.product_status == 0 %} <span style="background:#CCC">{{text_not_customdr_order}}</span> {% elseif order.product_status == 2 %} <span style="background:#CCC">{{text_part_customdr_order}}</span>{% endif %}</td>
+  <td class="text-right">{{ order.total }}</td>
+  <td class="text-left">{{ order.date_added }}</td>
+  
+  <!--<td class="text-left">{{ order.date_modified }}</td>-->
+  <td class="text-right"><div style="float:right">
+      <div class="btn-group" style="float:left;">
+        <button type="button" {% if (order.status!='Pending' and order.status!='On-Hold') or  order.product_status == 0  %} disabled {% endif%} onClick="payclick('{{order.pay}}');" id="pay{{order.order_id}}"   class="btn btn-success btn-xs" >
+        {% if order.status=='In-Production' or order.status=='Shipped' %}{{ text_paid }}{% else %}{{ text_checkout }}{% endif %}
+        </button>
+      </div>
+      <div class="btn-group"  style="float:left; margin-left:20px;"> <a href="{{ order.view }}" data-toggle="tooltip" title="{{ button_view }}" class="btn btn-primary"><i class="fa fa-eye"></i>{{ button_view }}</a>
+        <button type="button" {% if (order.status!='Pending' and order.status!='On-Hold') or order.product_status == 0  %} disabled {% endif%}  data-toggle="dropdown" class="btn btn-primary dropdown-toggle">
+        <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu dropdown-menu-right">
+          <li><a href="{{ order.view }}"><i class="fa fa-pencil"></i> {{ text_edit }}</a></li>
+          {% if order.status=='Pending'  %}
+          <li><a href="javascript:onhod({{order.order_id}});"  data-toggle="tooltip" ><i class="fa fa-pencil"></i> {{ text_onhold }}</a></li>
+          {% endif %}
+          <li><a href="javascript:cancel({{order.order_id}});"  data-toggle="tooltip" ><i class="fa fa-reply"></i> {{ text_cancel }}</a></li>
+          <li></li>
+        </ul>
+      </div>
+    </div></td>
+</tr>
+{% endfor %}
+                    
+                    {% else %}
+<tr>
+  <td class="text-center" colspan="8">{{ text_no_results }}</td>
+</tr>
+
+{% endif %}
+  </tbody>
+                    
+                  </table>
+                </div>
+                <div class="row">
+                  <div class="btn-group" style="float: right; margin-right:20px;"><a href="javascript:pay();" data-toggle="tooltip" title="{{ text_paid_selected }}" class="btn btn-success btn-xs" >{{ text_paid_selected }}</a></div>
+                </div>
+              <div class="row pagination-results">
+                <div class="col-sm-6 text-left">{{ pagination }}</div>
+                <!-- <div class="col-sm-6 text-right">{{ results }}</div>--> 
+              </div>     

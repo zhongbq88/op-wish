@@ -1,0 +1,173 @@
+<?php
+// Heading
+$_['heading_title']					= 'PayPal Pro iFrame';
+
+// Text
+$_['text_success']					= '成功: 您已修改了PayPal Pro iFrame 帐户的详细信息 ！';
+$_['text_edit']                     = '编辑PayPal Pro iFrame';
+$_['text_pp_pro_iframe']			= '<a target="_BLANK"href="https://www.paypal.com/uk/mrb/pal=V4T754QB63XXL"> <img src="view/image/payment/paypal.png"alt="PayPal Website Payment Pro"title="PayPal Website Payment Pro iFrame"style="border: 1px solid #EEEEEE;"/></a>';
+$_['text_authorization']			= '授权模式';
+$_['text_sale']						= '銷售模式';
+$_['text_payment_info']				= '支付信息';
+$_['text_capture_status']			= '捕获状态';
+$_['text_amount_auth']				= '授权金额';
+$_['text_amount_captured']			= '捕获金额';
+$_['text_amount_refunded']			= '退还金额';
+$_['text_capture_amount']			= '捕获总数';
+$_['text_complete_capture']			= '完整捕获';
+$_['text_transactions']				= '交易记录';
+$_['text_complete']					= '完成';
+$_['text_confirm_void']				= '如果取消，您将无法捕获任何资金';
+$_['text_view']						= '查看';
+$_['text_refund']					= '退款';
+$_['text_resend']					= '重新发送';
+$_['text_reauthorise']				= '重新授权';
+$_['text_reauthorised']				= '交易已經重新授权';
+$_['text_transaction']				= '交易记录';
+$_['text_product_lines']			= '生产线';
+$_['text_ebay_txn_id']				= 'eBay 交易记录 ID';
+$_['text_name']						= '名称';
+$_['text_qty']						= '数量';
+$_['text_price']					= '价格';
+$_['text_number']					= '号码';
+$_['text_coupon_id']				= '优惠券 ID';
+$_['text_coupon_amount']			= '优惠券数额';
+$_['text_coupon_currency']			= '优惠券货币';
+$_['text_loyalty_disc_amt']			= '忠诚卡盘金额';
+$_['text_loyalty_currency']			= '忠诚卡货币';
+$_['text_options_name']				= '选项名称';
+$_['text_tax_amt']					= '税额';
+$_['text_currency_code']			= '币种代码';
+$_['text_amount']					= '金额';
+$_['text_gift_msg']					= '礼物信息';
+$_['text_gift_receipt']				= '礼品收据';
+$_['text_gift_wrap_name']			= '礼物包名称';
+$_['text_gift_wrap_amt']			= '礼品包装数量';
+$_['text_buyer_email_market']		= '买方市场营销电子邮件';
+$_['text_survey_question']			= '调查问题';
+$_['text_survey_chosen']			= '调查选择的选择';
+$_['text_receiver_business']		= '接收人业务';
+$_['text_receiver_email']			= '接收人电子邮件';
+$_['text_receiver_id']				= '接收人 ID';
+$_['text_buyer_email']				= '买方电子邮件';
+$_['text_payer_id']					= '付款人 ID';
+$_['text_payer_status']				= '付款人状态';
+$_['text_country_code']				= '国家/地区代码';
+$_['text_payer_business']			= '付款人业务';
+$_['text_payer_salute']				= '付款人的敬礼';
+$_['text_payer_firstname']			= '付款人名字';
+$_['text_payer_middlename']			= '付款人中间名';
+$_['text_payer_lastname']			= '付款人姓氏';
+$_['text_payer_suffix']				= '付款人字尾';
+$_['text_address_owner']			= '地址持有人';
+$_['text_address_status']			= '地址状态';
+$_['text_ship_sec_name']			= '第二收货人名称';
+$_['text_ship_name']				= '收货人名称';
+$_['text_ship_street1']				= '收货人地址 1';
+$_['text_ship_street2']				= '收货人地址 2';
+$_['text_ship_city']				= '收货人城市';
+$_['text_ship_state']				= '收货人州份';
+$_['text_ship_zip']					= '收货人邮编';
+$_['text_ship_country']				= '收货人国家/地区代码';
+$_['text_ship_phone']				= '收货人电话号码';
+$_['text_ship_sec_add1']			= '第二收货人地址 1';
+$_['text_ship_sec_add2']			= '第二收货人地址 2';
+$_['text_ship_sec_city']			= '第二收货人城市';
+$_['text_ship_sec_state']			= '第二收货人州份';
+$_['text_ship_sec_zip']				= '第二收货人邮编';
+$_['text_ship_sec_country']			= '第二收货人国家/地区代码';
+$_['text_ship_sec_phone']			= '第二收货人电话号码';
+$_['text_trans_id']					= '交易记录 ID';
+$_['text_receipt_id']				= '收据 ID';
+$_['text_parent_trans_id']			= '主交易 ID';
+$_['text_trans_type']				= '交易类型';
+$_['text_payment_type']				= '支付类型';
+$_['text_order_time']				= '订单时间';
+$_['text_fee_amount']				= '费用金额';
+$_['text_settle_amount']			= '结算金额';
+$_['text_tax_amount']				= '税额';
+$_['text_exchange']					= '汇率';
+$_['text_payment_status']			= '付款状态';
+$_['text_pending_reason']			= '等待处理原因';
+$_['text_reason_code']				= '原因代码';
+$_['text_protect_elig']				= '资格保障';
+$_['text_protect_elig_type']		= '资格保障类型';
+$_['text_store_id']					= '商店ID';
+$_['text_terminal_id']				= '终端 ID';
+$_['text_invoice_number']			= '发票编号';
+$_['text_custom']					= '自定义';
+$_['text_note']						= '备注:';
+$_['text_sales_tax']				= '销售税';
+$_['text_buyer_id']					= '买家 ID';
+$_['text_close_date']				= '结束日期';
+$_['text_multi_item']				= '多项目';
+$_['text_sub_amt']					= '认购额';
+$_['text_sub_period']				= '认购期';
+$_['text_redirect']					= '重定向';
+$_['text_iframe']					= 'Iframe';
+$_['help_checkout_method']			= "如果没有安装 SSL 或如果您在使用贝宝选项禁用承载的付款页面上没有工资，请使用重定向方法。";
+$_['help_debug']					= "日志的其他信息。";
+
+// Column
+$_['column_trans_id']				= '交易记录 ID';
+$_['column_amount']					= '金额';
+$_['column_type']					= '支付类型';
+$_['column_status']					= '状态';
+$_['column_pend_reason']			= '等待处理原因';
+$_['column_date_added']				= '已创建';
+$_['column_action']					= '操作';
+
+// Tab
+$_['tab_settings']					= '设置';
+$_['tab_order_status']				= '订单状态';
+$_['tab_checkout_customisation']	= '结帐定制';
+
+// Entry
+$_['entry_username']				= 'API 用户名';
+$_['entry_password']				= 'API 密码';
+$_['entry_signature']				= 'API 签名';
+$_['entry_test']					= '测试模式';
+$_['entry_total']					= '总计';
+$_['entry_order_status']			= '订单状态';
+$_['entry_geo_zone']				= '地理区域';
+$_['entry_status']					= '状态';
+$_['entry_sort_order']				= '排序顺序';
+$_['entry_transaction_method']		= '交易方式：';
+$_['entry_transaction_id']			= '交易记录 ID';
+$_['entry_full_refund']				= '全额退款';
+$_['entry_amount']					= '金额';
+$_['entry_message']					= '消息';
+$_['entry_ipn_url']					= 'IPN 的 URL：';
+$_['entry_checkout_method']			= '结帐方法';
+$_['entry_debug']					= '调试模式：';
+$_['entry_canceled_reversal_status'] = '取消保留状态：';
+$_['entry_completed_status']		= '完成状态:';
+$_['entry_denied_status']			= '拒绝状态:';
+$_['entry_expired_status']			= '过期状态:';
+$_['entry_failed_status']			= '失败状态:';
+$_['entry_pending_status']			= '等待处理状态:';
+$_['entry_processed_status']		= '处理状态:';
+$_['entry_refunded_status']			= '退款状态:';
+$_['entry_reversed_status']			= '保留状态:';
+$_['entry_voided_status']			= '无效状态:';
+
+// Help
+$_['help_test']						= '使用在线或测试 (sandbox) 处理交易记录网关服务器吗？在 Internet explorer 中测试可能会失败';
+$_['help_total']					= '需要最低结帐金额才能启动支付模组';
+
+// Button
+$_['button_refund']					= '退款';
+$_['button_void']					= '无效';
+$_['button_capture']				= '捕获';
+$_['button_reauthorise']			= '重新授权';
+
+// Error
+$_['error_permission']				= '警告: 您没有权限修改PayPal Website Payment Pro iFrame (UK)!';
+$_['error_sig']						= '必须输入签名 ！';
+$_['error_user']					= '必须输入用户 ！';
+$_['error_password']				= '必需填写密码 ！';
+$_['error_timeout']					= '请求已超时。';
+$_['error_transaction_missing']		= '找不到交易记录';
+$_['error_missing_data']			= '丢失的数据';
+$_['error_general']					= '出现错误了';
+$_['error_capture_amt']				= '输入捕获金额';

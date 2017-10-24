@@ -1,0 +1,169 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>Contact</title>
+<link href="catalog/view/javascript/information/css/bootstrap.css" rel="stylesheet" type="text/css" media="all">
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script src="catalog/view/javascript/information/js/jquery-1.11.0.min.js"></script>
+<!-- Custom Theme files -->
+<link href="catalog/view/javascript/information/css/style.css" rel="stylesheet" type="text/css" media="all"/>
+<link rel="stylesheet" href="catalog/view/javascript/information/css/flexslider.css" type="text/css" media="screen" />
+
+<!-- Custom Theme files -->
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); }>
+</script>
+<meta name="keywords" content="Auction Responsive web template, Bootstrap Web Templates, Flat Web Templates, AndriodCompatible web template, Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, SonyErricsson, Motorola web design" />
+<!--Google Fonts-->
+<!--<link href='http://fonts.useso.com/css?family=Lato:100,300,400,700,900' rel='stylesheet' type='text/css'>
+<link href='http://fonts.useso.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>-->
+<!-- start-smoth-scrolling -->
+<script src="hcatalog/view/javascript/jquery/jquery-2.1.1.min.js"></script>
+<script type="text/javascript" src="catalog/view/javascript/information/js/move-top.js"></script>
+<script type="text/javascript" src="catalog/view/javascript/information/js/easing.js"></script>
+	<script type="text/javascript">
+			jQuery(document).ready(function($) {
+				$(".scroll").click(function(event){		
+					event.preventDefault();
+					$('html,body').animate({scrollTop:$(this.hash).offset().top},1000);
+				});
+			});
+	</script>
+</head>
+<body>
+<!-- //end-smoth-scrolling -->
+<!--header start here-->
+<div class="header">
+	<div class="container">
+		<div class="header-main">
+			<div class="logo">
+				<a href="index.html"> <img src="catalog/view/javascript/information/images/logo.png" alt="" title=""> </a>
+			</div>
+			<div class="head-right">
+			  <div class="top-nav">
+					<span class="menu"> <img src="catalog/view/javascript/information/images/icon.png" alt=""/></span>
+				<ul class="res">
+						<li><a  href="index.php?route=information/index">Home</a></li>
+					<li><a href="index.php?route=information/about">About Us</a></li>
+					<li><a class="active" href="index.php?route=information/contact">Contact</a></li>
+				<div class="clearfix"> </div>
+				</ul>
+				<!-- script-for-menu -->
+							 <script>
+							   $( "span.menu" ).click(function() {
+								 $( "ul.res" ).slideToggle( 300, function() {
+								 // Animation complete.
+								  });
+								 });
+							</script>
+			<!-- /script-for-menu -->
+			 </div>
+		    
+			<div class="social">
+				<ul >
+					<li><a class="fa" href="#"> </a></li>
+					<li><a class="tw" href="#"> </a></li>
+					<li><a class="p" href="#"> </a></li>
+				</ul>
+				</div>
+				
+			<div class="search-box">
+				<div id="sb-search" class="sb-search">
+					<form>
+						<input class="sb-search-input" placeholder="Search" type="search" name="search" id="search">
+						<input class="sb-search-submit" type="submit" value="">
+						<span class="sb-icon-search"> </span>
+					</form>
+			   </div>
+			</div>
+			<div class="clearfix"> </div>
+			   <!-- search-scripts -->
+					<script src="js/classie.js"></script>
+					<script src="js/uisearch.js"></script>
+						<script>
+							new UISearch( document.getElementById( 'sb-search' ) );
+						</script>
+			  <!-- //search-scripts -->
+		</div>
+		
+		<div class="clearfix"> </div>
+		</div>
+	</div>
+</div>
+<!--header end here-->
+<!--contact start here-->
+<div class="contact">
+	<div class="contact-main">
+	   <div class="container">
+			<div class="contact-top">
+				<h3>CONTACT US</h3>
+				<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.</p>
+			</div>
+			<div class="contact-bottom">
+             <form action="{{ action }}" method="post" enctype="multipart/form-data" class="form-horizontal">
+				<div class="col-md-7 contact-left">
+					<p>Name</p>
+		             <input type="text"  name="name" value="{{ name }}" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = '';}"/>
+		            <p>E-mail</p> 
+		             <input type="text" name="email" value="{{ email }}" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = '';}"/>
+		            <!--<p>Subject</p>
+		             <input type="text" name="subject" value="" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = '';}"/>-->
+		            <p>Phone</p>
+		             <input type="text" name="telephone" value="{{ telephone }}" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = '';}"/>
+				</div>
+				<div class="col-md-5 contact-right">
+					<p>Messages</p>
+					  <textarea name="enquiry" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = '';}"/> {{ enquiry }}</textarea>
+		             <input type="submit" value="Send">
+				 </div>
+                   </form>
+				 <div class="clearfix"> </div>
+				</div>
+		</div>
+	</div>
+</div>
+<!--contact end here-->
+<!--map start here-->
+<div class="map">
+	<div class="container">
+		<div class="col-md-7 map-left">
+			<h3>CONTACT INFO</h3>
+				      <P>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.</P>
+				     <div class="addre">
+					      <h4>ADDRESS</h4>
+					      <p>Address : Richard McClintock</p>
+						  <p>New Street : Letraset sheets </p>
+						  <p>ph : +123 859 6050</p>
+					 </div>
+		</div>
+		<div class="col-md-5 map-right">
+			<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d387144.007583421!2d-73.97800349999999!3d40.7056308!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c24fa5d33f083b%3A0xc80b8f06e177fe62!2sNew+York%2C+NY%2C+USA!5e0!3m2!1sen!2sin!4v1415253431785"> </iframe>
+	   </div>
+	</div>
+</div>
+<!--map end here-->
+<!--footer start here-->
+<div class="footer">
+	
+	<div class="copyright">
+	<div class="container">
+		<div class="copy-main">
+			<div class="copy-left">
+				<p>Copyright &copy; Company name All rights </p>
+			</div>
+			<div class="copy-right"> 
+				<ul>
+					<li><a class="active" href="index.html">Home</a></li>/
+					<li><a href="about.html">About</a></li>/
+					<li><a href="blog.html">Blog</a></li>/
+					<li><a href="contact.html">Contact</a></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+</div>
+</div>
+<!--footer end here-->
+</body>
+</html>

@@ -1,0 +1,36 @@
+img{border:none; vertical-align: top; -webkit-box-sizing:border-box;-moz-box-sizing:border-box;}
+ul,ol,li{list-style:none; padding: 0; margin: 0;}
+dl,dt,dd,h1,h2,h3,h4,p{ margin: 0;}
+a{ text-decoration: none; color: #000; -webkit-tap-highlight-color: transparent; -webkit-touch-callout: none; -webkit-user-select: none;}
+/*a:active {background: #ddd;}a:hover{background: #ddd;}*/
+/*在firefox下移除input[number]的上下箭头*/
+input[type="number"]{-moz-appearance:textfield;}
+input,textarea{ font-family:"PingFang SC"; font-size: 24px;
+    -webkit-appearance: none;/*在chrome下移除input[number]的上下箭头*/
+    -moz-appearance: none;
+    outline: none; border: none; background: none; color: #000;
+    -webkit-box-sizing:border-box; -webkit-font-smoothing: antialiased;
+    -moz-box-sizing:border-box; -moz-font-smoothing: antialiased;
+}
+body{
+    width: 800px;
+    font-family:"PingFang SC";font-size: 30px; margin: 0 auto;
+    /*background: #ff392e; */
+    color: #000;
+    -webkit-font-smoothing: antialiased;-webkit-tap-highlight-color: transparent;-webkit-overflow-scrolling:touch;}
+div,li,a,button{ -webkit-tap-highlight-color: transparent;}
+html,body,.wrap,.page-content{ height: 100%;}
+.wrap{ background: #fff;}
+.main{ height: 100%; width: 100%; position: relative; overflow: hidden; background: #fff; -webkit-box-sizing:border-box;}
+.container{ height: 100%; width: 100%; -webkit-box-sizing:border-box;  overflow-x:hidden; overflow-y: auto; -webkit-overflow-scrolling:touch;}
+
+
+.btn{ display: block; height: 58px; line-height: 58px; width: 180px; margin: auto; border-radius: 5px; text-align: center; background: #f47a8c; color: #fff; font-size: 30px;}
+
+.clear{ clear:both; height:0; line-height:0; font-size:0; overflow:hidden;}
+.clearfix:after{ visibility:hidden; display:block; font-size:0;content: ".";clear:both; height:0;zoom:1;}
+* html>body .clearfix { display:inline-block;}
+* html .clearfix { height:1%;}
+*+html .clearfix { min-height:1%;}
+.f-l{ float: left;}
+.f-r{ float: right;}

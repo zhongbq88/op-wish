@@ -1,0 +1,102 @@
+{{ header }}
+<div id="account-login" class="container">
+
+  <div class="row">
+  
+  <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">Customer</h3>
+      </div>
+      <div class="panel-body">
+        <ul class="nav nav-tabs">
+          <li class="active"><a href="#tab-history" data-toggle="tab" aria-expanded="true" style="color:#000" >{{ text_returning_customer }}</a></li>
+          <li class=""><a href="#tab-additional" data-toggle="tab" aria-expanded="false" style="color:#000" >{{ text_new_customer }}</a></li>
+                  </ul>
+        <div class="tab-content">
+          <div class="tab-pane active" id="tab-history">
+            <div id="history">
+            <p><strong>{{ text_i_am_returning_customer }}</strong></p>
+            <form action="{{ action }}" method="post" enctype="multipart/form-data">
+              <div class="form-group">
+                <label class="control-label" for="input-email">{{ entry_email }}</label>
+                <input type="text" name="email" value="{{ email }}" placeholder="{{ entry_email }}" id="input-email" class="form-control" />
+              </div>
+              <div class="form-group">
+                <label class="control-label" for="input-password">{{ entry_password }}</label>
+                <input type="password" name="password" value="{{ password }}" placeholder="{{ entry_password }}" id="input-password" class="form-control" />
+                <a href="{{ forgotten }}">{{ text_forgotten }}</a></div>
+              <input type="submit" value="{{ button_login }}" class="btn btn-primary" />
+              {% if redirect %}
+              <input type="hidden" name="redirect" value="{{ redirect }}" />
+              {% endif %}
+            </form>
+
+</div>
+            
+          </div>
+          <div class="tab-pane" id="tab-additional">                                    
+           <p><strong>{{ text_register }}</strong></p>
+            <p>{{ text_register_account }}</p>
+             <form action="{{ register }}" method="post" enctype="multipart/form-data">
+             <div class="form-group required">
+                <label class="control-label" for="input-firstname">{{ entry_firstname }}</label>
+                <input type="text" name="firstname" value="{{ email }}" placeholder="{{ entry_firstname }}" id="input-firstname" class="form-control" />
+                {% if error_firstname %}
+              <div class="text-danger">{{ error_firstname }}</div>
+              {% endif %}
+              </div>
+               <div class="form-group required">
+                <label class="control-label" for="input-lastname">{{ entry_lastname }}</label>
+                <input type="text" name="lastname" value="{{ lastname }}" placeholder="{{ entry_lastname }}" id="input-lastname" class="form-control" />
+                 {% if error_lastname %}
+              <div class="text-danger">{{ error_lastname }}</div>
+              {% endif %}
+              </div>
+              <div class="form-group required">
+                <label class="control-label" for="input-email">{{ entry_email }}</label>
+                <input type="text" name="email" value="{{ email }}" placeholder="{{ entry_email }}" id="input-email" class="form-control" />
+                 {% if error_email %}
+              <div class="text-danger">{{ error_email }}</div>
+              {% endif %}
+              </div>
+              <div class="form-group required">
+                <label class="control-label" for="input-password">{{ entry_password }}</label>
+                <input type="password" name="password" value="{{ password }}" placeholder="{{ entry_password }}" id="input-password" class="form-control" />
+                 {% if error_password %}
+              <div class="text-danger">{{ error_password }}</div>
+              {% endif %}
+                </div>
+                <div class="form-group required">
+                <label class="control-label" for="input-password">{{ entry_confirm }}</label>
+                <input type="password" name="confirm" value="{{ confirm }}" placeholder="{{ entry_confirm }}" id="input-confirm" class="form-control" />
+              {% if error_confirm %}
+              <div class="text-danger">{{ error_confirm }}</div>
+              {% endif %} 
+                </div>
+                {% if text_agree %}
+        <div class="buttons">
+          <div class="pull-right">{{ text_agree }}
+            {% if agree %}
+            <input type="checkbox" name="agree" value="1" checked="checked" />
+            {% else %}
+            <input type="checkbox" name="agree" value="1" />
+            {% endif %}
+            &nbsp;
+           <input type="submit" value="{{ text_save }}" class="btn btn-primary" />
+          </div>
+        </div>
+        {% else %}
+        <div class="buttons">
+          <div class="pull-right">
+            <input type="submit" value="{{ button_continue }}" class="btn btn-primary" />
+          </div>
+        </div>
+        {% endif %}
+            </form>
+          </div>
+           </div>
+      </div>
+    </div>
+  </div>
+</div>
+{{ footer }}

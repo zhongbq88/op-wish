@@ -1,0 +1,35 @@
+{{ header }}
+<div id="product-category" class="container">
+  <div class="row">
+    <div id="content" class="{{ class }}">
+     {% if categories %}
+
+      <div class="row"> {% for category in categories %}
+        <div class="product-layout product-list col-xs-12">
+          <div class="product-thumb">
+            <div class="image"><a href="{{ category.href }}"><img src="{{ category.thumb }}" alt="{{ category.name }}" title="{{ category.name }}" class="img-responsive" /></a></div>
+            <div>
+              <div class="caption">
+                <h4 ><a href="{{ category.href }}" style="color:#FFF">{{ category.name }}</a></h4>
+                <!-- {% if product.price %}
+                <p class="price" style="color:#CCC"> {% if not product.special %}
+                  {{ product.price }}
+                  {% else %} <span class="price-new">{{ product.special }}</span> <span class="price-old">{{ product.price }}</span> {% endif %}
+                  {% endif %} --> 
+              </div>
+            </div>
+          </div>
+        </div>
+        {% endfor %} </div>
+      <div class="row">
+        <div class="col-sm-6 text-left">{{ pagination }}</div>
+        <!--<div class="col-sm-6 text-right">{{ results }}</div>--> 
+      </div>
+      {% else %}
+       <div class="row">
+        {{ productlist }}
+         </div>
+      {% endif %} </div>
+  </div>
+</div>
+{{ footer }} 

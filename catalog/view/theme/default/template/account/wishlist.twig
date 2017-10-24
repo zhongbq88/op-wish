@@ -1,0 +1,269 @@
+{{ header }}
+<div id="loader"></div>
+<div id="account-wishlist" class="container" style="padding:40px;"> {% if success %}
+  <div class="alert alert-success alert-dismissible"><i class="fa fa-check-circle"></i> {{ success }}
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
+  </div>
+  {% endif %}
+  <div class="row"> {{ column_left }}
+    {% if column_left and column_right %}
+    {% set class = 'col-sm-6' %}
+    {% elseif column_left or column_right %}
+    {% set class = 'col-sm-9' %}
+    {% else %}
+    {% set class = 'col-sm-12' %}
+    {% endif %}
+    <div id="content" class="{{ class }}" > {{ content_top }} 
+      <!-- <h2>{{ heading_title }}</h2>--> 
+      {% if products %}
+      <div class="row" style="margin-top:15px;">
+        <div style="float:left; margin-top:10px;">
+          <div style="float:left;">
+            <input type="checkbox"  checked="checked" onclick="$('input[name*=\'product\']').prop('checked', this.checked);" />
+          </div>
+          <strong style="margin-left:5px; margin-bottom:5px;"> Select All Products </strong> </div>
+        <button  type="button" id="push_all" style="float:right;"class="btn btn-success btn-icon-left margin-right"><i class="fa fa-plus"></i>Push All Products to Shop</button>
+      </div>
+      {% for  product in products%}
+      <div class="row" style="margin-top:20px;">
+        <div class="tab" role="tabpanel">
+          <input  type="hidden" name="product[{{product.product_id}}][model]" value="{{ image.thumb}}"/>
+          <!-- Nav tabs -->
+          <ul class="nav nav-tabs" role="tablist" >
+            <li style="width:50px; height:100%; text-align:center; margin-top:10px;">
+              <input type="checkbox" name="product[{{product.product_id}}][checked]" checked="checked"/>
+            </li>
+            <li role="presentation" class="active"><a style="border-left: 1px solid #ddd;" href="#Section1_{{product.product_id}}" aria-controls="Product" role="tab" data-toggle="tab">Product</a></li>
+            <li role="presentation"><a href="#Section2_{{product.product_id}}" aria-controls="Description" role="tab" data-toggle="tab">Description</a></li>
+            <li role="presentation"><a href="#Section3_{{product.product_id}}" aria-controls="Variants" role="tab" data-toggle="tab">Variants</a></li>
+            <li role="presentation"><a href="#Section4_{{product.product_id}}" aria-controls="Images" role="tab" data-toggle="tab">Images</a></li>
+            <li style="float:right">
+              <button  type="button" id="push_one" data-productid='{{product.product_id}}' style="  height:30px; padding:0px; padding-left:20px; padding-right:20px; margin-right:15px;margin-top:5px; "class="btn btn-success btn-icon-left margin-right"><i class="fa fa-plus"></i>Push to Shop</button>
+            </li>
+          </ul>
+          
+          <!-- Tab panes -->
+          <div class="tab-content tabs">
+            <div role="tabpanel" class="tab-pane fade in active" id="Section1_{{product.product_id}}">
+              <div class="row">
+                <div class="col-md-3 col-xs-4">
+                  <div class="product-img"> <img src="{{ product.thumb}}" alt="{{ product.name}}" class="responsive-img border-img"> </div>
+                </div>
+                <div class="col-md-9 col-xs-8">
+                  <div class="container-flex">
+                    <div class="mr10 no-shrink oberlo-supplier"></div>
+                    <h3><a href="" target="_blank" class="blue-color"> {{ product.name}}</a> <span class="red-color"></span></h3>
+                  </div>
+                  <div class="row space-small-top space-bottom">
+                    <div class="col-md-12 input-block">
+                      <label>Change name:</label>
+                      </br>
+                      <input  type="text" style="width:100%"  id="product_title" value="{{ product.name}}" name="product[{{product.product_id}}][title]">
+                    </div>
+                    <div class="col-md-12 input-block js-build-wrapper" style="margin-top:10px;">
+                      <label>Collections:</label>
+                      </br>
+                      <select style="width:100%" name="product[{{product.product_id}}][coll]"  >
+                        <option value="0">- None -</option>
+                        <option value="459306312">Home page</option>
+                      </select>
+                    </div>
+                    <div class="col-md-12 input-block" style="margin-top:10px;">
+                      <label>Tags:</label>
+                      </br>
+                      <input style="width:100%"  name="product[{{product.product_id}}][tag]"  id="product_tags" value="{{ product.tag}}" type="text" >
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div role="tabpanel" class="tab-pane fade" id="Section2_{{product.product_id}}">
+              <div class="row" style="padding-left:15px; padding-right:15px;">
+                <div style="display:none">
+                  <textarea name="product[{{product.product_id}}][description]" id="input-description{{product.product_id}}"></textarea>
+                </div>
+                <div id="edit_des{{product.product_id}}">
+                  <p>{{ product.description}}</p>
+                </div>
+              </div>
+            </div>
+            <div role="tabpanel" class="tab-pane fade" id="Section3_{{product.product_id}}">
+              <div class="row">
+                <div class="col-md-3 col-xs-4" style="text-align:center;"> {% if product.variants %}
+                  <table class="table table-bordered table-hover">
+                    {% for variant in product.variants %}
+                    {% if loop.index ==1 %}
+                    <thead>
+                      <tr>
+                        <td class="text-center"><input type="checkbox" checked="checked" onclick="$('input[name*=\'product[{{product.product_id}}][variant][selected]\']').prop('checked', this.checked);" /></td>
+                        <td class="text-center"><?php echo $column_image; ?></td>
+                        <td class="text-center">SKU</td>
+                        {% if variant.option1 %}
+                        <td class="text-center">Color</td>
+                        <input  type="hidden" name="product[{{product.product_id}}][option1]" value="Color"/>
+                        {% endif %}
+                        {% if variant.option2 %}
+                        <td class="text-center">Size</td>
+                        <input  type="hidden" name="product[{{product.product_id}}][option2]" value="Size"/>
+                        {% endif %}
+                        <td class="text-center">Cost</td>
+                        <td class="text-center">Sale Price</td>
+                        <td class="text-center">MSRP</td>
+                      </tr>
+                    </thead>
+                    <tbody>
+                    
+                    {% endif %}
+                    <tr>
+                      <td class="text-center"><input type="checkbox" name="product[{{product.product_id}}][variant][selected][]" checked="checked" /></td>
+                      <td class="text-center">{% if variant.variants_image  %} <a href="{{ product.href }}"><img style="max-height:50px; max-width:50px;" src="{{ variant.thumb}}" alt="{{ product.name}}"  title="{{ product.name}}" /></a>
+                        <input  type="hidden" name="product[{{product.product_id}}][variant][images][]" value="{{ variant.src }}"/>
+                        {% endif %}</td>
+                      <td class="text-center"><input  disabled="disabled" type="text" name="product[{{product.product_id}}][variant][sku][]" value="{{ variant.variants_sku}}" /></td>
+                      {% if variant.option1 %}
+                      <td class="text-center"><input type="text" name="product[{{product.product_id}}][variant][option1][]" value="{{ variant.option1}}"/></td>
+                      {% endif %}
+                      {% if variant.option2 %}
+                      <td class="text-center"><input  type="text" name="product[{{product.product_id}}][variant][option2][]" value="{{ variant.option2}}"/></td>
+                      {% endif %}
+                      <td class="text-center">{{ variant.price |number_format(2, '.', ',')}}</td>
+                      <td class="text-center"><input  type="text" name="product[{{product.product_id}}][variant][price][]" value="{{ variant.price*1.5|number_format(2, '.', ',')}}"/></td>
+                      <td class="text-center"><input  type="text" name="product[{{product.product_id}}][variant][compare_price][]" value="{{ variant.msrp*1.5|number_format(2, '.', ',')}}"/></td>
+                    </tr>
+                    {% endfor %}
+                      </tbody>
+                    
+                  </table>
+                  {% endif %} </div>
+              </div>
+            </div>
+            <div role="tabpanel" class="tab-pane fade" id="Section4_{{product.product_id}}"> {% if product.images %}
+            <div class="product-grid">
+              <div class="row"> {% for image in product.images %}
+              
+              
+              
+                <div class="col-sm-2 col-xs-6 col-md-25 col-lg-2 col-sm-3" >
+                 
+                    <div class="image"><!--<a href="{{ product.href }}" >--><img src="{{ image.thumb }}" alt="{{ product.name }}" title="{{ product.name }}" class="img-responsive" /><!--</a>-->
+                      <input  type="hidden" name="product[{{product.product_id}}][images][]" value="{{ image.src}}"/>
+                    </div>
+                  
+                </div>
+                {% endfor %} </div>
+                </div>
+              {% endif %} </div>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+      {% else %}
+      <p>{{ text_empty }}</p>
+      {% endif %} 
+      <!--<div class="buttons clearfix">
+        <div class="pull-right"><a href="{{ continue }}" class="btn btn-primary">{{ button_continue }}</a></div>
+      </div>--> 
+      {{ content_bottom }}</div>
+    {{ column_right }}</div>
+</div>
+{{ footer }}
+<style>
+a {
+    color: #555555;
+    -webkit-transition: 0.5s;
+    -o-transition: 0.5s;
+    transition: 0.5s;
+}
+
+a:hover {
+    color: #555555;
+   
+}
+
+.tab {
+    border: 1px solid #dddddd;
+}
+.nav-tabs{
+	 border: 0px solid #dddddd;
+	 padding:0xp;
+	 margin:0px;
+	 height:40px;
+}
+
+.tab-content{
+	padding:10px;
+	
+}
+.nav-tabs > li.active > a, .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:focus {
+    color: #555555;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-bottom-color: transparent;
+	border-left-color: transparent;
+	border-top-color: transparent;
+    cursor: default;
+	height:41px;
+	z-index:2;
+}
+.nav-tabs > li > a {
+    margin-right: 0px;
+    border: 1px solid #ddd;
+	border-top-color: transparent;
+	border-left-color: transparent;
+	border-bottom-color: transparent;
+    border-radius: 0px 0px 0 0;
+}
+</style>
+<link rel="stylesheet" href="catalog/view/theme/default/stylesheet/css-loader.css">
+<script type="text/javascript" src="catalog/view/javascript/editor/wangEditor.min.js"></script> 
+<script type="text/javascript">
+ {% for product in products %}
+ var E=window.wangEditor;
+ var editor=new E('#edit_des{{ product.product_id }}');
+ editor.create();
+{% endfor %}
+
+</script> 
+<script type="text/javascript"><!--
+$('#push_all').on('click', function() {
+	 {% for product in products %}
+		$('#input-description{{ product.product_id }}').val(editor.txt.html());
+	{% endfor %}
+	pushProduct('');
+});
+$('#push_one').on('click', function() {
+	var productid = $(this).get(0).getAttribute('data-productid');
+	$('#input-description'+productid).val(editor.txt.html());
+	pushProduct(productid);
+});
+
+ function pushProduct(productid){
+	
+	//var node = this;
+	$.ajax({
+		url: 'index.php?route=commonipl/publishipl&product_id='+productid,
+		type: 'post',
+		data: $('.tab input[type=\'text\'], .tab input[type=\'hidden\'], .tab input[type=\'checkbox\'],.tab select, .tab textarea'),
+		dataType: 'json',
+		beforeSend: function() {
+			//$('#gopublish').button('loading');
+			$('#loader').addClass("loader loader-clock is-active");
+		},
+		complete: function() {
+			$('#loader').removeClass();
+			//$('#gopublish').button('reset');
+		},
+		success: function(json) {
+			//alert(json['success']);
+			if (json['success']) {
+				window.location.href="index.php?route=commonipl/dashboard";
+			}
+			
+			
+		},
+        error: function(xhr, ajaxOptions, thrownError) {
+            //alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+        }
+	});
+}
+//--></script>

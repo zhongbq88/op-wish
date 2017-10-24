@@ -1,0 +1,46 @@
+{% if options %}
+{% for option in options %}
+{% if option.type == 'select'%}
+  <div class="panel-heading {% if variant_index==1 %} required {% endif %}" style="height:52px;" >
+    <h4 class="panel-title" style="height:52px;" ><a  data-toggle="collapse" data-parent="#accordion" 
+				   href="#collapse{{options_array[variant_index]}}" class="accordion-toggle" style="float:left; width:180px; text-decoration:none; margin-top:6px;">
+     <input type="hidden" name="product_id[{{ variant_index }}]" value="{{ product_id }}" />
+     <input type="hidden" name="size_width[{{ variant_index }}]" id="size_width{{ variant_index }}"  value="{{ width }}" />
+     <input type="hidden" name="size_height[{{ variant_index }}]" id="size_height{{ variant_index }}" value="{{ height }}" />
+      <label class="control-label">{{variant}} {{ variant_index }}</label>
+      <i class="fa fa-caret-down" style="margin-left:12px;"></i></a>
+      <div>
+        <input type="text" name="variant[{{ variant_index }}]" value="{{ option.name }}{{ loop.index }}" class="form-input" style="height:30px;padding:5px 10px;font-size:12px;line-height:1" placeholder="Enter title" id="input-coupon"  />
+        <div style="float:right;margin-top:-9px;">
+          <div style=" float: left"><img src="http://127.0.0.1:8080/storage/upload/cache/left.jpg-50x50.jpg" style="display:none" id="src-option1-{{ option.product_option_id }}-{{variant_index}}" /></div>
+          <div style=" float: left; margin-left:8px;"><img src="http://127.0.0.1:8080/storage/upload/cache/left.jpg-50x50.jpg" id="src-option2-{{ option.product_option_id }}-{{variant_index}}" style="display:none"/></div>
+        </div>
+      </div>
+    </h4>
+  </div>
+  <div id="collapse{{options_array[variant_index]}}" data-index ="{{ variant_index }}" class="panel-collapse collapse {% if loop.index==1 %}in {% endif %}">
+    <div class="panel-body op{{variant_index}}"> {% if option.option_image_view %}
+      <div id="select_options_style{{variant_index}}"> {{ option.option_image_view }} </div>
+      {% else %}
+      <div id="select_options_style{{variant_index}}" style="display:none"></div>
+      <div id="select_options{{variant_index}}">
+        <label class="control-label">{{ option.name }}</label>
+        <div class="row"> {% for option_value in option.product_option_value %}
+          <div style="width:388px;float:left; margin-left:15px;">
+            <div class="product-thumb" > {% if option_value.image %}
+              <div class="image"><a  href="javascript:loadDesignImage({{option_value.option_value_id}},{{ product_id }},{{option.option_id}},{{ option.product_option_id }},{{variant_index}})"><img src="{{ option_value.image}}" alt="{{ option_value.name}}" title="{{ option_value.name}}" class="img-responsive" /></a></div>
+              {% endif %}
+              <div>
+                <div class="caption">
+                  <h4 ><a href="javascript:loadDesignImage({{option_value.option_value_id}},{{ product_id }},{{option.option_id}},{{ option.product_option_id }})"  style="color:#FFF">{{option_value.name}}</a></h4>
+                </div>
+              </div>
+            </div>
+          </div>
+          {% endfor %} </div>
+      </div>
+      {% endif %} </div>
+  </div>
+{% endif %}
+{% endfor %}
+{% endif %} 

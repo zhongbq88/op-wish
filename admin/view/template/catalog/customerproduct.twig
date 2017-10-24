@@ -1,0 +1,154 @@
+{{ header }}{{ column_left }}
+<div id="content">
+  <div class="page-header">
+    <div class="container-fluid">
+      <div class="pull-right"><a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-default"><i class="fa fa-reply"></i></a></div>
+      <h1>{{ heading_title }}</h1>
+      <ul class="breadcrumb">
+        {% for breadcrumb in breadcrumbs %}
+        <li><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+  <div class="container-fluid">
+    <div class="panel panel-default">
+      <div class="panel-body" >
+        <div style="float:left; margin-left:20px;">
+         <label class="control-label" for="input-customer">Customer</label>
+            <input type="text" name="filter_customer" value="{{ filter_customer }}" placeholder="{{ entry_customer }}" id="input-customer" class="form-control" />
+          <!--<label class="control-label" for="input-order-status">{{ column_model }}</label>
+          <select name="filter_product_model" id="input-product-model" class="form-control">
+            <option value=""></option>
+            
+            
+
+              {% for product_model in product_models %}
+              {% if product_model.model == filter_product_model %}
+
+                  
+            
+            <option value="{{ product_model.model }}" selected="selected">{{ product_model.model }}</option>
+            
+            
+
+              
+              {% else %}
+              
+              
+                  
+                  
+            
+            <option value="{{ product_model.model }}">{{ product_model.model }}</option>
+            
+            
+                  
+                  
+              
+              {% endif %}
+              {% endfor %}
+            
+            
+                
+                
+          
+          </select>
+        </div>
+        <div style="float:left; margin-left:20px;">
+          <label class="control-label" for="input-order-status">Status</label>
+          <select name="filter_product_status" id="input-product-statu" class="form-control">
+            <option value=""></option>
+            <option value="Processing" {% if 'Processing' == filter_product_status %} selected="selected" {% endif %} >
+            
+            Processing
+            
+            </option>
+            <option value="Processed"  {% if 'Processed' == filter_product_status %} selected="selected" {% endif %}>
+            
+            Processed
+            
+            </option>
+          </select>-->
+        </div>
+        <div style="float:left; margin-left:20px; margin-top:23px;">
+          <button type="button" id="button-filter" class="btn btn-default"><i class="fa fa-filter"></i> {{ button_filter }}</button>
+        </div>
+      </div>
+    </div>
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title"><i class="fa fa-info-circle"></i> {{ text_list }}</h3>
+      </div>
+      <div class="panel-body">
+        <table class="table table-bordered table-hover">
+          <thead>
+            <tr>
+              <td class="text-center">{{ column_image }}</td>
+              <td class="text-center">Customer</td>
+              <td class="text-center">{{ column_name }}</td>
+              <td class="text-center">{{ column_status }}</td>
+              <td class="text-center">{{ column_sales}}</td>
+              <td class="text-center">{{ column_price }}</td>
+              <td class="text-center">{{ column_date_added }}</td>
+            </tr>
+          </thead>
+          <tbody valign="middle" >
+          
+          {% if products %}
+          {% for product in products %}
+          <tr>
+            <td class="text-center"><img src="{{ product.image }}" style="width: auto; height:100px;" alt="{{ product.name }}" class="img-thumbnail" /></td>
+            <td class="text-center">{{ product.customer }}</td>
+            <td class="text-center"><a href="{{ product.href }}">{{ product.name }}</a></td>
+            <td class="text-center">{{ product.status }}</td>
+            <td class="text-center">{{ product.sales }}</td>
+            <td class="text-center">{{ product.price }}</td>
+            <td class="text-center">{{ product.published_at }}</td>
+           <!-- <td class="text-center"><div class="btn-group" >
+                <button type="button" onClick="addproduct();" id="pay{{order.order_id}}"   class="btn btn-success btn-xs" > {{ add_product }}</button>
+              </div>
+              <div class="btn-group"  style=" margin-left:20px;"> <a href="{{ product.href }}" target="_parent" data-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fa fa-pencil"></i>{{ button_edit }}</a> </div></td>-->
+          </tr>
+          {% endfor %}
+          {% else %}
+          <tr>
+            <td class="text-center" colspan="8">{{ text_no_results }}</td>
+          </tr>
+          {% endif %}
+            </tbody>
+          
+        </table>
+      </div>
+      <div class="row">
+        <div class="col-sm-6 text-left">{{ pagination }}</div>
+        <div class="col-sm-6 text-right">{{ results }}</div>
+      </div>
+    </div>
+  </div>
+  <script type="text/javascript"><!--
+  $('#button-filter').on('click', function() {
+	url = '';
+		var filter_customer = $('input[name=\'filter_customer\']').val();
+
+	if (filter_customer) {
+		url += '&filter_customer=' + encodeURIComponent(filter_customer);
+	}
+	/*var filter_product_status = $('select[name=\'filter_product_status\']').val();
+
+	if (filter_product_status) {
+		url += '&filter_product_status=' + encodeURIComponent(filter_product_status);
+	}
+
+	var filter_product_model = $('select[name=\'filter_product_model\']').val();
+
+	if (filter_product_model !== '') {
+		url += '&filter_product_model=' + encodeURIComponent(filter_product_model);
+	}*/
+	
+	location = 'index.php?route=catalog/customerproduct&user_token={{ user_token }}' + url;
+  });
+  
+
+//--></script> 
+</div>
+{{ footer }} 

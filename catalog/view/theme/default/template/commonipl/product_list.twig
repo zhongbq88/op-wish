@@ -1,0 +1,252 @@
+{{ header }}
+<div id="loader"></div>
+<div id="product-product" class="container">
+<form id="publish_product_form" name="publish_product_form" method="post" action="index.php?route=commonipl/review" role="form" enctype="multipart/form-data">
+  <div id="product"> 
+   {% if product_views %}
+    <h3>{{ text_option }}</h3>
+    <div class="panel-group" id="accordion"> 
+    {% for product_view in product_views %}
+      <div class="panel panel-default" id="panel-body{{ loop.index }}">
+        <div class="panel-heading {% if loop.index==1 %} required {% endif %}" style="height:52px;" >
+          <h4 class="panel-title" style="height:52px;" ><a  data-toggle="collapse" data-parent="#accordion" 
+				   href="#collapse{{options_array[loop.index]}}" class="accordion-toggle" style="float:left; width:180px; text-decoration:none; margin-top:6px;">
+            <label class="control-label">{{variant}} {{ loop.index }}</label>
+            <i class="fa fa-caret-down" style="margin-left:12px;"></i></a>
+            <div>
+              <input type="text" name="variant[]" value="" class="form-input" style="height:30px;padding:5px 10px;font-size:12px;line-height:1" placeholder="Enter title" id="input-coupon"  />
+              <div style="float:right;margin-top:-9px;">
+                <div style=" float: left"><img src="http://127.0.0.1:8080/storage/upload/cache/left.jpg-50x50.jpg" style="display:none" id="src-option1-{{ option.product_option_id }}" /></div>
+                <div style=" float: left; margin-left:8px;"><img src="http://127.0.0.1:8080/storage/upload/cache/left.jpg-50x50.jpg" id="src-option2-{{ option.product_option_id }}" style="display:none"/></div>
+              </div>
+            </div>
+          </h4>
+        </div>
+        <div id="collapse{{options_array[loop.index]}}" data-index ="{{ loop.index }}" class="panel-collapse collapse {% if loop.index==1 %}in {% endif %}">
+          <div class="panel-body op{{loop.index}}">
+            <div id="{{loop.index}}"> {{ product_view }} </div>
+          </div>
+        </div>
+      </div>
+       
+      {% endfor %}
+      {% endif %} </div>
+    <div class="button-group" style="margin:0 auto;">
+      <button type="submit" id="button-review"   disabled data-loading-text="{{ text_loading }}" class="btn btn-primary btn-lg btn-block" style=" width:auto; text-align:center;">{{ review_and_publish_designs }}</button>
+    </div>
+  </div>
+  </div>
+  </div>
+</form>
+</div>
+<!--<div class="modal-backdrop in"></div>--> 
+<script type="text/javascript"><!--
+var editarray = new Array();
+function loadDesignProduct(href,node){
+	//var variant_index = $(node).parent().get(0).getAttribute('id');
+	var variant_index =$('.in ').get(0).getAttribute('data-index');
+	//alert(variant_index);
+	$.ajax({
+				url: href+"&variant_index="+variant_index,
+				type: 'get',
+				dataType: 'json',
+				cache: false,
+				contentType: false,
+				processData: false,
+				beforeSend: function() {
+					  //alert(1);
+				},
+				complete: function() {
+					 //alert(2);
+				},
+				success: function(json) {
+					//alert(123);
+					if(json['success']){
+						//alert(123);
+						$('#panel-body'+variant_index).html(json['success']);
+						
+						//alert(123);
+					}
+				},
+				error: function(xhr, ajaxOptions, thrownError) {
+					//alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+				}
+			});
+}
+
+ function loadDesignImage(option_value_id,product_id,option_id,product_option_id,variant_index){
+	 //alert(option_id);
+	  $.ajax({
+				url: 'index.php?route=commonipl/productdesign/getOption&product_id='+product_id+'&option_value_id='+option_value_id+'&product_option_id='+product_option_id+"&variant_index="+variant_index,
+				type: 'get',
+				dataType: 'json',
+				cache: false,
+				contentType: false,
+				processData: false,
+				beforeSend: function() {
+					  //alert(1);
+				},
+				complete: function() {
+					 //alert(2);
+				},
+				success: function(json) {
+					if(json['success']){
+						$('#select_options_style'+variant_index).html(json['success']);
+						$("#select_options"+variant_index).attr ("style","display:none;");
+						$('#select_options_style'+variant_index).attr ("style","display:block;");
+					}
+				},
+				error: function(xhr, ajaxOptions, thrownError) {
+					//alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+				}
+			});
+	}
+	
+	function load_paired_products(variant_index,product_option_id){
+		document.getElementById("src-option1-"+product_option_id+"-"+variant_index).src ='';
+		document.getElementById("src-option2-"+product_option_id+"-"+variant_index).src ='';
+		editarray = editarray.splice(variant_index);
+		//alert(editarray);
+		if(editarray.length<=0){
+			$('#button-review').prop('disabled', true);
+		}
+		
+	$.ajax({
+				url:  window.location.href+"&variant_index="+variant_index,
+				type: 'get',
+				dataType: 'json',
+				cache: false,
+				contentType: false,
+				processData: false,
+				beforeSend: function() {
+					  //alert(1);
+				},
+				complete: function() {
+					 //alert(2);
+				},
+				success: function(json) {
+					//alert(123);
+					if(json['success']){
+						//alert(123);
+						//$('#select_options'+variant_index).remove();
+						$('#select_options_style'+variant_index).html(json['success']);
+						//alert(123);
+					}
+				},
+				error: function(xhr, ajaxOptions, thrownError) {
+					//alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+				}
+			});
+		
+	}
+	
+	function variant_image(node){
+
+	$('#form-upload').remove();
+
+	$('body').prepend('<form enctype="multipart/form-data" id="form-upload" style="display: none;"><input type="file" name="file" /></form>');
+
+	$('#form-upload input[name=\'file\']').trigger('click');
+
+	if (typeof timer != 'undefined') {
+    	clearInterval(timer);
+	}
+
+	timer = setInterval(function() {
+		if ($('#form-upload input[name=\'file\']').val() != '') {
+			clearInterval(timer);
+			var option_image_id = $(node).get(0).getAttribute("data-id");
+			var product_option_id = $(node).get(0).getAttribute("data-product-option-id");
+			var formData =  new FormData($('#form-upload')[0]);
+			var variant_index = $(node).get(0).getAttribute("data-variant-index");
+			var index = $(node).get(0).getAttribute("data-index");
+			//alert(width);
+			formData.append("src", $(node).get(0).getAttribute("data-src"));
+			formData.append("width", $('#size_width'+variant_index).val());
+			formData.append("height", $('#size_height'+variant_index).val());
+			//alert($('#size_height'+variant_index).val());
+			$.ajax({
+				url: 'index.php?route=tool/upload',
+				type: 'post',
+				dataType: 'json',
+				data: formData,
+				cache: false,
+				contentType: false,
+				processData: false,
+				beforeSend: function() {
+					//alert(123);
+					$('#loading'+variant_index+"_"+option_image_id).attr ("style","display:block;");
+					$('.button-group #upload_text'+variant_index+"_"+option_image_id).text('{{text_loading}}');
+				},
+				complete: function() {
+					//alert(456);
+					
+				},
+				success: function(json) {
+					$('.text-danger').remove();
+
+					if (json['error']) {
+						$('#artwork'+variant_index+"_"+option_image_id).after('<div class="text-danger" ><font color="red" size="4px" ><strong>' + json['error'] + '</strong></font></div>');
+					}
+
+					if (json['success']) {
+						$('.text-danger').remove();
+						//alert(json['src']+","+json['preimg']+","+json['code']);
+						document.getElementById("src-option"+index+"-"+product_option_id+"-"+variant_index).src = json['src'];
+						$("#src-option"+index+"-"+product_option_id+"-"+variant_index).attr ("style","display:block;");
+						//alert(json['preimg']);
+						if(json['preimg']){
+							//alert(document.getElementById("option_image"+option_image_id));
+							document.getElementById("option_image"+variant_index+"_"+option_image_id).src = json['viewimg'];
+							//$('#thumbnail'+option_id).attr('href',json['preimg']); 
+							$("#option-img"+variant_index+"_"+option_image_id).val(json['preimg']);
+							editarray.push(variant_index);
+							$('#button-review').removeAttr("disabled"); 
+						}
+						
+						//$("#src-option"+option_id).attr ("style","float:right;  width: auto; height:35px; display:block;");
+						
+						$("#input-option"+variant_index+"_"+option_image_id).val(json['code']);
+					}
+		  
+				  $('#loading'+variant_index+"_"+option_image_id).attr ("style","display:none;");
+				  $('#upload_text'+variant_index+"_"+option_image_id).text('{{button_upload}}');
+						 
+				},
+				error: function(xhr, ajaxOptions, thrownError) {
+					alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+				}
+			});
+		}
+	}, 500);
+	}
+	
+//--></script>
+<style>
+.form-control {
+  display: block;
+  width: 100%;
+  height: 34px;
+  padding: 6px 12px;
+  font-size: 14px;
+  line-height: 1.42857143;
+  color: #555;
+  background-color: #fff;
+  background-image: none;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+          box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+  -webkit-transition: border-color ease-in-out .15s, -webkit-box-shadow ease-in-out .15s;
+       -o-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+          transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+}
+.form-control:focus {
+  border-color: #66afe9;
+  outline: 0;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102, 175, 233, .6);
+          box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102, 175, 233, .6);
+}
+</style>
+<link rel="stylesheet" href="catalog/view/theme/default/stylesheet/css-loader.css">
+{{ footer }} 

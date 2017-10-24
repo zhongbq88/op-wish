@@ -1,0 +1,18 @@
+{{ header }}
+<div id="account-edit" class="container">
+  <div class="row" id="connect-form" style="background-color: #f8f8f8; padding: 15px; margin-left: 0; margin-right: 0">
+    <div class="col-md-12">
+      <form id="w0" action="index.php?route=woocommerce/connect/register" method="post">
+        <input type="hidden" name="_csrf" value="Uk9kazAxU0YQKVMiUmEFPzMiISd8CSoJCiNXE2dlIic6Cy8DQgAWcA==">
+        <div class="form-group field-store-website">
+          <label class="control-label" for="store-website">Store URL</label>
+          <input type="text" id="store-website" class="form-control" name="Store[website]" placeholder="http://your-wordpress-site.com/">
+          <div class="hint-block">Type in the address of your WordPress site home page</div>
+          <div class="help-block"></div>
+        </div>
+        <input type="submit" class="btn btn-danger btn-lg margin-right-5" value="Connect">
+      </form>
+    </div>
+  </div>
+</div>
+{{ footer }}

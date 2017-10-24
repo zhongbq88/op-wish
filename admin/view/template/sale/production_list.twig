@@ -1,0 +1,368 @@
+{{ header }}{{ column_left }}
+<div id="content">
+  <div class="page-header">
+    <div class="container-fluid">
+      <div class="pull-right"><a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-default"><i class="fa fa-reply"></i></a></div>
+      <h1>{{ heading_title }}</h1>
+      <ul class="breadcrumb">
+        {% for breadcrumb in breadcrumbs %}
+        <li><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+  <div class="container-fluid">
+    <div class="panel panel-default">
+      <div class="panel-body" >
+        <div style="float:left; margin-left:20px;">
+          <label class="control-label" for="input-order-status">{{ column_model }}</label>
+          <select name="filter_product_model" id="input-product-model" class="form-control">
+            <option value=""></option>
+            
+
+              {% for product_model in product_models %}
+              {% if product_model.model == filter_product_model %}
+
+                  
+            <option value="{{ product_model.model }}" selected="selected">{{ product_model.model }}</option>
+            
+
+              
+              {% else %}
+              
+              
+                  
+                  
+            <option value="{{ product_model.model }}">{{ product_model.model }}</option>
+            
+                  
+                  
+              
+              {% endif %}
+              {% endfor %}
+            
+            
+                
+                
+          </select>
+        </div>
+        <div style="float:left; margin-left:20px;">
+          <label class="control-label" for="input-order-status">Status</label>
+          <select name="filter_product_status" id="input-product-statu" class="form-control">
+            <option value=""></option>
+             <option value="Processing" {% if 'Processing' == filter_product_status %} selected="selected" {% endif %} >
+            Processing
+            </option>
+            <option value="Processed"  {% if 'Processed' == filter_product_status %} selected="selected" {% endif %}>
+            Processed
+            </option>
+           
+          </select>
+        </div>
+        <div style="float:left; margin-left:20px; margin-top:25px;">
+          <button type="button" id="button-filter" class="btn btn-default"><i class="fa fa-filter"></i> {{ button_filter }}</button>
+        </div>
+      </div>
+    </div>
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title"><i class="fa fa-info-circle"></i> {{ text_order }}</h3>
+      </div>
+      <div class="panel-body">
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <td class="text-left" style="width:50%">{{ column_product }}</td>
+              <td class="text-center" style="width:15%">{{ column_model }}</td>
+              <td class="text-center" style="width:15%">{{ column_quantity }}</td>
+              <td class="text-center" style="width:15%">{{ text_action }}</td>
+            </tr>
+          </thead>
+          <tbody>
+          
+          {% for product in products %}
+          <tr id="{{ product.order_product_id}}">
+            <td class="text-left"><a href="{{ product.href }}">{{ product.name }}</a> <br />
+              &nbsp;<small> - {{ product.sku }}</small> {% for option in product.option1 %} <br />
+              &nbsp;<small> - {{ option.value }}</small> {% endfor %}
+              {% for option in product.option %} <br />
+              &nbsp;<small> - {{ option.name }}: <a href="{{ option.href }}">{{ option.value }}</a></small> {% endfor %}
+              &nbsp;<small> -  {% if product.total==0 %} <br />
+              <span style="color:#F00">{{text_not_customdr_order}}</span> {% endif %}
+              {% if product.design_file %}
+              <div style="float: right"><a class="thumbnail" style="border:none;"><img src="{{  product.design_file }}"   style="width: auto; height: 120px;" /></a></div>
+              {% endif %} </td>
+            <td class="text-center" style="width:15%">{{ product.model }}</td>
+            <td class="text-center" style="width:15%">{{ product.quantity }}</td>
+            <td class="text-center" style="width:15%"><button type="button" {% if product.status=='Processed'  %} disabled class="btn btn-danger" {% else %} class="btn btn-success" {% endif%} onClick="edit('{{ product.order_product_id}}',this);"   >
+              <i class="fa fa-pencil"></i> {% if product.status=='Processed'  %} {{ text_processed }} {% else %} Processing {% endif%}
+              </button></td>
+          </tr>
+          {% endfor %}
+            </tbody>
+          
+        </table>
+      </div>
+      <div class="row">
+        <div class="col-sm-6 text-left">{{ pagination }}</div>
+        <div class="col-sm-6 text-right">{{ results }}</div>
+      </div>
+    </div>
+  </div>
+  <script type="text/javascript"><!--
+  $('#button-filter').on('click', function() {
+	url = '';
+	var filter_product_status = $('select[name=\'filter_product_status\']').val();
+
+	if (filter_product_status) {
+		url += '&filter_product_status=' + encodeURIComponent(filter_product_status);
+	}
+
+	var filter_product_model = $('select[name=\'filter_product_model\']').val();
+
+	if (filter_product_model !== '') {
+		url += '&filter_product_model=' + encodeURIComponent(filter_product_model);
+	}
+	
+	location = 'index.php?route=sale/production&user_token={{ user_token }}' + url;
+  });
+  function edit(order_product_id,node){
+	  
+	  $.ajax({
+		url: 'index.php?route=sale/production/edit&user_token={{ user_token }}&order_product_id='+order_product_id,
+		dataType: 'json',
+		/*beforeSend: function() {
+			$('#button-invoice').button('loading');
+		},
+		complete: function() {
+			$('#button-invoice').button('reset');
+		},*/
+		success: function(json) {
+			
+
+			if (json['success']) {
+				$(node).attr('disabled',"false");
+				$(node).addClass("btn btn-danger");
+			}
+		},
+		error: function(xhr, ajaxOptions, thrownError) {
+			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+		}
+		});
+}
+  
+$(document).delegate('#button-invoice', 'click', function() {
+	$.ajax({
+		url: 'index.php?route=sale/order/createinvoiceno&user_token={{ user_token }}&order_id={{ order_id }}',
+		dataType: 'json',
+		beforeSend: function() {
+			$('#button-invoice').button('loading');
+		},
+		complete: function() {
+			$('#button-invoice').button('reset');
+		},
+		success: function(json) {
+			$('.alert-dismissible').remove();
+
+			if (json['error']) {
+				$('#content > .container-fluid').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + '</div>');
+			}
+
+			if (json['invoice_no']) {
+				$('#invoice').html(json['invoice_no']);
+
+				$('#button-invoice').replaceWith('<button disabled="disabled" class="btn btn-success btn-xs"><i class="fa fa-cog"></i></button>');
+			}
+		},
+		error: function(xhr, ajaxOptions, thrownError) {
+			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+		}
+	});
+});
+
+$(document).delegate('#button-reward-add', 'click', function() {
+	$.ajax({
+		url: 'index.php?route=sale/order/addreward&user_token={{ user_token }}&order_id={{ order_id }}',
+		type: 'post',
+		dataType: 'json',
+		beforeSend: function() {
+			$('#button-reward-add').button('loading');
+		},
+		complete: function() {
+			$('#button-reward-add').button('reset');
+		},
+		success: function(json) {
+			$('.alert-dismissible').remove();
+
+			if (json['error']) {
+				$('#content > .container-fluid').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + '</div>');
+			}
+
+			if (json['success']) {
+                $('#content > .container-fluid').prepend('<div class="alert alert-success alert-dismissible"><i class="fa fa-check-circle"></i> ' + json['success'] + '</div>');
+
+				$('#button-reward-add').replaceWith('<button id="button-reward-remove" data-toggle="tooltip" title="{{ button_reward_remove }}" class="btn btn-danger btn-xs"><i class="fa fa-minus-circle"></i></button>');
+			}
+		},
+		error: function(xhr, ajaxOptions, thrownError) {
+			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+		}
+	});
+});
+
+$(document).delegate('#button-reward-remove', 'click', function() {
+	$.ajax({
+		url: 'index.php?route=sale/order/removereward&user_token={{ user_token }}&order_id={{ order_id }}',
+		type: 'post',
+		dataType: 'json',
+		beforeSend: function() {
+			$('#button-reward-remove').button('loading');
+		},
+		complete: function() {
+			$('#button-reward-remove').button('reset');
+		},
+		success: function(json) {
+			$('.alert-dismissible').remove();
+
+			if (json['error']) {
+				$('#content > .container-fluid').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + '</div>');
+			}
+
+			if (json['success']) {
+                $('#content > .container-fluid').prepend('<div class="alert alert-success alert-dismissible"><i class="fa fa-check-circle"></i> ' + json['success'] + '</div>');
+
+				$('#button-reward-remove').replaceWith('<button id="button-reward-add" data-toggle="tooltip" title="{{ button_reward_add }}" class="btn btn-success btn-xs"><i class="fa fa-plus-circle"></i></button>');
+			}
+		},
+		error: function(xhr, ajaxOptions, thrownError) {
+			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+		}
+	});
+});
+
+$(document).delegate('#button-commission-add', 'click', function() {
+	$.ajax({
+		url: 'index.php?route=sale/order/addcommission&user_token={{ user_token }}&order_id={{ order_id }}',
+		type: 'post',
+		dataType: 'json',
+		beforeSend: function() {
+			$('#button-commission-add').button('loading');
+		},
+		complete: function() {
+			$('#button-commission-add').button('reset');
+		},
+		success: function(json) {
+			$('.alert-dismissible').remove();
+
+			if (json['error']) {
+				$('#content > .container-fluid').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + '</div>');
+			}
+
+			if (json['success']) {
+                $('#content > .container-fluid').prepend('<div class="alert alert-success alert-dismissible"><i class="fa fa-check-circle"></i> ' + json['success'] + '</div>');
+
+				$('#button-commission-add').replaceWith('<button id="button-commission-remove" data-toggle="tooltip" title="{{ button_commission_remove }}" class="btn btn-danger btn-xs"><i class="fa fa-minus-circle"></i></button>');
+			}
+		},
+		error: function(xhr, ajaxOptions, thrownError) {
+			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+		}
+	});
+});
+
+$(document).delegate('#button-commission-remove', 'click', function() {
+	$.ajax({
+		url: 'index.php?route=sale/order/removecommission&user_token={{ user_token }}&order_id={{ order_id }}',
+		type: 'post',
+		dataType: 'json',
+		beforeSend: function() {
+			$('#button-commission-remove').button('loading');
+		},
+		complete: function() {
+			$('#button-commission-remove').button('reset');
+		},
+		success: function(json) {
+			$('.alert-dismissible').remove();
+
+			if (json['error']) {
+				$('#content > .container-fluid').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + '</div>');
+			}
+
+			if (json['success']) {
+                $('#content > .container-fluid').prepend('<div class="alert alert-success alert-dismissible"><i class="fa fa-check-circle"></i> ' + json['success'] + '</div>');
+
+				$('#button-commission-remove').replaceWith('<button id="button-commission-add" data-toggle="tooltip" title="{{ button_commission_add }}" class="btn btn-success btn-xs"><i class="fa fa-plus-circle"></i></button>');
+			}
+		},
+		error: function(xhr, ajaxOptions, thrownError) {
+			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+		}
+	});
+});
+
+$('#history').delegate('.pagination a', 'click', function(e) {
+	e.preventDefault();
+
+	$('#history').load(this.href);
+});
+
+$('#history').load('index.php?route=sale/order/history&user_token={{ user_token }}&order_id={{ order_id }}');
+
+$('#button-history').on('click', function() {
+	var tracking_company = encodeURIComponent($('select[name=\'shipping_method\']').val());
+	var tracking_number = encodeURIComponent($('input[name=\'shipping_number\']').val());
+	$.ajax({
+		url: '{{ catalog }}index.php?route=api/order/history&api_token={{ api_token }}&store_id={{ store_id }}&order_id={{ order_id }}',
+		type: 'post',
+		dataType: 'json',
+		data: 'order_status_id=' + encodeURIComponent($('select[name=\'order_status_id\']').val()) + '&notify=' + ($('input[name=\'notify\']').prop('checked') ? 1 : 0) + '&override=' + ($('input[name=\'override\']').prop('checked') ? 1 : 0) + '&append=' + ($('input[name=\'append\']').prop('checked') ? 1 : 0) + '&comment=' + encodeURIComponent($('textarea[name=\'comment\']').val())+'&shopping_number=' + encodeURIComponent($('input[name=\'shipping_number\']').val())+'&shopping_method=' + encodeURIComponent($('select[name=\'shipping_method\']').val()),
+		beforeSend: function() {
+			$('#button-history').button('loading');
+		},
+		complete: function() {
+			$('#button-history').button('reset');
+		},
+		success: function(json) {
+			$('.alert-dismissible').remove();
+
+			if (json['error']) {
+				$('#history').before('<div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+			}
+
+			if (json['success']) {
+				
+				updateShipping(tracking_company,tracking_number);
+				$('#history').load('index.php?route=sale/order/history&user_token={{ user_token }}&order_id={{ order_id }}');
+
+				$('#history').before('<div class="alert alert-success alert-dismissible"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+
+				$('textarea[name=\'comment\']').val('');
+				
+				//updateShipping(tracking_company,tracking_number);
+				
+			}
+		},
+		error: function(xhr, ajaxOptions, thrownError) {
+			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+		}
+	});
+});
+
+function updateShipping(tracking_company,tracking_number){
+	$.ajax({
+		url: '{{ catalog }}index.php?route=shopify/updateorder',
+		type: 'post',
+		dataType: 'json',
+		data: 'tracking_company=' + tracking_company + '&tracking_number=' + tracking_number+"&order_id={{ order_id }}&customer_id={{ customer_id }}",
+		success: function(json) {
+			//alert(json);
+		},
+		error: function(xhr, ajaxOptions, thrownError) {
+			//alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+		}
+	});
+}
+
+//--></script> 
+</div>
+{{ footer }} 

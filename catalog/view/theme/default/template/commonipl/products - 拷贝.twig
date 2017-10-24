@@ -1,0 +1,52 @@
+
+<div id="product-category" class="container">
+
+  <div class="row">
+    <div id="content" class="{{ class }}"> {% if products %}
+      <div class="row"> {% for product in products %}
+        <div class="product-layout product-grid col-lg-3 col-md-3 col-sm-6 col-xs-12" style="width:285px;">
+          <div class="product-thumb">
+            <div class="image"><a href="{{ product.href }}" ><img src="{{ product.thumb }}" alt="{{ product.name }}" title="{{ product.name }}" class="img-responsive" /></a></div>
+            <div>
+              <div >
+                <h4  style="text-align:center; min-height:35px; padding:0;"><a href="{{product.href}}" >{{ product.name }}</a></h4>
+                <!-- {% if product.price %}
+                <p class="price" style="color:#CCC"> {% if not product.special %}
+                  {{ product.price }}
+                  {% else %} <span class="price-new">{{ product.special }}</span> <span class="price-old">{{ product.price }}</span> {% endif %}
+                  {% endif %} --> 
+              </div>
+              <div class="button-group">
+                <button type="button" style="width:100%"  onclick="wishlist.add('{{ product.product_id }}');"><span class="hidden-xs hidden-sm hidden-md">{{ button_wishlist }}</span></button>
+              </div>
+            </div>
+          </div>
+        </div>
+        {% endfor %} </div>
+      <div class="row">
+        <div class="col-sm-6 text-left">{{ pagination }}</div>
+        <!--<div class="col-sm-6 text-right">{{ results }}</div>--> 
+      </div>
+      {% endif %}
+      {% if not categories and not products %}
+      <p>{{ text_empty }}</p>
+      {% endif %} </div>
+  </div>
+</div>
+<style>
+a{
+	color: #999;
+	overflow : hidden;
+	text-overflow: ellipsis;
+	display: -webkit-box;
+	-webkit-line-clamp: 2;
+	-webkit-box-orient: vertical;
+	padding:0px;
+	margin:0px;
+	
+}
+</style>
+<script type="text/javascript"><!--
+
+
+</script>

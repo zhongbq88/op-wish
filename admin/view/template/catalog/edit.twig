@@ -1,0 +1,36 @@
+<div id="input-body">
+ <div class="modal-backdrop in"></div>
+ <div id="modal-text" class="modal in" style="display: block;"><div id="filemanager" class="modal-dialog modal-lg">
+  <div class="modal-content">
+    <div class="modal-header">
+    <button type="button" style="float:right; margin-left:10px;" data-toggle="tooltip" title="" id="close" class="btn btn-default" data-original-title="Save"><i class="fa fa-reply"></i></button><button type="button" onclick="textsave($('textarea[name=\'product_description\']').val(),'{{ node }}');" style="float:right" data-toggle="tooltip" title="" class="btn btn-primary" data-original-title="Save"><i class="fa fa-save"></i></button>
+    
+      <h4 class="modal-title">编辑</h4>
+    </div>
+     <div class="modal-body">
+           <div class="row">
+       <div class="col-sm-10" id="input-text-body" style="width:100%;">
+                      <textarea name="product_description" placeholder="{{ entry_description }}" id="textarea-description" data-toggle="summernote" data-lang="{{ summernote }}"  class="form-control">{{ text }}</textarea>
+       </div>
+  </div>
+     </div>
+    </div>
+</div>
+</div>
+
+    <link href="view/javascript/codemirror/lib/codemirror.css" rel="stylesheet" />
+  <link href="view/javascript/codemirror/theme/monokai.css" rel="stylesheet" />
+  <script type="text/javascript" src="view/javascript/codemirror/lib/codemirror.js"></script> 
+  <script type="text/javascript" src="view/javascript/codemirror/lib/xml.js"></script> 
+  <script type="text/javascript" src="view/javascript/codemirror/lib/formatting.js"></script> 
+  <script type="text/javascript" src="view/javascript/summernote/summernote.js"></script>
+  <link href="view/javascript/summernote/summernote.css" rel="stylesheet" />
+  <script type="text/javascript" src="view/javascript/summernote/summernote-image-attributes.js"></script> 
+  <script type="text/javascript" src="view/javascript/summernote/opencart.js"></script> 
+<script type="text/javascript"><!--
+$('#close').on('click', function() {
+	$('#input-body').remove();
+}); 
+</script> 
+
+
