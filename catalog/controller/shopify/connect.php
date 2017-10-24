@@ -6,6 +6,7 @@ use phpish\shopify;
 class ControllerShopifyConnect extends Controller {
 	
 	public function index(){
+		$this->session->data['store'] = 'shopify';
 		if(empty($this->session->data['shop'])||empty($this->customer->getId())){
 			$this->getToken();
 		}
