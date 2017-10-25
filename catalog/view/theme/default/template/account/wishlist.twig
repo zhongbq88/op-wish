@@ -38,7 +38,7 @@
             <li role="presentation"><a href="#Section3_{{product.product_id}}" aria-controls="Variants" role="tab" data-toggle="tab">Variants</a></li>
             <li role="presentation"><a href="#Section4_{{product.product_id}}" aria-controls="Images" role="tab" data-toggle="tab">Images</a></li>
             <li style="float:right">
-              <button  type="button" id="push_one" data-productid='{{product.product_id}}' style="  height:30px; padding:0px; padding-left:20px; padding-right:20px; margin-right:15px;margin-top:5px; "class="btn btn-success btn-icon-left margin-right"><i class="fa fa-plus"></i>Push to Shop</button>
+              <button  type="button" id="push_one" data-productid='{{product.product_id}}' onclick="pushOne('{{product.product_id}}')" style="  height:30px; padding:0px; padding-left:20px; padding-right:20px; margin-right:15px;margin-top:5px; "class="btn btn-success btn-icon-left margin-right"><i class="fa fa-plus"></i>Push to Shop</button>
             </li>
           </ul>
           
@@ -231,8 +231,7 @@ $('#push_all').on('click', function() {
 	{% endfor %}
 	pushProduct('');
 });
-$('#push_one').on('click', function() {
-	var productid = $(this).get(0).getAttribute('data-productid');
+function pushOne(productid) {
 	$('#input-description'+productid).val(editor.txt.html());
 	pushProduct(productid);
 });
