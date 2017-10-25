@@ -77,8 +77,12 @@ class ControllerAccountWishList extends Controller {
 
 				if ($this->customer->isLogged() || !$this->config->get('config_customer_price')) {
 					$price = $this->currency->format($this->tax->calculate($product_info['price'], $product_info['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency']);
+					$sale_price = $this->tax->calculate($product_info['price']*1.5, $product_info['tax_class_id'], $this->config->get('config_tax'));
+					$compare_price = $this->tax->calculate($product_info['price']*2, $product_info['tax_class_id'], $this->config->get('config_tax'));
 				} else {
 					$price = false;
+					$sale_price = false;
+					$compare_price = false;
 				}
 
 				if (isset($product_info['special'])&&(float)$product_info['special']) {
@@ -114,6 +118,8 @@ class ControllerAccountWishList extends Controller {
 					'stock'      => $stock,
 					'description' => $product_info['description'],
 					'price'      => $price,
+					'sale_price' => $sale_price,
+					'compare_price' => $compare_price,
 					'special'    => $special,
 					'href'       => $this->url->link('product/product', 'product_id=' . $product_info['product_id']),
 					'remove'     => $this->url->link('account/wishlist', 'remove=' . $product_info['product_id'])
