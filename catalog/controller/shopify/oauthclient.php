@@ -47,13 +47,13 @@ class Oauthclient {
 			$shopify = shopify\client($this->store, SHOPIFY_APP_API_KEY, $this->oauth_token);
 		if(isset($data['product'])){
 			$result =  $shopify('POST /admin/products.json', array(), $data);
-			//print_r($result);
+			print_r($result);
 			$variants = $result['variants'];
 			$images = $result['images'];
 			$variants2 = array();
 			$i=0;
 			$count = 0;
-			
+			print_r($variantImages);
 			foreach($data['product']['images'] as $key=> $image){
 				if(isset($variantImages[$image['src']])){
 					$variant_postion = $variantImages[$image['src']];
