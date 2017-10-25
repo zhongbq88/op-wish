@@ -168,6 +168,7 @@ class ControllerCatalogUpload extends Controller {
 					}
 					$option_id1 ='';
 					$option_id2 ='';
+					$key ='';
 					if(!empty($product[4])){
 							$option = array(
 								"option_id" => $option1data['option_id'],
@@ -178,8 +179,9 @@ class ControllerCatalogUpload extends Controller {
 							$option["option_value_id"] = $option_id1;
 							if(!isset($options1[$product[4]])){
 								$options1[$product[4]] = $option;
+								
 							}
-							
+							$key = $product[4];
 					}
 					if(!empty($product[5])){
 						
@@ -193,18 +195,23 @@ class ControllerCatalogUpload extends Controller {
 							if(!isset($options2[$product[5]])){
 								$options2[$product[5]] = $option;
 							}
+							$key += $product[5];
 							
 					} 
-					$variants[] = array(
-								'variants_sku'=>$product[0],
-								'option1'=>$product[4],
-								'option1_id'=>$option_id1,
-								'option2_id'=>$option_id2,
-								'option2'=>$product[5],
-								'price'=>$product[2],
-								'msrp'=>$product[12],
-								'variants_image'=>$image
-							);
+					
+					if(!isset($variants[$key])){
+						  $variants[$key] = array(
+							  'variants_sku'=>$product[0],
+							  'option1'=>$product[4],
+							  'option1_id'=>$option_id1,
+							  'option2_id'=>$option_id2,
+							  'option2'=>$product[5],
+							  'price'=>$product[2],
+							  'msrp'=>$product[12],
+							  'variants_image'=>$image
+						  );
+					}
+					
 					$productId = $product[26];
 				}
 				if(isset($productar)&&count($productar)>0){

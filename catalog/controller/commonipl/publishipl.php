@@ -50,6 +50,7 @@ class ControllerCommoniplPublishipl extends Controller {
 		$variantImages = array();
 		$option1Value = array();
 		$option2Value = array();
+		print_r($product['variant']['selected']);
 		foreach($product['variant']['selected'] as $key => $selected){
 			if($selected =='on'){
 				$variant = array(
