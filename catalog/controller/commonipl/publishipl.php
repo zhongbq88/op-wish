@@ -117,7 +117,7 @@ class ControllerCommoniplPublishipl extends Controller {
 		);
 		//print_r($images);
 		//print_r($variantImages);
-		//$this->save($data,$variantImages,$product_id);
+		$this->save($data,$variantImages,$product_id);
 	}
 	
 	public function save($paoducts,$variantImages,$product_id){
