@@ -1356,3 +1356,5 @@
 2017-10-25 8:30:59 - PHP Notice:  Undefined index: store in /opt/bitnami/apps/op-wish/catalog/controller/commonipl/category.php on line 38
 2017-10-25 8:34:56 - PHP Notice:  Undefined index: store in /opt/bitnami/apps/op-wish/catalog/controller/commonipl/category.php on line 37
 2017-10-25 8:34:56 - PHP Notice:  Undefined index: store in /opt/bitnami/apps/op-wish/catalog/controller/commonipl/category.php on line 38
+2017-10-25 10:33:49 - PHP Notice:  Undefined index: store in /opt/bitnami/apps/op-wish/catalog/controller/commonipl/category.php on line 37
+2017-10-25 10:33:49 - PHP Notice:  Undefined index: store in /opt/bitnami/apps/op-wish/catalog/controller/commonipl/category.php on line 38
