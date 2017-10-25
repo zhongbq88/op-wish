@@ -114,7 +114,7 @@ if($(window).width() > 992) {
                                 <div class="right">
                                   <div class="name" style="height:60px;"><a href="{{product.href}}" style="overflow:hidden;text-overflow: ellipsis;
 display: -webkit-box;-webkit-line-clamp: 2;-webkit-box-orient: vertical;">{{ product.name }}</a></div>
-                                  <div class="price"> ${{product.price}} </div>
+                                  <div class="price"> {{product.price}} </div>
                                   <div class="only-hover">
                                     <ul>
                                       <li style="width:100%;"><a onclick="wishlist.add('{{ product.product_id }}');" style="width:100%;" data-toggle="tooltip" data-original-title="{{ button_wishlist }}">{{ button_wishlist }}</a></li>

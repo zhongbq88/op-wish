@@ -1313,3 +1313,7 @@
 2017-10-24 8:07:04 - PHP Notice:  Array to string conversion in D:\xampp\htdocs\op\oc-wish\admin\controller\catalog\upload.php on line 120
 2017-10-24 8:07:04 - PHP Notice:  Array to string conversion in D:\xampp\htdocs\op\oc-wish\admin\controller\catalog\upload.php on line 120
 2017-10-25 4:06:05 - PHP Notice:  Undefined offset: 0 in D:\xampp\htdocs\op\oc-wish\catalog\controller\shopify\oauthclient.php on line 61
+2017-10-25 7:37:57 - PHP Notice:  Undefined index: model in D:\xampp\htdocs\op\oc-wish\catalog\model\shopify\order.php on line 375
+2017-10-25 7:37:57 - PHP Notice:  Undefined index: options in D:\xampp\htdocs\op\oc-wish\catalog\model\shopify\order.php on line 375
+2017-10-25 7:51:01 - PHP Notice:  Undefined index: model in D:\xampp\htdocs\op\oc-wish\catalog\model\shopify\order.php on line 375
+2017-10-25 7:51:01 - PHP Notice:  Undefined index: options in D:\xampp\htdocs\op\oc-wish\catalog\model\shopify\order.php on line 375

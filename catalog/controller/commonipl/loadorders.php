@@ -20,19 +20,19 @@ class ControllerCommoniplLoadorders extends Controller {
 					$json =  $this->getOrders($customer_info['firstname'].'.myshopify.com',$customer_info['token'],$customer_info);
 				}
 			}
-			print_r('456');
+			//print_r('456');
 		}else{
 			$customer_info = array();
 			//print_r($this->customer->isLogged().$this->customer->getId());
 			if ($this->customer->isLogged()) {
 				$customer_info = $this->model_account_customer->getCustomer($this->customer->getId());	  
 			}
-			print_r('123');
+			//print_r('123');
 			//print_r($customer_info);
 			$json =  $this->getOrders($this->session->data['shop'],$this->session->data['oauth_token'],$customer_info);
-			if(isset($json['success'])){
-				$json['order_list'] = $this->load->controller('commonipl/orders/getList');
-			}
+			/*if(isset($json['success'])){
+				
+			}*/
 			
 		}
 		if (isset($this->request->get['syn'])) {
