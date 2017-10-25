@@ -43,6 +43,9 @@ class ControllerCommoniplPublishipl extends Controller {
 	}
 	
 	public function pushProduct($product,$product_id){
+		if(!isset($product['variant']['selected'])){
+			return;
+		}
 		$variants = array();
 		$images = array();
 		$options = array();
