@@ -115,7 +115,7 @@
                     
                     {% endif %}
                     <tr>
-                      <td class="text-center"><input type="checkbox" name="product[{{product.product_id}}][variant][selected][]" checked="checked" /></td>
+                      <td class="text-center"><input type="checkbox" name="product[{{product.product_id}}][variant][selected][]" checked="checked" value="{{ product.product_id }}" /></td>
                       <td class="text-center">{% if variant.variants_image  %} <a href="{{ product.href }}"><img style="max-height:50px; max-width:50px;" src="{{ variant.thumb}}" alt="{{ product.name}}"  title="{{ product.name}}" /></a>
                         <input  type="hidden" name="product[{{product.product_id}}][variant][images][]" value="{{ variant.src }}"/>
                         {% endif %}</td>
@@ -242,7 +242,7 @@ function pushone(productid) {
 	$.ajax({
 		url: 'index.php?route=commonipl/publishipl&product_id='+productid,
 		type: 'post',
-		data: $('.tab input[type=\'text\'], .tab input[type=\'hidden\'], .tab input[type=\'checkbox\'],.tab select, .tab textarea'),
+		data: $('.tab input[type=\'text\'], .tab input[type=\'hidden\'], .tab input[type=\'checkbox\']:checked,.tab select, .tab textarea'),
 		dataType: 'json',
 		beforeSend: function() {
 			//$('#gopublish').button('loading');
