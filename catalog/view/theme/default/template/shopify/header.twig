@@ -576,9 +576,10 @@ div.pagination-results ul li a, div.pagination-results ul li span {
 		 },{
           label: '{{ faq }}',
           message: '{{ faq }}',
-          href: "http://www.customdr.com/index.php?route=common/faqs", 
-		  target: "new"
-         }
+		  callback: function(){
+		   window.location.href="index.php?route=common/faqs";
+          }
+		 }
 			
 				]
 		
