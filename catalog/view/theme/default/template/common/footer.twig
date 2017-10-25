@@ -24,8 +24,12 @@ Please donate via PayPal to donate@opencart.com
                   <div class="col-sm-12" style="margin:0px; padding:0px;">
                     <div class="footer-about-us text-center" style="margin:0px; padding:0px; padding-bottom:20px;">
                       <ul class="social-icons social-icons-fashionsimple"> 
-                       <li><a  href="index.php?route=common/termsandprivacy" style="font-size:16px;">TERMS AND PRIVACY</a></li>
-                        <li><a  href="index.php?route=common/policy" style="font-size:16px;">POLICY</a></li>
+                      {% if informations %}
+                      {% for info in informations %}
+                       <li><a  href="{{ info .href}}" style="font-size:16px;">{{info.title}}</a></li>
+                       {% endfor %}
+                       {% endif%}
+                       
                          <li><a  href="index.php?route=commonipl/edit" style="font-size:16px;">ACCOUNT SETTINGS</a></li>
                       </ul>
                     </div>                    
