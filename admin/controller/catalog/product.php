@@ -1144,10 +1144,35 @@ class ControllerCatalogProduct extends Controller {
 		} else {
 			$data['manufacturer'] = '';
 		}
-
+		$this->load->model('tool/image');
 		// Categories
 		$this->load->model('catalog/category');
 
+		if (isset($this->request->post['variant'])) {
+			$data['variants'] = $this->request->post['variant'];
+		} elseif (isset($this->request->get['product_id'])) {
+			$variants_datas = $this->model_catalog_product->getProductVariants($product_info['product_id']);
+			$variants = array();
+				foreach($variants_datas as $variant){
+					$variant['src'] =$variant['variants_image'];
+					$variant['thumb'] = $this->model_tool_image->resize($variant['variants_image'], $this->config->get('theme_' . $this->config->get('config_theme') . '_image_additional_width'), $this->config->get('theme_' . $this->config->get('config_theme') . '_image_additional_height'));
+					$variants[] = $variant;
+				}
+				$data['variants'] = $variants;
+		} else {
+			$data['variants'] = array();
+		}
+		
+		
+		$results = $this->model_catalog_product->getProductImages($product_info['product_id']);
+		$images = array();
+		foreach ($results as $result) {
+				$images[] = array(
+					'src' =>$result['image'],
+					'thumb' =>  $this->model_tool_image->resize($result['image'], $this->config->get('theme_' . $this->config->get('config_theme') . '_image_product_width'), $this->config->get('theme_' . $this->config->get('config_theme') . '_image_product_height'))
+				);
+		}
+		$data['vimages'] =$images;
 		if (isset($this->request->post['product_category'])) {
 			$categories = $this->request->post['product_category'];
 		} elseif (isset($this->request->get['product_id'])) {
@@ -1155,6 +1180,7 @@ class ControllerCatalogProduct extends Controller {
 		} else {
 			$categories = array();
 		}
+		
 
 		$data['product_categories'] = array();
 
@@ -1326,7 +1352,7 @@ class ControllerCatalogProduct extends Controller {
 			$data['image'] = '';
 		}
 
-		$this->load->model('tool/image');
+		
 
 		if (isset($this->request->post['image']) && is_file(DIR_IMAGE . $this->request->post['image'])) {
 			$data['thumb'] = $this->model_tool_image->resize($this->request->post['image'], 100, 100);

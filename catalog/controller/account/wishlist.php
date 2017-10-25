@@ -77,12 +77,12 @@ class ControllerAccountWishList extends Controller {
 
 				if ($this->customer->isLogged() || !$this->config->get('config_customer_price')) {
 					$price = $this->currency->format($this->tax->calculate($product_info['price'], $product_info['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency']);
-					$sale_price = $this->tax->calculate($product_info['price']*1.5, $product_info['tax_class_id'], $this->config->get('config_tax'));
-					$compare_price = $this->tax->calculate($product_info['price']*2, $product_info['tax_class_id'], $this->config->get('config_tax'));
+					/*$sale_price = $this->tax->calculate($product_info['sale_price'], $product_info['tax_class_id'], $this->config->get('config_tax'));
+					$compare_price = $this->tax->calculate($product_info['msrp'], $product_info['tax_class_id'], $this->config->get('config_tax'));*/
 				} else {
 					$price = false;
-					$sale_price = false;
-					$compare_price = false;
+					/*$sale_price = false;
+					$compare_price = false;*/
 				}
 
 				if (isset($product_info['special'])&&(float)$product_info['special']) {
@@ -98,12 +98,16 @@ class ControllerAccountWishList extends Controller {
 					'src' =>$result['image'],
 					'thumb' =>  $this->model_tool_image->resize($result['image'], $this->config->get('theme_' . $this->config->get('config_theme') . '_image_product_width'), $this->config->get('theme_' . $this->config->get('config_theme') . '_image_product_height'))
 				);
+				
 			}
 			 $variants_datas =$this->model_commonipl_product->getProductVariants($product_info['product_id']);
 			 $variants = array();
 				foreach($variants_datas as $variant){
 					$variant['src'] =$variant['variants_image'];
 					$variant['thumb'] = $this->model_tool_image->resize($variant['variants_image'], $this->config->get('theme_' . $this->config->get('config_theme') . '_image_additional_width'), $this->config->get('theme_' . $this->config->get('config_theme') . '_image_additional_height'));
+					$variant['price'] = $this->currency->format($this->tax->calculate($variant['price'], $product_info['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency']);
+					$variant['sale_price'] = $this->tax->calculate($variant['sale_price'], $product_info['tax_class_id'], $this->config->get('config_tax'));
+					$variant['compare_price'] = $this->tax->calculate($variant['msrp'], $product_info['tax_class_id'], $this->config->get('config_tax'));
 					$variants[] = $variant;
 				}
 				
@@ -118,8 +122,8 @@ class ControllerAccountWishList extends Controller {
 					'stock'      => $stock,
 					'description' => $product_info['description'],
 					'price'      => $price,
-					'sale_price' => $sale_price,
-					'compare_price' => $compare_price,
+					/*'sale_price' => $sale_price,
+					'compare_price' => $compare_price,*/
 					'special'    => $special,
 					'href'       => $this->url->link('product/product', 'product_id=' . $product_info['product_id']),
 					'remove'     => $this->url->link('account/wishlist', 'remove=' . $product_info['product_id'])

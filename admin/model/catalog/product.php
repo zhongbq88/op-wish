@@ -1,5 +1,13 @@
 <?php
 class ModelCatalogProduct extends Model {
+	
+	
+	public function getProductVariants($product_id) {
+		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "product_variants WHERE product_id = '" . (int)$product_id . "' ");
+
+		return $query->rows;
+	}
+	
 	public function addProduct($data) {
 		$this->db->query("INSERT INTO " . DB_PREFIX . "product SET model = '" . $this->db->escape($data['model']) . "', sku = '" . $this->db->escape($data['sku']) . "', upc = '" . $this->db->escape($data['upc']) . "', ean = '" . $this->db->escape($data['ean']) . "', jan = '" . $this->db->escape($data['jan']) . "', isbn = '" . $this->db->escape($data['isbn']) . "', mpn = '" . $this->db->escape($data['mpn']) . "', location = '" . $this->db->escape($data['location']) . "', quantity = '" . (int)$data['quantity'] . "', minimum = '" . (int)$data['minimum'] . "', subtract = '" . (int)$data['subtract'] . "', stock_status_id = '" . (int)$data['stock_status_id'] . "', date_available = '" . $this->db->escape($data['date_available']) . "', manufacturer_id = '" . (int)$data['manufacturer_id'] . "', shipping = '" . (int)$data['shipping'] . "', price = '" . (float)$data['price'] . "', points = '" . (int)$data['points'] . "', weight = '" . (float)$data['weight'] . "', weight_class_id = '" . (int)$data['weight_class_id'] . "', length = '" . (float)$data['length'] . "', width = '" . (float)$data['width'] . "', height = '" . (float)$data['height'] . "', length_class_id = '" . (int)$data['length_class_id'] . "', status = '" . (int)$data['status'] . "', tax_class_id = '" . (int)$data['tax_class_id'] . "', sort_order = '" . (int)$data['sort_order'] . "', date_added = NOW(), date_modified = NOW()");
 
@@ -154,6 +162,16 @@ class ModelCatalogProduct extends Model {
 				$this->db->query("INSERT INTO " . DB_PREFIX . "product_to_store SET product_id = '" . (int)$product_id . "', store_id = '" . (int)$store_id . "'");
 			}
 		}
+		
+		$this->db->query("DELETE FROM " . DB_PREFIX . "product_variants WHERE product_id = '" . (int)$product_id . "'");
+		if(isset($data['variant']['sku'])){
+			$variant = $data['variant'];
+			foreach ($variant['sku'] as $i => $value) {
+				$this->db->query("INSERT INTO " . DB_PREFIX . "product_variants SET  option1_id = '" . (isset($variant['option1_id'][$i])?(int)$variant['option1_id'][$i]:'')  . "', option2_id = '" . (isset($variant['option2_id'][$i])?(int)$variant['option2_id'][$i]:'') . "', product_id = '" . (int)$product_id . "', variants_image = '" . (isset($variant['variants_image'][$i])?$this->db->escape($variant['variants_image'][$i]):'') . "', variants_sku = '" . $this->db->escape($value) . "', price = '" . (float)$variant['price'][$i] . "', sale_price = '" . (float)$variant['sale_price'][$i] . "', msrp = '" . (float)$variant['msrp'][$i] . "', option1 = '" . (isset($variant['option1'][$i])?$this->db->escape($variant['option1'][$i]):'') . "', option2 = '" . (isset($variant['option2'][$i])?$this->db->escape($variant['option2'][$i]):'') . "'");
+			}
+		}
+		
+
 
 		$this->db->query("DELETE FROM " . DB_PREFIX . "product_attribute WHERE product_id = '" . (int)$product_id . "'");
 
@@ -781,7 +799,7 @@ class ModelCatalogProduct extends Model {
 		//print_r($variants);
 		if(isset($variants)){
 			foreach($variants as $data){
-				$this->db->query("INSERT INTO " . DB_PREFIX . "product_variants SET  option1_id = '" . (isset($data['option1_id'])?(int)$data['option1_id']:'')  . "', option2_id = '" . (isset($data['option2_id'])?(int)$data['option2_id']:'') . "', product_id = '" . (int)$product_id . "', variants_image = '" . (isset($data['variants_image'])?$this->db->escape($data['variants_image']):'') . "', variants_sku = '" . $this->db->escape($data['variants_sku']) . "', price = '" . (float)$data['price'] . "', msrp = '" . (float)$data['msrp'] . "', option1 = '" . (isset($data['option1'])?$this->db->escape($data['option1']):'') . "', option2 = '" . (isset($data['option2'])?$this->db->escape($data['option2']):'') . "'");
+				$this->db->query("INSERT INTO " . DB_PREFIX . "product_variants SET  option1_id = '" . (isset($data['option1_id'])?(int)$data['option1_id']:'')  . "', option2_id = '" . (isset($data['option2_id'])?(int)$data['option2_id']:'') . "', product_id = '" . (int)$product_id . "', variants_image = '" . (isset($data['variants_image'])?$this->db->escape($data['variants_image']):'') . "', variants_sku = '" . $this->db->escape($data['variants_sku']) . "', price = '" . (float)$data['price'] . "',sale_price = '" . (float)$data['sale_price'] . "', msrp = '" . (float)$data['msrp'] . "', option1 = '" . (isset($data['option1'])?$this->db->escape($data['option1']):'') . "', option2 = '" . (isset($data['option2'])?$this->db->escape($data['option2']):'') . "'");
 			}
 			
 		}
