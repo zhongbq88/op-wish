@@ -7,7 +7,7 @@ class ControllerShopifyConnect extends Controller {
 	
 	public function index(){
 		$this->session->data['store'] = 'shopify';
-		if(empty($this->session->data['shop'])||empty($this->customer->getId())){
+		if(empty($this->session->data['shop'])||empty($this->customer->getId())||!$this->customer->isLogged()){
 			$this->getToken();
 		}
 		if (!$this->customer->isLogged()) {
@@ -17,7 +17,7 @@ class ControllerShopifyConnect extends Controller {
 		$this->response->redirect($this->url->link('commonipl/dashboard', '', true));
 	}
 	
-		public function getToken(){
+	public function getToken(){
 		if(!empty($this->customer->getId())&&(!isset($_GET['shop'])||!isset($_GET['code']))){
 			if ($this->customer->isLogged()) {
 				$this->session->data['oauth_token'] = $this->customer->getToken();
