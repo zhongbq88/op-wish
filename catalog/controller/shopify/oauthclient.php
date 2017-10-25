@@ -61,8 +61,8 @@ class Oauthclient {
 					$image2['id'] = $images[$key]['id'];
 					$variant_ids = array();
 					foreach($variant_postion as $pos){
-						if(isset($variants[$pos])){
-							$variant_ids[] = $variants[$pos]['id'];
+						if(isset($variants[$pos-1])){
+							$variant_ids[] = $variants[$pos-1]['id'];
 						}
 					}
 					//print_r($image2);
