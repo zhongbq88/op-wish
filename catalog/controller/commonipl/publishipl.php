@@ -25,15 +25,15 @@ class ControllerCommoniplPublishipl extends Controller {
 		} else {
 			$products = array();
 		}
-		//print_r($products);
+		print_r($products);
 		if(!empty($product_id)){
 			$this->pushProduct($products[$product_id],$product_id);
 		}else{
-			foreach($products as $id=> $product){
-				if($product['checked']=='on'){
-					$this->pushProduct($product,$id);
+			foreach($products['selected'] as $id){
+				//if($product['checked']=='on'){
+				$this->pushProduct($products[$id],$id);
 					
-				}
+				//}
 			}	
 		}
 		$json['success'] = 'index.php?route=commonipl/dashboard';
@@ -51,8 +51,7 @@ class ControllerCommoniplPublishipl extends Controller {
 		$option1Value = array();
 		$option2Value = array();
 		print_r($product['variant']['selected']);
-		foreach($product['variant']['selected'] as $key => $selected){
-			if($selected =='on'){
+		foreach($product['variant']['selected'] as $key){
 				$variant = array(
 					'position' => $position,
 					'price' => $product['variant']['price'][$key],
@@ -79,7 +78,6 @@ class ControllerCommoniplPublishipl extends Controller {
 				}
 				$variantImages[HTTPS_SERVER.'image/'.$product['variant']['images'][$key]][] = $position;
 				$position++;
-			}
 			
 		}
 		if(!empty($option1Value)){
