@@ -43,7 +43,7 @@ class ControllerCommonHeader extends Controller {
 			$data['logo'] = '';
 		}
 
-		$this->load->language('store/header');
+		$this->load->language('common/header');
 
 		// Wishlist
 		if ($this->customer->isLogged()) {
@@ -77,6 +77,7 @@ class ControllerCommonHeader extends Controller {
 		$data['cart'] = $this->load->controller('common/cart');
 		$data['menu'] = $this->load->controller('common/menu');
 		$data['login_store'] =$this->customer->isLogged() && $this->session->data['store']=='store';
+		$data['shopify'] = $this->session->data['shop'];
 		return $this->load->view('common/header', $data);
 	}
 }
