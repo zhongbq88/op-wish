@@ -154,7 +154,7 @@ class ControllerCatalogUpload extends Controller {
 							'weight' =>  $product[8],
 							'image' => $image,
 							'tag' => $product[10],
-							'description' =>  $product[11],
+							'description' =>  $this->descriptionFormat($product[11]),
 							'model' => $product[13],
 							'date_available' => $product[15],
 							'product_id' => $product[26],
@@ -249,6 +249,11 @@ class ControllerCatalogUpload extends Controller {
 
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
+	}
+	
+	private function descriptionFormat($description){
+		return  str_replace(';','</br>',str_replace(':',':  ',$description));
+		
 	}
 	
 	public function getOptionValueId($option,$optionValue){

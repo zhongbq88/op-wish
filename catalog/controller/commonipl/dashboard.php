@@ -28,7 +28,7 @@ class ControllerCommoniplDashboard extends Controller{
 		$results = $this->model_commonipl_order->getStatusTotalOrders();
 
 		$pending =0;
-		$in_production =0;
+		$processing =0;
 		$shipped =0;
 		$on_hold =0;
 		$cancelled =0;
@@ -39,8 +39,8 @@ class ControllerCommoniplDashboard extends Controller{
 			
 			if($result['order_status_id']==1){
 				$pending+=1;
-			}else if($result['order_status_id']==17){
-				$in_production+=1;
+			}else if($result['order_status_id']==2){
+				$processing+=1;
 			}else if($result['order_status_id']==3){
 				$shipped+=1;
 			}else if($result['order_status_id']==18){
@@ -48,7 +48,7 @@ class ControllerCommoniplDashboard extends Controller{
 			}else if($result['order_status_id']==7 || $result['order_status_id']==11||$result['order_status_id']==10||$result['order_status_id']==14){
 				$cancelled+=1;
 			}
-			if($result['order_status_id']==17 || $result['order_status_id']==13 || $result['order_status_id']==17|| $result['order_status_id']==5|| $result['order_status_id']==3){
+			if($result['order_status_id']==2 || $result['order_status_id']==13 || $result['order_status_id']==5|| $result['order_status_id']==3){
 				$orderIds .=",'".$result['order_id']."'";
 				//$total+=(float)$result['total'];
 				//$charges+=(float)$result['total'];
@@ -66,7 +66,7 @@ class ControllerCommoniplDashboard extends Controller{
 		}
 		
 		$data['pending'] = $pending; 
-		$data['in_production'] = $in_production; 
+		$data['processing'] = $processing; 
 		$data['shipped'] = $shipped; 
 		$data['on_hold'] = $on_hold; 
 		$data['cancelled'] = $cancelled; 

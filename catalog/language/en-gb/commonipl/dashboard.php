@@ -128,6 +128,7 @@ $_['text_error']            = 'The order you requested could not be found!';
 $_['your_vivajean_profits_orders']            = 'Orders';
 $_['text_pending']        = 'Pending:';
 $_['text_in_production']        = 'In-Production:';
+$_['processing']   ='Processing';
 $_['text_shipped']        = 'Shipped:';
 $_['text_on_hold']        = 'On-Hold:';
 $_['text_cancelled']        = 'Cancelled:';

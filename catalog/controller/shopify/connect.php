@@ -47,7 +47,7 @@ class ControllerShopifyConnect extends Controller {
 			$this->session->data['oauth_token'] = $oauth_token;
 			$this->session->data['shop'] = $_GET['shop'];
 			$this->session->data['store'] = 'shopify';
-			//$this->load->controller('shopify/loadorders');
+			$this->load->controller('shopify/loadorders');
 			return $shop;
 			//echo 'App Successfully Installed!';
 		}

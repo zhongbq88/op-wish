@@ -214,8 +214,9 @@ $.ajax({
 					loading = false;
 					//alert(json['order_list']);
 					$("#Synchronize").stopRotate();
-					if (json['order_list']) {
-						$('#order_body').html(json['order_list']);
+					if (json['success']) {
+						//$json['order_list'] = $this->load->controller('');
+						$('#order_body').load('index.php?route=commonipl/orders/getList');
 					}
 				},
 				error: function(xhr, ajaxOptions, thrownError) {
