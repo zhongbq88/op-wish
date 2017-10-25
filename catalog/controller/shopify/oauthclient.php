@@ -68,7 +68,7 @@ class Oauthclient {
 					//print_r($image2);
 					if(!empty($variant_ids)){
 						$image2['variant_ids'] = $variant_ids;
-						$rult = $shopify('PUT /admin/products/'.$result['id'].'/images/'.$image['id'].'.json', array(), array('image' =>$image2));
+						$rult = $shopify('PUT /admin/products/'.$result['id'].'/images/'.$image2['id'].'.json', array(), array('image' =>$image2));
 					}
 				}
 				
