@@ -31,7 +31,7 @@
           <!-- Nav tabs -->
           <ul class="nav nav-tabs" role="tablist" >
             <li style="width:50px; height:100%; text-align:center; margin-top:10px;">
-              <input type="checkbox" name="product[{{product.product_id}}][checked]" checked="checked"/>
+              <input type="checkbox" name="product[selected][{{product.product_id}}]" checked="checked" value="{{product.product_id}}"/>
             </li>
             <li role="presentation" class="active"><a style="border-left: 1px solid #ddd;" href="#Section1_{{product.product_id}}" aria-controls="Product" role="tab" data-toggle="tab">Product</a></li>
             <li role="presentation"><a href="#Section2_{{product.product_id}}" aria-controls="Description" role="tab" data-toggle="tab">Description</a></li>
