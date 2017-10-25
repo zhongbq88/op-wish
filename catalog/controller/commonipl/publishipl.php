@@ -100,7 +100,7 @@ class ControllerCommoniplPublishipl extends Controller {
 		$images = array();
 		foreach($imageArray as $position => $image){
 			$images[] = array(
-				'position'=>$position,
+				'position'=>$position+1,
 				"src"=>HTTPS_SERVER.'image/'.$image
 			);
 		}
@@ -115,9 +115,9 @@ class ControllerCommoniplPublishipl extends Controller {
 			"variants"=>$variants,
 			"images"=>$images
 		);
-		print_r($images);
-		print_r($variantImages);
-		//$this->save($data,$variantImages,$product_id);
+		//print_r($images);
+		//print_r($variantImages);
+		$this->save($data,$variantImages,$product_id);
 	}
 	
 	public function save($paoducts,$variantImages,$product_id){
