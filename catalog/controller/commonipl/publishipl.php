@@ -73,6 +73,10 @@ class ControllerCommoniplPublishipl extends Controller {
 					}
 				}
 				$variants[] = $variant;
+				$image = $product['variant']['images'][$key];
+				if(!in_array($image, $images)){
+					$images[] = $image;
+				}
 				$variantImages[HTTPS_SERVER.'image/'.$product['variant']['images'][$key]][] = $position;
 				$position++;
 			}
@@ -90,8 +94,9 @@ class ControllerCommoniplPublishipl extends Controller {
 				'values'=>array_unique($option2Value)
 			);
 		}
-		
-		foreach($product['images'] as $position => $image){
+		$imageArray = array_merge($images,$product['images']);
+		$images = array();
+		foreach($imageArray as $position => $image){
 			$images[] = array(
 				'position'=>$position,
 				"src"=>HTTPS_SERVER.'image/'.$image
