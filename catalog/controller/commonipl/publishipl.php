@@ -25,7 +25,7 @@ class ControllerCommoniplPublishipl extends Controller {
 		} else {
 			$products = array();
 		}
-		print_r($products);
+		//print_r($products);
 		if(!empty($product_id)){
 			$this->pushProduct($products[$product_id],$product_id);
 		}else{
