@@ -144,8 +144,8 @@
               
               
                 <div class="col-sm-2 col-xs-6 col-md-25 col-lg-2 col-sm-3" >
-                 
-                    <div class="image"><!--<a href="{{ product.href }}" >--><img src="{{ image.thumb }}" alt="{{ product.name }}" title="{{ product.name }}" class="img-responsive" /><!--</a>-->
+                   
+                    <div class="image" style=" text-align:center;vertical-align:middle; margin-top:10px;"><!--<a href="{{ product.href }}" >--><img src="{{ image.thumb }}" alt="{{ product.name }}" title="{{ product.name }}" class="img-responsive"  /><!--</a>-->
                       <input  type="hidden" name="product[{{product.product_id}}][images][]" value="{{ image.src}}"/>
                     </div>
                   
@@ -178,6 +178,14 @@ a {
 a:hover {
     color: #555555;
    
+}
+
+.product-grid .image{
+	 border: 1px solid transparent;
+}
+
+.image:hover{
+	   border: 1px solid #bc985c;
 }
 
 .tab {
