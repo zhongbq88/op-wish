@@ -76,11 +76,9 @@
               <div style="float: right"><a class="thumbnail" style="border:none;"><img src="{{  product.design_file }}"   style="width: auto; height: 120px;" /></a></div>
               {% endif %} </td>
             <td class="text-left">{{ product.model }}</td>
-             <td class="text-left"><div class="input-group btn-block" style="max-width: 225px;">
+             <td class="text-left"><div class="input-group btn-block" >
              {% if product.option_select %}
-            
-            <div style="float:left;">
-             <select name="size_name{{product.order_product_id}}"  {% if (order_status_id!=1 and order_status_id!=18) or product.total==0 %} disabled {% endif %} id="input-size" class="form-control" style="float:left; width:100px;">
+             <select name="size_name{{product.order_product_id}}"  {% if (order_status_id!=1 and order_status_id!=18) or product.total==0 %} disabled {% endif %} id="input-size" class="form-control" style="float:left; width:50%;">
                 <!--<option value="">{{ product.selected_name }}</option>-->
                 
                 {% for option_select in product.option_select %}
@@ -95,15 +93,12 @@
                   {% endif %}
                 {% endfor %}
               
-              </select></div>
-             
-           
-             <!-- <div class="input-group btn-block" style="max-width: 200px; float:left">-->
-            <div style="float:left;">
-                <input type="text"  style="width:100px;" {% if (order_status_id!=1 and order_status_id!=18) or product.total==0 %} disabled {% endif %} name="quantity[{{ product.order_product_id }}]" id="input{{ product.order_product_id }}" value="{{ product.quantity }}" size="1" class="form-control" />
-                </div>
+              </select>
+                <input type="text"  style="width:50%;" {% if (order_status_id!=1 and order_status_id!=18) or product.total==0 %} disabled {% endif %} name="quantity[{{ product.order_product_id }}]" id="input{{ product.order_product_id }}" value="{{ product.quantity }}" size="1" class="form-control" />
+                
                 {% else %}
-                 <input type="text"  style="width:100px;" {% if (order_status_id!=1 and order_status_id!=18) or product.total==0 %} disabled {% endif %} name="quantity[{{ product.order_product_id }}]" id="input{{ product.order_product_id }}" value="{{ product.quantity }}" size="1" class="form-control" />
+                
+                 <input type="text"  style="width:100%;" {% if (order_status_id!=1 and order_status_id!=18) or product.total==0 %} disabled {% endif %} name="quantity[{{ product.order_product_id }}]" id="input{{ product.order_product_id }}" value="{{ product.quantity }}" size="1" class="form-control" />
                   {% endif %}
                   
                 <span class="input-group-btn">
