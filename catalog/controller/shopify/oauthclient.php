@@ -53,7 +53,7 @@ class Oauthclient {
 			$variants2 = array();
 			$i=0;
 			$count = 0;
-			//print_r($variant_count);
+			
 			foreach($data['product']['images'] as $key=> $image){
 				if(isset($variantImages[$image['src']])){
 					$variant_postion = $variantImages[$image['src']];
