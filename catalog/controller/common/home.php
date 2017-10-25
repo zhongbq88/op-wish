@@ -18,7 +18,7 @@ class ControllerCommonHome extends Controller {
 		$data['header'] = $this->load->controller('common/header');
 		
 
-		$this->response->setOutput($this->load->view('common/home', $data));
+		$this->response->setOutput($this->load->view('common/index', $data));
 		//$this->response->redirect('https://apps.shopify.com/customdr');
 	}
 }

@@ -1312,3 +1312,30 @@
 2017-10-24 8:07:04 - PHP Notice:  Array to string conversion in D:\xampp\htdocs\op\oc-wish\admin\controller\catalog\upload.php on line 120
 2017-10-24 8:07:04 - PHP Notice:  Array to string conversion in D:\xampp\htdocs\op\oc-wish\admin\controller\catalog\upload.php on line 120
 2017-10-24 8:07:04 - PHP Notice:  Array to string conversion in D:\xampp\htdocs\op\oc-wish\admin\controller\catalog\upload.php on line 120
+2017-10-25 1:01:37 - PHP Notice:  Undefined offset: 0 in /opt/bitnami/apps/op-wish/catalog/controller/shopify/oauthclient.php on line 61
+2017-10-25 1:01:38 - PHP Notice:  Undefined offset: 1 in /opt/bitnami/apps/op-wish/catalog/controller/shopify/oauthclient.php on line 61
+2017-10-25 1:01:38 - PHP Notice:  Undefined offset: 2 in /opt/bitnami/apps/op-wish/catalog/controller/shopify/oauthclient.php on line 61
+2017-10-25 1:01:39 - PHP Notice:  Undefined offset: 3 in /opt/bitnami/apps/op-wish/catalog/controller/shopify/oauthclient.php on line 61
+2017-10-25 1:01:39 - PHP Notice:  Undefined offset: 4 in /opt/bitnami/apps/op-wish/catalog/controller/shopify/oauthclient.php on line 61
+2017-10-25 1:01:40 - PHP Notice:  Undefined offset: 5 in /opt/bitnami/apps/op-wish/catalog/controller/shopify/oauthclient.php on line 61
+2017-10-25 1:01:40 - PHP Notice:  Undefined offset: 6 in /opt/bitnami/apps/op-wish/catalog/controller/shopify/oauthclient.php on line 61
+2017-10-25 2:10:12 - PHP Notice:  Undefined index: selected in /opt/bitnami/apps/op-wish/catalog/controller/commonipl/publishipl.php on line 53
+2017-10-25 2:10:12 - PHP Notice:  Undefined index: selected in /opt/bitnami/apps/op-wish/catalog/controller/commonipl/publishipl.php on line 54
+2017-10-25 2:10:12 - PHP Warning:  Invalid argument supplied for foreach() in /opt/bitnami/apps/op-wish/catalog/controller/commonipl/publishipl.php on line 54
+2017-10-25 2:14:07 - PHP Notice:  Undefined offset: 1 in /opt/bitnami/apps/op-wish/catalog/controller/commonipl/publishipl.php on line 60
+2017-10-25 2:14:07 - PHP Notice:  Undefined offset: 1 in /opt/bitnami/apps/op-wish/catalog/controller/commonipl/publishipl.php on line 61
+2017-10-25 2:14:07 - PHP Notice:  Undefined offset: 1 in /opt/bitnami/apps/op-wish/catalog/controller/commonipl/publishipl.php on line 62
+2017-10-25 2:14:07 - PHP Notice:  Undefined offset: 1 in /opt/bitnami/apps/op-wish/catalog/controller/commonipl/publishipl.php on line 65
+2017-10-25 2:14:07 - PHP Notice:  Undefined offset: 1 in /opt/bitnami/apps/op-wish/catalog/controller/commonipl/publishipl.php on line 78
+2017-10-25 2:14:07 - PHP Notice:  Undefined offset: 1 in /opt/bitnami/apps/op-wish/catalog/controller/commonipl/publishipl.php on line 82
+2017-10-25 2:37:12 - PHP Notice:  Undefined index: id in /opt/bitnami/apps/op-wish/catalog/controller/shopify/oauthclient.php on line 71
+2017-10-25 2:50:36 - PHP Notice:  Undefined index: model in /opt/bitnami/apps/op-wish/catalog/model/shopify/order.php on line 375
+2017-10-25 2:50:36 - PHP Notice:  Undefined index: options in /opt/bitnami/apps/op-wish/catalog/model/shopify/order.php on line 375
+2017-10-25 2:50:36 - PHP Notice:  Undefined index: model in /opt/bitnami/apps/op-wish/catalog/model/shopify/order.php on line 375
+2017-10-25 2:50:36 - PHP Notice:  Undefined index: options in /opt/bitnami/apps/op-wish/catalog/model/shopify/order.php on line 375
+2017-10-25 2:50:36 - PHP Notice:  Undefined index: model in /opt/bitnami/apps/op-wish/catalog/model/shopify/order.php on line 375
+2017-10-25 2:50:36 - PHP Notice:  Undefined index: options in /opt/bitnami/apps/op-wish/catalog/model/shopify/order.php on line 375
+2017-10-25 3:07:23 - PHP Notice:  Undefined index: store in /opt/bitnami/apps/op-wish/catalog/controller/commonipl/product.php on line 236
+2017-10-25 3:07:23 - PHP Notice:  Undefined index: store in /opt/bitnami/apps/op-wish/catalog/controller/commonipl/product.php on line 237
+2017-10-25 3:07:38 - PHP Notice:  Undefined index: store in /opt/bitnami/apps/op-wish/catalog/controller/commonipl/product.php on line 236
+2017-10-25 3:07:38 - PHP Notice:  Undefined index: store in /opt/bitnami/apps/op-wish/catalog/controller/commonipl/product.php on line 237

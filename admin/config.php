@@ -1,12 +1,12 @@
 <?php
 // HTTP
 
-define('HTTP_SERVER', 'http://52.38.200.51/admin/');
-define('HTTP_CATALOG', 'http://52.38.200.51/');
+define('HTTP_SERVER', 'http://www.jewelryegg.com/admin/');
+define('HTTP_CATALOG', 'http://www.jewelryegg.com/');
 
 // HTTPS
-define('HTTPS_SERVER', 'https://52.38.200.51/admin/');
-define('HTTPS_CATALOG', 'https://52.38.200.51/');
+define('HTTPS_SERVER', 'https://www.jewelryegg.com/admin/');
+define('HTTPS_CATALOG', 'https://www.jewelryegg.com/');
 
 // DIR
 define('DIR_APPLICATION', '/opt/bitnami/apps/op-wish/admin/');

@@ -1,10 +1,10 @@
 <?php
 // HTTP
 
-define('HTTP_SERVER', 'https://52.38.200.51/');
+define('HTTP_SERVER', 'https://www.jewelryegg.com/');
 
 // HTTPS
-define('HTTPS_SERVER', 'https://52.38.200.51/');
+define('HTTPS_SERVER', 'https://www.jewelryegg.com/');
 
 // DIR
 define('DIR_APPLICATION', '/opt/bitnami/apps/op-wish/catalog/');
@@ -35,5 +35,5 @@ define('DB_PREFIX', 'oc_');
 
 //shopify
 define('REDIRECTION_URL', HTTPS_SERVER.'index.php?route=shopify/connect');
-define('SHOPIFY_APP_API_KEY', 'b88d44a8a3808e07ac0d4ee572fed9e8');
-define('SHOPIFY_APP_SHARED_SECRET', 'caef0591baf13066c9c76b178a4471eb');
+define('SHOPIFY_APP_API_KEY', '5b71faed10003d2444d2e46cff3f9cda');
+define('SHOPIFY_APP_SHARED_SECRET', 'c7101cbb98952d4f0c91d5644052fc21');
