@@ -26,17 +26,27 @@ class ControllerCommoniplPublishipl extends Controller {
 			$products = array();
 		}
 		//print_r($products);
+		$results = array();
 		if(!empty($product_id)){
-			$this->pushProduct($products[$product_id],$product_id);
+			$results[$product_id] = $this->pushProduct($products[$product_id],$product_id);
 		}else{
 			foreach($products['selected'] as $id){
 				//if($product['checked']=='on'){
-				$this->pushProduct($products[$id],$id);
-					
+				$results[$id] = $this->pushProduct($products[$id],$id);
 				//}
 			}	
 		}
-		$json['success'] = 'index.php?route=commonipl/dashboard';
+		if(isset($results)){
+			$json['success'] = $results;
+			foreach($results as  $value){
+				if(!empty($value)){
+					$json['text'] = sprintf($this->language->get('publish_sucessfully'), 'https://'.$this->session->data['shop'].'/admin/products/'.$value);
+				}
+			}
+			
+		}else{
+			$json['error'] = 'Push Error';
+		}
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 		
@@ -117,7 +127,7 @@ class ControllerCommoniplPublishipl extends Controller {
 		);
 		//print_r($images);
 		//print_r($variantImages);
-		$this->save($data,$variantImages,$product_id);
+		return $this->save($data,$variantImages,$product_id);
 	}
 	
 	public function save($paoducts,$variantImages,$product_id){
@@ -129,17 +139,9 @@ class ControllerCommoniplPublishipl extends Controller {
 			$product = Oauthclient::getInstance($this->customer->getStore(),$this->customer->getConsumerkey()
 			,$this->customer->getConsumerSecret(),$this->customer->getToken())->post(array('product' =>$paoducts),$variantImages);
 			$product_Add_id = $this->model_commonipl_product->saveShopifyAddProduct($product,$product_id);
-			if(isset($this->session->data['shop'])){
-				if(!isset($product['id'])||$product['id']==0){
-					//$product['id'] =  ($this->model_commonipl_product->getLastOAddProductId();
-					$this->session->data['sussecc'] = sprintf($this->language->get('publish_store_sucessfully'), 'index.php?route=store/product&product_id='.$product_Add_id);
-				}else{
-					$this->session->data['sussecc'] = sprintf($this->language->get('publish_sucessfully'), 'https://'.$this->session->data['shop'].'/admin/products/'.$product['id']);
-				}
-				
-			}
 			if(isset($product['id'])){
 				$this->model_account_wishlist->deleteWishlist($product_id);
+				return $product['id'];
 			}
 			//$this->response->redirect($this->url->link('shopify/dashboard'));
 			
@@ -158,7 +160,7 @@ class ControllerCommoniplPublishipl extends Controller {
 			print_r($e->getRequest());
 			print_r($e->getResponse());
 		}
-		
+		return '';
 		
 	}
 	
