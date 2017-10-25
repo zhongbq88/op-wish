@@ -37,6 +37,7 @@
             <li><a href="#tab-reward" data-toggle="tab">{{ tab_reward }}</a></li>
             <li><a href="#tab-seo" data-toggle="tab">{{ tab_seo }}</a></li>
             <li><a href="#tab-design" data-toggle="tab">{{ tab_design }}</a></li>
+             <li><a href="#tab-variant" data-toggle="tab">Variants</a></li>
           </ul>
           <div class="tab-content">
             <div class="tab-pane active" id="tab-general">
@@ -1129,11 +1130,102 @@
                 </table>
               </div>
             </div>
+            
+             <div class="tab-pane" id="tab-variant">
+              <div class="table-responsive">
+                {% if variants %}
+                  <table class="table table-bordered table-hover">
+                    {% for variant in variants %}
+                    {% if loop.index ==1 %}
+                    <thead>
+                      <tr>
+                 
+                        <td class="text-center">{{ column_image }}</td>
+                        <td class="text-center">SKU</td>
+                        {% if variant.option1 %}
+                        <td class="text-center">Color</td>
+                        <input  type="hidden" name="product[{{product.product_id}}][option1]" value="Color"/>
+                        {% endif %}
+                        {% if variant.option2 %}
+                        <td class="text-center">Size</td>
+                        <input  type="hidden" name="product[{{product.product_id}}][option2]" value="Size"/>
+                        {% endif %}
+                        <td class="text-center">Cost</td>
+                        <td class="text-center">Sale Price</td>
+                        <td class="text-center">MSRP</td>
+                      </tr>
+                    </thead>
+                    <tbody>
+                    
+                    {% endif %}
+                    <tr>
+                   
+                      <td class="text-center">{% if variant.variants_image  %} <a href="javascript:selectedImage('{{ loop.index }}');"><img style="max-height:50px; max-width:50px;" src="{{ variant.thumb}}" id="vimage{{ loop.index }}" /></a>
+                        <input  type="hidden" name="variant[variants_image][]" value="{{ variant.src }}" id="vimage_input{{ loop.index }}" />
+                        {% endif %}</td>
+                      <td class="text-center"><input type="text" name="variant[sku][]" value="{{ variant.variants_sku}}" /></td>
+                      {% if variant.option1 %}
+                      <td class="text-center"><input type="text" name="variant[option1][]" value="{{ variant.option1}}"/>
+                      <input type="hidden" name="variant[option1_id][]" value="{{ variant.option1_id}}"/></td>
+                      {% endif %}
+                      {% if variant.option2 %}
+                      <td class="text-center"><input  type="text" name="variant[option2][]" value="{{ variant.option2}}"/>
+                      <input  type="hidden" name="variant[option2_id][]" value="{{ variant.option2_id}}"/></td>
+                      {% endif %}
+                      <td class="text-center"><input  type="text" name="variant[price][]" value="{{ (variant.price)|number_format(2, '.', ',')}}"/></td>
+                      <td class="text-center"><input  type="text" name="variant[sale_price][]" value="{{ (variant.sale_price)|number_format(2, '.', ',')}}"/></td>
+                      <td class="text-center"><input  type="text" name="variant[msrp][]" value="{{ (variant.msrp)|number_format(2, '.', ',')}}"/></td>
+                    </tr>
+                    {% endfor %}
+                      </tbody>
+                    
+                  </table>
+                  {% endif %} 
+              </div>
+            </div>
+            
           </div>
         </form>
       </div>
     </div>
   </div>
+  <div id="des-body"  style="display:none;" >
+  <div id="input-body" >
+    <div class="modal-backdrop in"></div>
+    <div id="modal-text" class="modal in" style="display: block;" >
+      <div id="filemanager" class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" style="float:right; margin-left:10px;" data-toggle="tooltip" title="" id="close" class="btn btn-default" data-original-title="Save"><i class="fa fa-reply"></i></button>
+            
+            <h4 class="modal-title">Image</h4>
+          </div>
+          <div class="modal-body">
+            <div class="row">
+              <div class="col-sm-10" id="input-text-body" style="width:100%;"> 
+               {% if vimages %}
+            <div class="product-grid">
+              <div class="row"> {% for image in vimages %}
+              
+              
+              
+                <div class="col-sm-2 col-xs-6 col-md-25 col-lg-2 col-sm-3" >
+                   
+                    <div class="image" style=" text-align:center;vertical-align:middle; margin-top:10px;"> <a href="javascript:inputImage('{{ image.thumb }}','{{ image.src }}');"><img src="{{ image.thumb }}"  class="img-responsive"  /></a>
+                      
+                    </div>
+                  
+                </div>
+                {% endfor %} </div>
+                </div>
+              {% endif %}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    </div>
   <link href="view/javascript/codemirror/lib/codemirror.css" rel="stylesheet" />
   <link href="view/javascript/codemirror/theme/monokai.css" rel="stylesheet" />
   <script type="text/javascript" src="view/javascript/codemirror/lib/codemirror.js"></script> 
@@ -1144,6 +1236,20 @@
   <script type="text/javascript" src="view/javascript/summernote/summernote-image-attributes.js"></script> 
   <script type="text/javascript" src="view/javascript/summernote/opencart.js"></script> 
   <script type="text/javascript"><!--
+  var imageIndex = 0; 
+  $('#close').on('click', function() {
+    $('#des-body').attr ("style","display:none;");
+   });
+   
+   function selectedImage(index){
+	   imageIndex =index;
+	   $('#des-body').attr ("style","display:block;");
+   }
+   function inputImage(thumb,src){
+	   $('#vimage'+imageIndex).attr ("src",thumb);
+	   $('#vimage_input'+imageIndex).val (src);
+	   $('#des-body').attr ("style","display:none;");
+   }
 // Manufacturer
 $('input[name=\'manufacturer\']').autocomplete({
 	'source': function(request, response) {

@@ -207,7 +207,8 @@ class ControllerCatalogUpload extends Controller {
 							  'option2_id'=>$option_id2,
 							  'option2'=>$product[5],
 							  'price'=>$product[2],
-							  'msrp'=>$product[12],
+							  'sale_price'=>$product[2]*1.5,
+							  'msrp'=>$product[12]*1.5,
 							  'variants_image'=>$image
 						  );
 					}
