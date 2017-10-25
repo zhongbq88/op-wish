@@ -53,8 +53,9 @@ class ControllerCommoniplPublishipl extends Controller {
 		$variantImages = array();
 		$option1Value = array();
 		$option2Value = array();
-		print_r($product['variant']['selected']);
+		//print_r($product['variant']['selected']);
 		foreach($product['variant']['selected'] as $key){
+				$key = $key-1;
 				$variant = array(
 					'position' => $position,
 					'price' => $product['variant']['price'][$key],
@@ -114,8 +115,8 @@ class ControllerCommoniplPublishipl extends Controller {
 			"variants"=>$variants,
 			"images"=>$images
 		);
-		print_r($images);
-		print_r($variantImages);
+		//print_r($images);
+		//print_r($variantImages);
 		//$this->save($data,$variantImages,$product_id);
 	}
 	
@@ -137,7 +138,9 @@ class ControllerCommoniplPublishipl extends Controller {
 				}
 				
 			}
-			$this->model_account_wishlist->deleteWishlist($product_id);
+			if(isset($product['id'])){
+				$this->model_account_wishlist->deleteWishlist($product_id);
+			}
 			//$this->response->redirect($this->url->link('shopify/dashboard'));
 			
 		}
