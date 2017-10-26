@@ -36,28 +36,27 @@ class ControllerShopifyConnect extends Controller {
 					}else{
 						if($charge['status']=='pending'){
 							$confirmation_url = $charge['confirmation_url'];
-						}else{
-							$data = array(
-									"name"=>$charging['name'],
-									"price"=> $charging['price'],
-									"return_url"=> $charging['return_url']
-							);
-							if($charging['sendbox']==1){
-								$data["test"]=true;
-							}
-							if($charging['trial_days']>0){
-								$data["trial_days"]=$charging['trial_days'];
-							}
-							
-							$result =  $shopify('POST /admin/'.$url.'application_charges.json', array(), array($url.'application_charge'=>$data));
-							$confirmation_url = $result['confirmation_url'];
+							die("<script> top.location.href='".$confirmation_url."'</script>");
 						}
-						
-						die("<script> top.location.href='".$confirmation_url."'</script>");
 					}
 					break;
 				}
 			}
+			$data = array(
+					"name"=>$charging['name'],
+					"price"=> $charging['price'],
+					"return_url"=> $charging['return_url']
+			);
+			if($charging['sendbox']==1){
+				$data["test"]=true;
+			}
+			if($charging['trial_days']>0){
+				$data["trial_days"]=$charging['trial_days'];
+			}
+			
+			$result =  $shopify('POST /admin/'.$url.'application_charges.json', array(), array($url.'application_charge'=>$data));
+			$confirmation_url = $result['confirmation_url'];
+			die("<script> top.location.href='".$confirmation_url."'</script>");
 			//print_r($get);
 			/*
 			print_r($result);
