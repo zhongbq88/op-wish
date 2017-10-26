@@ -32,7 +32,6 @@ class ControllerShopifyConnect extends Controller {
 				foreach($charges as $charge){
 					if($charge['status']=='accepted'){
 						$this->response->redirect($this->url->link('commonipl/dashboard', '', true));
-						/*die("<script> top.location.href='".$charge['return_url']."'</script>");*/
 					}else{
 						if($charge['status']=='pending'){
 							$confirmation_url = $charge['confirmation_url'];
@@ -45,7 +44,7 @@ class ControllerShopifyConnect extends Controller {
 			$data = array(
 					"name"=>$charging['name'],
 					"price"=> $charging['price'],
-					"return_url"=> $charging['return_url']
+					"return_url"=>"'". $charging['retrun_url']."'"
 			);
 			if($charging['sendbox']==1){
 				$data["test"]=true;
@@ -53,7 +52,7 @@ class ControllerShopifyConnect extends Controller {
 			if($charging['trial_days']>0){
 				$data["trial_days"]=$charging['trial_days'];
 			}
-			
+			//print_r($data);
 			$result =  $shopify('POST /admin/'.$url.'application_charges.json', array(), array($url.'application_charge'=>$data));
 			$confirmation_url = $result['confirmation_url'];
 			die("<script> top.location.href='".$confirmation_url."'</script>");
