@@ -44,7 +44,7 @@ class ControllerShopifyConnect extends Controller {
 			$data = array(
 					"name"=>$charging['name'],
 					"price"=> $charging['price'],
-					"return_url"=>"'". $charging['retrun_url']."'"
+					"return_url"=>$charging['retrun_url']
 			);
 			if($charging['sendbox']==1){
 				$data["test"]=true;
