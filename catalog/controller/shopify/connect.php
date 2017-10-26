@@ -14,7 +14,70 @@ class ControllerShopifyConnect extends Controller {
 			$this->session->data['redirect'] = $this->url->link('commonipl/dashboard', '', true);
 			$this->response->redirect($this->url->link('account/login', '', true));
 		}
-		$this->response->redirect($this->url->link('commonipl/dashboard', '', true));
+		$this->chargeApp();
+		//
+	}
+	
+	public function chargeApp(){
+		try
+		
+		{
+			$charging = $this->config->get('config_charging');
+			//print_r($charging);
+			//return;
+			$url = ($charging['charge_type']==1)?'':'recurring_';
+			$shopify = shopify\client($this->session->data['shop'], SHOPIFY_APP_API_KEY,$this->session->data['oauth_token']);
+			$charges =  $shopify('GET /admin/'.$url.'application_charges.json?status=accepted');
+			if(isset($charges)){
+				foreach($charges as $charge){
+					if($charge['status']=='accepted'){
+						$this->response->redirect($this->url->link('commonipl/dashboard', '', true));
+						/*die("<script> top.location.href='".$charge['return_url']."'</script>");*/
+					}else{
+						if($charge['status']=='pending'){
+							$confirmation_url = $charge['confirmation_url'];
+						}else{
+							$data = array(
+									"name"=>$charging['name'],
+									"price"=> $charging['price'],
+									"return_url"=> $charging['return_url']
+							);
+							if($charging['sendbox']==1){
+								$data["test"]=true;
+							}
+							
+							$result =  $shopify('POST /admin/'.$url.'application_charges.json', array(), array($url.'application_charge'=>$data));
+							$confirmation_url = $result['confirmation_url'];
+						}
+						
+						die("<script> top.location.href='".$confirmation_url."'</script>");
+					}
+					break;
+				}
+			}
+			//print_r($get);
+			/*
+			print_r($result);
+			$permission_url = $result['confirmation_url'];
+			die("<script> top.location.href='$permission_url'</script>");*/
+			//echo 'App Successfully Installed!';
+		}
+		catch (shopify\ApiException $e)
+		{
+			# HTTP status code was >= 400 or response contained the key 'errors'
+			//echo $e;
+			print_r($e->getRequest());
+			print_r($e->getResponse());
+			
+		}
+		catch (shopify\CurlException $e)
+		{
+			# cURL error
+			//echo $e;
+			print_r($e->getRequest());
+			print_r($e->getResponse());
+			
+		}
 	}
 	
 	public function getToken(){
@@ -47,7 +110,7 @@ class ControllerShopifyConnect extends Controller {
 			$this->session->data['oauth_token'] = $oauth_token;
 			$this->session->data['shop'] = $_GET['shop'];
 			$this->session->data['store'] = 'shopify';
-			$this->load->controller('shopify/loadorders');
+			//$this->load->controller('shopify/loadorders');
 			return $shop;
 			//echo 'App Successfully Installed!';
 		}

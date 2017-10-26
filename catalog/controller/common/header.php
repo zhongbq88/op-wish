@@ -78,6 +78,7 @@ class ControllerCommonHeader extends Controller {
 		$data['menu'] = $this->load->controller('common/menu');
 		$data['login_store'] =$this->customer->isLogged() && $this->session->data['store']=='store';
 		$data['shopify'] = $this->session->data['shop'];
+		$data['appkey'] = SHOPIFY_APP_API_KEY;
 		return $this->load->view('common/header', $data);
 	}
 }
