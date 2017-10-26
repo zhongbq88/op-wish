@@ -45,6 +45,9 @@ class ControllerShopifyConnect extends Controller {
 							if($charging['sendbox']==1){
 								$data["test"]=true;
 							}
+							if($charging['trial_days']>0){
+								$data["trial_days"]=$charging['trial_days'];
+							}
 							
 							$result =  $shopify('POST /admin/'.$url.'application_charges.json', array(), array($url.'application_charge'=>$data));
 							$confirmation_url = $result['confirmation_url'];
