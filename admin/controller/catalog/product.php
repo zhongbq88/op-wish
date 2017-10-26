@@ -635,7 +635,6 @@ class ControllerCatalogProduct extends Controller {
 			foreach ($product_specials  as $product_special) {
 				if (($product_special['date_start'] == '0000-00-00' || strtotime($product_special['date_start']) < time()) && ($product_special['date_end'] == '0000-00-00' || strtotime($product_special['date_end']) > time())) {
 					$special = $this->currency->format($product_special['price'], $this->config->get('config_currency'));
-
 					break;
 				}
 			}
@@ -643,8 +642,9 @@ class ControllerCatalogProduct extends Controller {
 			$data['products'][] = array(
 				'product_id' => $result['product_id'],
 				'image'      => $image,
-				'name'       => $result['name'],
+				'name'       => utf8_substr(trim(strip_tags(html_entity_decode($result['name'], ENT_QUOTES, 'UTF-8'))), 0, 60) . '..',
 				'model'      => $result['model'],
+				'sku'      => $result['sku'],
 				'price'      => $this->currency->format($result['price'], $this->config->get('config_currency')),
 				'special'    => $special,
 				'quantity'   => $result['quantity'],

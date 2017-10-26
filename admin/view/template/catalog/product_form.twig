@@ -1153,6 +1153,7 @@
                         <td class="text-center">Cost</td>
                         <td class="text-center">Sale Price</td>
                         <td class="text-center">MSRP</td>
+                        <td class="text-center">{{ entry_quantity }}</td>
                       </tr>
                     </thead>
                     <tbody>
@@ -1175,6 +1176,7 @@
                       <td class="text-center"><input  type="text" name="variant[price][]" value="{{ (variant.price)|number_format(2, '.', ',')}}"/></td>
                       <td class="text-center"><input  type="text" name="variant[sale_price][]" value="{{ (variant.sale_price)|number_format(2, '.', ',')}}"/></td>
                       <td class="text-center"><input  type="text" name="variant[msrp][]" value="{{ (variant.msrp)|number_format(2, '.', ',')}}"/></td>
+                      <td class="text-center"><input  type="text" name="variant[quantity][]" value="{{ (variant.quantity)}}"/></td>
                     </tr>
                     {% endfor %}
                       </tbody>

@@ -94,6 +94,7 @@ class ControllerCatalogUpload extends Controller {
 				$options2 = array();
 				$images = array();
 				$path = 'catalog/product/';
+				$quantity = 0;
 				if (!is_dir(DIR_IMAGE . $path)) {
 					@mkdir(DIR_IMAGE . $path, 0777);
 				}
@@ -120,6 +121,7 @@ class ControllerCatalogUpload extends Controller {
 								'product_option_value'=>$options2
 							);
 							}
+							$productar['quantity'] = $quantity;
 							$product_id = $this->model_catalog_product->uploadProduct($productar);
 							if(isset($product_id)){
 								$this->model_catalog_product->addVariants($variants,$product_id);
@@ -164,6 +166,7 @@ class ControllerCatalogUpload extends Controller {
 						$options2 = array();
 						$images = array();
 						$variants = array();
+						$quantity = 0;
 						
 					}
 					$option_id1 ='';
@@ -206,13 +209,14 @@ class ControllerCatalogUpload extends Controller {
 							  'option1_id'=>$option_id1,
 							  'option2_id'=>$option_id2,
 							  'option2'=>$product[5],
+							  'quantity' => $product[6],
 							  'price'=>$product[2],
 							  'sale_price'=>$product[2]*1.5,
 							  'msrp'=>$product[12]*1.5,
 							  'variants_image'=>$image
 						  );
 					}
-					
+					$quantity +=$product[6];
 					$productId = $product[26];
 				}
 				if(isset($productar)&&count($productar)>0){
@@ -231,7 +235,7 @@ class ControllerCatalogUpload extends Controller {
 								'product_option_value'=>$options2
 							);
 							}
-						$products[] = $productar;
+						$productar['quantity'] = $quantity;
 						$product_id = $this->model_catalog_product->uploadProduct($productar);
 						if(isset($product_id)){
 							$this->model_catalog_product->addVariants($variants,$product_id);
