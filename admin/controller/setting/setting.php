@@ -8,7 +8,8 @@ class ControllerSettingSetting extends Controller {
 		$this->document->setTitle($this->language->get('heading_title'));
 
 		$this->load->model('setting/setting');
-
+		//print_r($this->request->post);
+		//return;
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
 			$this->model_setting_setting->editSetting('config', $this->request->post);
 
@@ -343,6 +344,12 @@ class ControllerSettingSetting extends Controller {
 			$data['config_currency_auto'] = $this->request->post['config_currency_auto'];
 		} else {
 			$data['config_currency_auto'] = $this->config->get('config_currency_auto');
+		}
+		
+		if (isset($this->request->post['config_charging'])) {
+			$data['config_charging'] = $this->request->post['config_charging'];
+		} else {
+			$data['config_charging'] = $this->config->get('config_charging');
 		}
 
 		$this->load->model('localisation/currency');
