@@ -11,6 +11,9 @@ class ControllerCommoniplDashboard extends Controller{
 		if(isset($this->session->data['srcImages'])){
 			unset($this->session->data['srcImages']);
 		}
+		if($this->session->data['home']){
+			unset($this->session->data['home']);
+		}
 		/*$status = $this->request->get['success'];
 		if($status!=1){
 			unset($this->session->data['shop']);

@@ -57,7 +57,11 @@ class ControllerShopifyFooter extends Controller {
 		}
 
 		$data['scripts'] = $this->document->getScripts('footer');
+		if(isset($this->session->data['home'])){
+			return $this->load->view('common/footer', $data);
+		}else{
+			return $this->load->view('shopify/footer', $data);
+		}
 		
-		return $this->load->view('shopify/footer', $data);
 	}
 }

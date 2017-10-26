@@ -76,8 +76,14 @@ class ControllerShopifyHeader extends Controller {
 		$data['search'] = $this->load->controller('common/search');
 		$data['cart'] = $this->load->controller('common/cart');
 		$data['menu'] = $this->load->controller('common/menu');
-		$data['appkey'] = SHOPIFY_APP_API_KEY;
+		if(isset($this->session->data['home'])){
+			$data['home'] = true;
+			return $this->load->view('common/header', $data);
+		}else{
+			$data['appkey'] = SHOPIFY_APP_API_KEY;
 
-		return $this->load->view('shopify/header', $data);
+			return $this->load->view('shopify/header', $data);
+		}
+		
 	}
 }
