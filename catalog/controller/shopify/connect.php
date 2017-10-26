@@ -27,9 +27,9 @@ class ControllerShopifyConnect extends Controller {
 			//return;
 			$url = ($charging['charge_type']==1)?'':'recurring_';
 			$shopify = shopify\client($this->session->data['shop'], SHOPIFY_APP_API_KEY,$this->session->data['oauth_token']);
-			$charges =  $shopify('GET /admin/'.$url.'application_charges.json?status=accepted');
-			if(isset($charges)){
-				foreach($charges as $charge){
+			$result =  $shopify('GET /admin/'.$url.'application_charges.json?status=accepted');
+			if(isset($result)){
+				foreach($result as $charge){
 					if($charge['status']=='accepted'){
 						$this->response->redirect($this->url->link('commonipl/dashboard', '', true));
 					}else{
@@ -44,7 +44,7 @@ class ControllerShopifyConnect extends Controller {
 			$data = array(
 					"name"=>$charging['name'],
 					"price"=> $charging['price'],
-					"return_url"=>$charging['retrun_url']
+					"return_url"=> isset($charging['retrun_url'])?$charging['retrun_url']:'https://www.jewelryegg.com/index.php?route=commonipl/dashboard'
 			);
 			if($charging['sendbox']==1){
 				$data["test"]=true;
@@ -55,7 +55,7 @@ class ControllerShopifyConnect extends Controller {
 			//print_r($data);
 			$result =  $shopify('POST /admin/'.$url.'application_charges.json', array(), array($url.'application_charge'=>$data));
 			$confirmation_url = $result['confirmation_url'];
-			die("<script> top.location.href='".$confirmation_url."'</script>");
+			die("<script> location.href='".$confirmation_url."'</script>");
 			//print_r($get);
 			/*
 			print_r($result);
