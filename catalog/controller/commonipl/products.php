@@ -67,6 +67,10 @@ class ControllerCommoniplProducts extends Controller {
 	//$data['header'] = $this->load->controller($this->session->data['store'].'/header');
 	//$this->response->setOutput($this->load->view('commonipl/products', $data));
 	//print_r($data);
+		if(isset($this->session->data['home'])){
+			$data['home'] = true;
+			
+		}
 		return $this->load->view('commonipl/products', $data);	
 
 	}

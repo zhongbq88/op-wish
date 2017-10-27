@@ -53,6 +53,7 @@ class ControllerCommonCart extends Controller {
 		$this->load->model('tool/upload');
 
 		$data['products'] = array();
+		$total_price =0;
 
 		foreach ($this->cart->getProducts() as $product) {
 			if ($product['image']) {
@@ -89,6 +90,7 @@ class ControllerCommonCart extends Controller {
 				
 				$price = $this->currency->format($unit_price, $this->session->data['currency']);
 				$total = $this->currency->format($unit_price * $product['quantity'], $this->session->data['currency']);
+				$total_price+=$unit_price * $product['quantity'];
 			} else {
 				$price = false;
 				$total = false;
@@ -129,7 +131,8 @@ class ControllerCommonCart extends Controller {
 				'text'  => $this->currency->format($total['value'], $this->session->data['currency']),
 			);
 		}
-
+		$data['total_item'] = count($data['products']);
+		$data['total_price'] = $this->currency->format($total_price, $this->session->data['currency']);
 		$data['cart'] = $this->url->link('checkout/cart');
 		$data['checkout'] = $this->url->link('checkout/checkout', '', true);
 

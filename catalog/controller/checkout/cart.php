@@ -7,7 +7,7 @@ class ControllerCheckoutCart extends Controller {
 
 		$data['breadcrumbs'] = array();
 
-		$data['breadcrumbs'][] = array(
+		/*$data['breadcrumbs'][] = array(
 			'href' => $this->url->link('common/home'),
 			'text' => $this->language->get('text_home')
 		);
@@ -15,7 +15,7 @@ class ControllerCheckoutCart extends Controller {
 		$data['breadcrumbs'][] = array(
 			'href' => $this->url->link('checkout/cart'),
 			'text' => $this->language->get('heading_title')
-		);
+		);*/
 
 		if ($this->cart->hasProducts() || !empty($this->session->data['vouchers'])) {
 			if (!$this->cart->hasStock() && (!$this->config->get('config_stock_checkout') || $this->config->get('config_stock_warning'))) {
@@ -269,11 +269,12 @@ class ControllerCheckoutCart extends Controller {
 		} else {
 			$product_id = 0;
 		}
-		//echo $product_id;
+		print_r($product_id);
+
 		$this->load->model('catalog/product');
 
 		$product_info = $this->model_catalog_product->getProduct($product_id);
-
+print_r($product_info);
 		if ($product_info) {
 			if (isset($this->request->post['quantity'])) {
 				$quantity = (int)$this->request->post['quantity'];
@@ -286,7 +287,7 @@ class ControllerCheckoutCart extends Controller {
 			} else {
 				$option = array();
 			}
-			//echo $option;
+
 			$product_options = $this->model_catalog_product->getProductOptions($this->request->post['product_id']);
 
 			foreach ($product_options as $product_option) {
@@ -314,7 +315,7 @@ class ControllerCheckoutCart extends Controller {
 					$json['error']['recurring'] = $this->language->get('error_recurring_required');
 				}
 			}
-
+print_r($json);
 			if (!$json) {
 				$this->cart->add($this->request->post['product_id'], $quantity, $option, $recurring_id);
 

@@ -16,8 +16,8 @@ class ControllerCommoniplOrders extends Controller {
 			$index++;
 		}
 		$data['continue'] = $this->url->link('commonipl/account', '', true);
-		$data['footer'] = $this->load->controller($this->session->data['store'].'/footer');
-		$data['header'] = $this->load->controller($this->session->data['store'].'/header');
+		$data['footer'] = $this->load->controller('common/footer');
+		$data['header'] = $this->load->controller('common/header');
 		$data['paid'] = $this->url->link('extension/payment/pp_express/ipn', '', true);
 		$data['sys_action'] = $this->url->link('shopify/loadorders&syn=true','', true);
 		$data['order_list'] = $this->getList();
@@ -460,8 +460,8 @@ class ControllerCommoniplOrders extends Controller {
 			$data['paid'] = $this->url->link('commonipl/orders/pay', 'order_id=' . $orderid . $url, true);
 			
 			//$data['status'] = $this->request->get['status'];
-			$data['footer'] = $this->load->controller($this->session->data['store'].'/footer');
-			$data['header'] = $this->load->controller($this->session->data['store'].'/header');
+			$data['footer'] = $this->load->controller('common/footer');
+			$data['header'] = $this->load->controller('common/header');
 
 			$this->response->setOutput($this->load->view('commonipl/order_info', $data));
 		} else {

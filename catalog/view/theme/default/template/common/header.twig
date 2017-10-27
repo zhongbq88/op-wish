@@ -522,7 +522,10 @@ div.pagination-results ul li a, div.pagination-results ul li span {
 	</script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
 <script src="https://cdn.shopify.com/s/assets/external/app.js"></script>
-{% if not home %}
+
+{% if ishome %}
+<script type="text/javascript" src="catalog/view/theme/fastor/js/common.js"></script>
+{%else%}
 <script type="text/javascript">
     ShopifyApp.init({
       apiKey: '{{ appkey }}',
@@ -543,7 +546,7 @@ div.pagination-results ul li a, div.pagination-results ul li span {
           label: '{{dashboard}}',
           message: '{{dashboard}}',
           callback: function(){
-            window.location.href="index.php?route=commonipl/dashboard";
+            window.location.href="index.php?route=commonipl/dashboard&shopify=true";
           }
         },
 		secondary:[
@@ -552,14 +555,14 @@ div.pagination-results ul li a, div.pagination-results ul li span {
 						label: '{{add_products}}',
           message: '{{add_products}}',
           callback: function(){
-		   window.location.href="index.php?route=commonipl/category";
+		   window.location.href="index.php?route=commonipl/category&shopify=true";
           }
 					},
 					{
           label: '{{ orders }}',
           message: '{{ orders }}',
           callback: function(){
-		   window.location.href="index.php?route=commonipl/orders";
+		   window.location.href="index.php?route=commonipl/orders&shopify=true";
           }
          },/*{
           label: '{{ acct_balance_transactions }}',
@@ -572,13 +575,13 @@ div.pagination-results ul li a, div.pagination-results ul li span {
           label: '{{ wish_list }}',
           message: '{{ wish_list }}',
           callback: function(){
-		   window.location.href="index.php?route=account/wishlist";
+		   window.location.href="index.php?route=account/wishlist&shopify=true";
           }
 		 },{
           label: '{{ faq }}',
           message: '{{ faq }}',
 		  callback: function(){
-		   window.location.href="index.php?route=information/information&information_id=7";
+		   window.location.href="index.php?route=information/information&shopify=true&information_id=7";
           }
 		 }]
 		
@@ -586,6 +589,7 @@ div.pagination-results ul li a, div.pagination-results ul li span {
     });
   });
 </script>
+
 {% endif %}
 <!--Start of Tawk.to Script-->
 <script type="text/javascript">
@@ -613,21 +617,21 @@ s0.parentNode.insertBefore(s1,s0);
 <body class="common-home body-full-width product-list-type-3 product-grid-type-3              no-box-type-7 box-type-5     footer-type-3 breadcrumb-style-7 border-width-1 body-white    body-header-type-4">
 <!--<div style="height:30px;"></div>--> 
 
-{% if home %}
+{% if ishome %}
 <div class="standard-body">
-  <div id="main" class="">
-    <header class="header-type-2">
-    <div class="background-header"></div>
-    <div class="slider-header"> 
-      <!-- Top of pages -->
-      <div id="top" class="full-width">
-        <div class="background-top"></div>
-        <div class="background">
-          <div class="shadow"></div>
-          <div class="pattern">
-            <div class="top-bar">
+<div id="main" class="">
+<header class="header-type-2">
+  <div class="background-header"></div>
+  <div class="slider-header"> 
+    <!-- Top of pages -->
+    <div id="top" class="full-width">
+      <div class="background-top"></div>
+      <div class="background">
+        <div class="shadow"></div>
+        <div class="pattern"> 
+          <!--<div class="top-bar">
               <div class="container"> 
-                <!-- Links -->
+               
                 <ul class="menu">
                   <li><a href="index.php?route=account/account">My Account</a></li>
                   <li><a href="index.php?route=account/wishlist" id="wishlist-total">Wish List (0)</a></li>
@@ -635,7 +639,7 @@ s0.parentNode.insertBefore(s1,s0);
                   <li><a href="index.php?route=checkout/checkout">Checkout</a></li>
                 </ul>
                 <form action="index.php?route=common/currency/currency" method="post" enctype="multipart/form-data" id="currency_form">
-                  <!-- Currency -->
+                  
                   <div class="dropdown"> <a href="#" class="dropdown-toggle" data-hover="dropdown" data-toggle="dropdown">$</a>
                     <ul class="dropdown-menu">
                       <li><a href="javascript:;" onclick="$('input[name=\'code\']').attr('value', 'EUR'); $('#currency_form').submit();">Euro</a></li>
@@ -647,21 +651,21 @@ s0.parentNode.insertBefore(s1,s0);
                   <input type="hidden" name="redirect" value="index.php?route=common/home">
                 </form>
               </div>
-            </div>
-            <div class="container">
-              <div class="row"> 
-                <!-- Header Left -->
-                <div class="col-sm-4" id="header-left"> 
-                  <!-- Search -->
-                  <div class="search_form">
-                    <div class="button-search"></div>
-                    <span role="status" aria-live="polite" class="ui-helper-hidden-accessible"></span>
-                    <input type="text" class="input-block-level search-query ui-autocomplete-input" name="search" placeholder="Search" id="search_query" value="" autocomplete="off">
-                    <div id="autocomplete-results" class="autocomplete-results">
-                      <ul class="ui-autocomplete ui-front ui-menu ui-widget ui-widget-content ui-corner-all" id="ui-id-1" tabindex="0" style="display: none;">
-                      </ul>
-                    </div>
-                    <script type="text/javascript">
+            </div>-->
+          <div class="container">
+            <div class="row"> 
+              <!-- Header Left -->
+              <div class="col-sm-4" id="header-left"> 
+                <!-- Search -->
+                <div class="search_form">
+                  <div class="button-search"></div>
+                  <span role="status" aria-live="polite" class="ui-helper-hidden-accessible"></span>
+                  <input type="text" class="input-block-level search-query ui-autocomplete-input" name="search" placeholder="Search" id="search_query" value="" autocomplete="off">
+                  <div id="autocomplete-results" class="autocomplete-results">
+                    <ul class="ui-autocomplete ui-front ui-menu ui-widget ui-widget-content ui-corner-all" id="ui-id-1" tabindex="0" style="display: none;">
+                    </ul>
+                  </div>
+                  <script type="text/javascript">
                                         		$(document).ready(function() {
                                         			$('#search_query').autocomplete({
                                         				delay: 0,
@@ -701,35 +705,26 @@ s0.parentNode.insertBefore(s1,s0);
                                         			};
                                         		});
                                         		</script> 
-                  </div>
                 </div>
+              </div>
+              
+              <!-- Header Center -->
+              <div class="col-sm-4" id="header-center"> 
+                <!-- Logo -->
+                <div class="logo"><a href="index.php?route=common/home"><img src="image/logo_text.png" title="Your Store" alt="Your Store"></a></div>
+              </div>
+              
+              <!-- Header Right -->
+              <div class="col-sm-4" id="header-right"> <a href="index.php?route=account/account" class="my-account"><i class="fa fa-user"></i></a> 
                 
-                <!-- Header Center -->
-                <div class="col-sm-4" id="header-center"> 
-                  <!-- Logo -->
-                  <div class="logo"><a href="index.php?route=common/home"><img src="image/logo_text.png" title="Your Store" alt="Your Store"></a></div>
-                </div>
-                
-                <!-- Header Right -->
-                <div class="col-sm-4" id="header-right"> <a href="index.php?route=account/account" class="my-account"><i class="fa fa-user"></i></a> 
-                  
-                  <!-- Cart block -->
-                  <div id="cart_block" class="dropdown">
-                    <div class="cart-heading dropdown-toogle" data-hover="dropdown" data-toggle="dropdown" onclick="window.location.href = 'index.php?route=checkout/cart'"> <i class="cart-count"><span id="total_count_ajax">0</span></i> <i class="cart-icon"><img src="catalog/view/theme/fastor/img/icon-cart-hover.png" class="cart-icon-hover" alt=""><img src="catalog/view/theme/fastor/img/icon-cart.png" class="cart-icon-standard" alt=""></i>
-                      <p><strong id="total_price_ajax"><span id="total_price">$0.00</span></strong></p>
-                    </div>
-                    <div class="dropdown-menu" id="cart_content">
-                      <div id="cart_content_ajax">
-                        <div class="empty">Your shopping cart is empty!</div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+                <!-- Cart block -->
+                {{ cart }}
               </div>
             </div>
           </div>
         </div>
-        <script type="text/javascript">
+      </div>
+      <script type="text/javascript">
   $(window).load(function(){
       var css_tpl = '<style type="text/css">';
       css_tpl += '#megamenu_2515050 ul.megamenu > li > .sub-menu > .content {';
@@ -742,9 +737,7 @@ s0.parentNode.insertBefore(s1,s0);
     $("head").append(css_tpl);
   });
 </script> 
-      </div>
     </div>
   </div>
-</div>
 </header>
 {%endif%} 

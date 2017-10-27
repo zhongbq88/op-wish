@@ -41,23 +41,33 @@
      			    		  return false;
      			    		});
 			    		
-     			    		$('.popup-image').click(function() {
-     			    			var smallImage = $(this).attr('data-image');
-     			    			var largeImage = $(this).attr('data-zoom-image');
-								//alert(largeImage);
-     			    			//var ez =   $('#image').data('elevateZoom');	
-     			    			$('#ex1').attr('src', largeImage);  
-     			    			/*ez.swaptheimage(smallImage, largeImage); 
-     			    			z_index = $(this).index('.thumbnails a, .thumbnails-carousel a');*/
-     			    			return false;
-     			    		});
+     			    		
 			    		} else {
 			    			$(document).on('click', '.open-popup-image', function () {
 			    			  $('.popup-gallery').magnificPopup('open', 0);
 			    			  return false;
 			    			});
 			    		}
+						/*$(document).on('click', '.popup-image', function () {
+     			    		  var smallImage = $(this).attr('data-image');
+     			    			var largeImage = $(this).attr('data-zoom-image');
+								alert(largeImage);
+     			    			//var ez =   $('#image').data('elevateZoom');	
+     			    			$('#ex1').attr('src', largeImage);  
+     			    			/*ez.swaptheimage(smallImage, largeImage); 
+     			    			z_index = $(this).index('.thumbnails a, .thumbnails-carousel a');
+     			    			return false;
+     			    		});*/
+						
 			    	});
+					function image(popup){
+						
+						 /*var smallImage = $(node).getAttribute('data-image');
+     			    			var largeImage = $(node).getAttribute('data-zoom-image');*/
+								//alert(popup);
+     			    			//var ez =   $('#image').data('elevateZoom');	
+     			    	$('#ex1').attr('src', popup);  
+					}
 			    </script>
                           <div class="col-sm-5 popup-gallery" >
                             <div class="row"> 
@@ -71,13 +81,13 @@
                                   <ul>
                                    {% if thumb %}
                                     <li style="  text-align:center;">
-                                      <p style=" text-align:center;"><a class="popup-image" href="javascript:void();" data-zoom-image="{{ popup }}" data-image="{{ popup }}" title="{{ heading_title }}"> <img src="{{ thumb }}" title="{{ heading_title }}" alt="{{ heading_title }}"  align="middle" /></a></p>
+                                      <p style=" text-align:center;"><a class="popup-image" href="javascript:image('{{ popup }}');" data-zoom-image="{{ popup }}" data-image="{{ popup }}" title="{{ heading_title }}"> <img src="{{ thumb }}" title="{{ heading_title }}" alt="{{ heading_title }}"  align="middle" /></a></p>
                                     </li>
                                    {% endif %}
                                     {% if images %}
                                     {% for image in images %}
                                     <li style=" text-align:center;">
-                                      <p><a class="popup-image" href="javascript:void();" data-zoom-image="{{ image.popup }}" data-image="{{ image.popup }}" title="{{ heading_title }}"> <img src="{{ image.thumb }}" title="{{ heading_title }}" alt="{{ heading_title }}"  align="middle" /></a></p>
+                                      <p><a class="popup-image" href="javascript:image('{{ image.popup }}');"  data-zoom-image="{{ image.popup }}" data-image="{{ image.popup }}" title="{{ heading_title }}"> <img src="{{ image.thumb }}" title="{{ heading_title }}" alt="{{ heading_title }}"  align="middle" /></a></p>
                                     </li>
                                     {% endfor %}
                                     {% endif %}
@@ -262,9 +272,11 @@
               <input type="text" name="quantity" value="{{ minimum }}" size="2" id="input-quantity" class="form-control" />
               <input type="hidden" name="product_id" value="{{ product_id }}" />
               <br />-->
-                                  
+                                  {% if home %}
+                                  <button type="button" data-toggle="tooltip"  data-loading-text="{{ text_loading }}" class="btn btn-primary btn-lg btn-block" title="{{ button_cart }}" onclick="cart.add('{{ product_id }}');"><span class="hidden-xs hidden-sm hidden-md">{{ button_cart }}</span></button>
+                                  {%else%}
                                   <button type="button" data-toggle="tooltip"  data-loading-text="{{ text_loading }}" class="btn btn-primary btn-lg btn-block" title="{{ button_wishlist }}" onclick="wishlist.add('{{ product_id }}');"><span class="hidden-xs hidden-sm hidden-md">{{ button_wishlist }}</span></button>
-                                  
+                                  {%endif%}
                                   <!--  <button type="button" id="button-cart" data-loading-text="{{ text_loading }}" class="btn btn-primary btn-lg btn-block">{{ button_cart }}</button>--> 
                                 </div>
                                 {% if minimum > 1 %}
