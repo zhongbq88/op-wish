@@ -62,6 +62,7 @@ $_['text_restock']               = 'Success: Products have been restocked!';
 $_['text_upload']                = 'Your file was successfully uploaded!';
 $_['text_picklist']              = 'Dispatch Note';
 $_['add_product']              = 'Add Product';
+$_['text_my_product']              = 'My Products';
 
 // Column
 $_['column_image']            = 'Image';
