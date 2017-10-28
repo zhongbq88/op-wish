@@ -10,6 +10,12 @@ class ModelAccountWishlist extends Model {
 	public function deleteWishlist($product_id) {
 		$this->db->query("DELETE FROM " . DB_PREFIX . "customer_wishlist WHERE customer_id = '" . (int)$this->customer->getId() . "' AND product_id = '" . (int)$product_id . "'");
 	}
+	
+	public function getWishlistByProductId($product_id) {
+        $query = $this->db->query("SELECT * FROM " . DB_PREFIX . "customer_wishlist WHERE customer_id = '" . (int)$this->customer->getId() . "' AND product_id = '" . (int)$product_id . "'");
+
+		return $query->row;
+	}
 
 	public function getWishlist() {
         $query = $this->db->query("SELECT * FROM " . DB_PREFIX . "customer_wishlist WHERE customer_id = '" . (int)$this->customer->getId() . "' ORDER BY date_added DESC");

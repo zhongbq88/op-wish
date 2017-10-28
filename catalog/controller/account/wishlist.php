@@ -15,16 +15,7 @@ class ControllerAccountWishList extends Controller {
 
 		$this->load->model('tool/image');
 
-		if (isset($this->request->get['remove'])) {
-			// Remove Wishlist
-			$this->model_account_wishlist->deleteWishlist($this->request->get['remove']);
-			$json = array();
-			$json['product_id'] = $this->request->get['remove'];
-			$json['success'] = $this->language->get('text_remove');
-			$this->response->addHeader('Content-Type: application/json');
-			$this->response->setOutput(json_encode($json));
-			//$this->response->redirect($this->url->link('account/wishlist'));
-		}
+		
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -131,7 +122,7 @@ class ControllerAccountWishList extends Controller {
 					'compare_price' => $compare_price,*/
 					'special'    => $special,
 					'href'       => $this->url->link('product/product', 'product_id=' . $product_info['product_id']),
-					'remove'     => $this->url->link('account/wishlist', 'remove=' . $product_info['product_id'])
+					'remove'     => $this->url->link('account/wishlist/remove', 'product_id=' . $product_info['product_id'])
 				);
 			} else {
 				$this->model_account_wishlist->deleteWishlist($result['product_id']);
@@ -190,6 +181,22 @@ class ControllerAccountWishList extends Controller {
 			}
 		}
 
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
+	}
+	
+	public function remove(){
+		$this->load->model('account/wishlist');
+		$this->load->language('account/wishlist');
+		$json = array();
+		if (isset($this->request->get['product_id'])) {
+			$this->model_account_wishlist->deleteWishlist($this->request->get['product_id']);
+			$json['product_id'] = $this->request->get['product_id'];
+			$json['success'] = $this->language->get('text_remove');
+			
+		}
+		
+			
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}

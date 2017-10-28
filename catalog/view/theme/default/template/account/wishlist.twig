@@ -230,22 +230,24 @@ a:hover {
 <link rel="stylesheet" href="catalog/view/theme/default/stylesheet/css-loader.css">
 <script type="text/javascript" src="catalog/view/javascript/editor/wangEditor.min.js"></script> 
 <script type="text/javascript">
+var editors = new Array();
  {% for product in products %}
  var E=window.wangEditor;
- var editor=new E('#edit_des{{ product.product_id }}');
+ var editor =new E('#edit_des{{ product.product_id }}');
  editor.create();
+ editors['{{ product.product_id }}'] = editor;
 {% endfor %}
 
 </script> 
 <script type="text/javascript"><!--
 $('#push_all').on('click', function() {
 	 {% for product in products %}
-		$('#input-description{{ product.product_id }}').val(editor.txt.html());
+		$('#input-description{{ product.product_id }}').val(editors['{{ product.product_id }}'].txt.html());
 	{% endfor %}
 	pushProduct('');
 });
 function pushone(productid) {
-	$('#input-description'+productid).val(editor.txt.html());
+	$('#input-description'+productid).val(editors[productid].txt.html());
 	pushProduct(productid);
 };
 
@@ -262,8 +264,9 @@ function remove(reqUrl){
 			//$('#gopublish').button('reset');
 		},
 		success: function(json) {
-			console.log(json);
+			//console.log(json);
 			//alert(json['success']);
+			$('.alert-dismissible').remove();
 			if (json['success']) {
 				
 				$('#product_item'+json['product_id']).remove();
@@ -300,6 +303,7 @@ function remove(reqUrl){
 		},
 		success: function(json) {
 			//alert(json['success']);
+			$('.alert-dismissible').remove();
 			if (json['success']) {
 				var result = json['success'];
 				
