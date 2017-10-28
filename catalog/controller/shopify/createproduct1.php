@@ -1,8 +1,9 @@
 <?php
 
-include(DIR_APPLICATION.'/controller/shopify/oauthclient.php');
+require 'vendor/autoload.php';
+use phpish\shopify;
 
-class ControllerCommoniplPublishipl extends Controller {
+class ControllerCreateproduct extends Controller {
 	
 	public function index(){
 		
@@ -47,8 +48,7 @@ class ControllerCommoniplPublishipl extends Controller {
 		}else{
 			$json['error'] = 'Push Error';
 		}
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
+		return $json;
 		
 	}
 	
@@ -135,9 +135,7 @@ class ControllerCommoniplPublishipl extends Controller {
 		$json = array();
 		try
 		{
-			
-			$product = Oauthclient::getInstance($this->customer->getStore(),$this->customer->getConsumerkey()
-			,$this->customer->getConsumerSecret(),$this->customer->getToken())->post(array('product' =>$paoducts),$variantImages);
+			$product = $this->post(array('product' =>$paoducts),$variantImages);
 			$product_Add_id = $this->model_commonipl_product->saveShopifyAddProduct($product,$product_id);
 			if(isset($product['id'])){
 				$this->model_account_wishlist->deleteWishlist($product_id);
@@ -192,8 +190,67 @@ class ControllerCommoniplPublishipl extends Controller {
         }
 		return $arr2;
    }
+   
+   public function post($data,$variantImages=array()){
+		//echo $this->store;
+		//echo $this->oauth_token;
+		//print_r($data);
+		//print_r($this->store);
+		//print_r($this->oauth_token);
+		try
+		{
+			$shopify = shopify\client($this->session->data['shop'], SHOPIFY_APP_API_KEY,$this->session->data['oauth_token']);
+		if(isset($data['product'])){
+			$result =  $shopify('POST /admin/products.json', array(), $data);
+			//print_r($result);
+			$variants = $result['variants'];
+			$images = $result['images'];
+			$variants2 = array();
+			$i=0;
+			$count = 0;
+			//print_r($variantImages);
+			foreach($data['product']['images'] as $key=> $image){
+				if(isset($variantImages[$image['src']])&&isset($images[$key])){
+					$variant_postion = $variantImages[$image['src']];
+					$image2 = array();
+					$image2['id'] = $images[$key]['id'];
+					$variant_ids = array();
+					foreach($variant_postion as $pos){
+						if(isset($variants[$pos-1])){
+							$variant_ids[] = $variants[$pos-1]['id'];
+						}
+					}
+					//print_r($image2);
+					if(!empty($variant_ids)){
+						$image2['variant_ids'] = $variant_ids;
+						$rult = $shopify('PUT /admin/products/'.$result['id'].'/images/'.$image2['id'].'.json', array(), array('image' =>$image2));
+					}
+				}
+				
+			}
+			return $result;
+		}
+			
+		}
+		catch (shopify\ApiException $e)
+		{
+			# HTTP status code was >= 400 or response contained the key 'errors'
+			//echo $e;
+			print_r($e->getRequest());
+			print_r($e->getResponse());
+		}
+		catch (shopify\CurlException $e)
+		{
+			# cURL error
+			//echo $e;
+			print_r($e->getRequest());
+			print_r($e->getResponse());
+		}
+		
+		return ;
+		
+    }
 	
 		
 }
 
-?>
