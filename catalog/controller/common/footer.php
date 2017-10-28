@@ -56,7 +56,10 @@ class ControllerCommonFooter extends Controller {
 		}
 
 		$data['scripts'] = $this->document->getScripts('footer');
-		
+		if(isset($this->session->data['home'])){
+			$data['ishome'] = true;
+			
+		}
 		return $this->load->view('common/footer', $data);
 	}
 }

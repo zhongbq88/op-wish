@@ -77,8 +77,8 @@ class ControllerCommonHeader extends Controller {
 		$data['cart'] = $this->load->controller('common/cart');
 		$data['menu'] = $this->load->controller('common/menu');
 		$data['login_store'] =$this->customer->isLogged() && $this->session->data['store']=='store';
-		if(isset($this->session->data['home'])){
-			$data['home'] = true;
+		if(isset($this->session->data['home'])&&!isset($this->request->get['shopify'])){
+			$data['ishome'] = true;
 			
 		}
 		if(isset($this->session->data['shop'])){

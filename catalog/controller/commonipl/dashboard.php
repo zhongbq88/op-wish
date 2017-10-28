@@ -8,6 +8,8 @@ class ControllerCommoniplDashboard extends Controller{
 		/*if (!$this->customer->isLogged()) {
 			$this->response->redirect($this->url->link('common/connect', '', true));
 		}*/
+		//print_r($this->session->data['home']);
+		
 		if(isset($this->session->data['srcImages'])){
 			unset($this->session->data['srcImages']);
 		}
@@ -138,8 +140,8 @@ class ControllerCommoniplDashboard extends Controller{
 		//print_r($productList);
 		$data['products'] = $productList;
 		
-		$data['footer'] = $this->load->controller($this->session->data['store'].'/footer');
-		$data['header'] = $this->load->controller($this->session->data['store'].'/header');
+		$data['footer'] = $this->load->controller('common/footer');
+		$data['header'] = $this->load->controller('common/header');
 		if(isset($this->session->data['sussecc'])){
 			$data['success'] = $this->session->data['sussecc'];
 			unset($this->session->data['sussecc']);

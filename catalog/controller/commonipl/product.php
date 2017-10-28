@@ -233,9 +233,11 @@ class ControllerCommoniplProduct extends Controller {
 
 			$this->model_commonipl_product->updateViewed($this->request->get['product_id']);
 			
-			$data['footer'] = $this->load->controller($this->session->data['store'].'/footer');
-			$data['header'] = $this->load->controller($this->session->data['store'].'/header');
-
+			$data['footer'] = $this->load->controller('common/footer');
+			$data['header'] = $this->load->controller('common/header');
+			if(isset($this->session->data['home'])){
+				$data['home'] = true;
+			}
 			$this->response->setOutput($this->load->view('commonipl/product', $data));
 		} else {
 			$url = '';
