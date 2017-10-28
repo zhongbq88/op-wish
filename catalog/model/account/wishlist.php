@@ -16,6 +16,12 @@ class ModelAccountWishlist extends Model {
 
 		return $query->rows;
 	}
+	
+	public function getWishlistProductId() {
+        $query = $this->db->query("SELECT product_id FROM " . DB_PREFIX . "customer_wishlist WHERE customer_id = '" . (int)$this->customer->getId() . "'");
+
+		return $query->rows;
+	}
 
 	public function getTotalWishlist() {
 		$query = $this->db->query("SELECT COUNT(*) AS total FROM " . DB_PREFIX . "customer_wishlist WHERE customer_id = '" . (int)$this->customer->getId() . "'");

@@ -17,7 +17,8 @@ class ControllerCommoniplProducts extends Controller {
 		}
 
 		$data['products'] = array();
-
+		$this->load->model('account/wishlist');
+		$wishlistProductId = $this->model_account_wishlist->getWishlistProductId();
 		$results = $this->model_commonipl_product->getProductsByCategoryId($category_id);
 		foreach ($results as $result) {
 			if ($result['image']) {
@@ -60,9 +61,12 @@ class ControllerCommoniplProducts extends Controller {
 				'tax'         => $tax,
 				'minimum'     => $result['minimum'] > 0 ? $result['minimum'] : 1,
 				'rating'      => isset($result['rating'])?$result['rating']:0,
+				'added'       => $this->inArray($result['product_id'],$wishlistProductId),
 				'href'        => $this->url->link('commonipl/product','product_id=' . $result['product_id'])
 			);
+			
 		}
+		
 			//$data['footer'] = $this->load->controller($this->session->data['store'].'/footer');
 	//$data['header'] = $this->load->controller($this->session->data['store'].'/header');
 	//$this->response->setOutput($this->load->view('commonipl/products', $data));
@@ -73,6 +77,17 @@ class ControllerCommoniplProducts extends Controller {
 		}
 		return $this->load->view('commonipl/products', $data);	
 
+	}
+	
+	private function inArray($product_id,$array){
+		
+		foreach($array as $value){
+			if($product_id == $value['product_id']){
+				
+				return 1;
+			}
+		}
+		return 0;
 	}
 	
 }
