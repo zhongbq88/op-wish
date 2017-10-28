@@ -9,6 +9,10 @@ class ControllerCommoniplDashboard extends Controller{
 			$this->response->redirect($this->url->link('common/connect', '', true));
 		}*/
 		//print_r($this->session->data['home']);
+		if($this->load->controller('shopify/oauth/checkChargeApp')==false){
+			die('<script> top.location.href="https://'.$this->session->data['shop'].'/admin/apps"</script>');
+			return;
+		}
 		
 		if(isset($this->session->data['srcImages'])){
 			unset($this->session->data['srcImages']);
@@ -148,6 +152,8 @@ class ControllerCommoniplDashboard extends Controller{
 		}
 		$this->response->setOutput($this->load->view('commonipl/dashboard', $data));
 	}
+	
+	
 	
 }
 

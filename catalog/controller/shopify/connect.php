@@ -28,6 +28,7 @@ class ControllerShopifyConnect extends Controller {
 			$url = ($charging['charge_type']==1)?'':'recurring_';
 			$shopify = shopify\client($this->session->data['shop'], SHOPIFY_APP_API_KEY,$this->session->data['oauth_token']);
 			$result =  $shopify('GET /admin/'.$url.'application_charges.json?status=accepted');
+			//print_r($result);
 			if(isset($result)){
 				foreach($result as $charge){
 					if($charge['status']=='accepted'){
@@ -55,7 +56,7 @@ class ControllerShopifyConnect extends Controller {
 			//print_r($data);
 			$result =  $shopify('POST /admin/'.$url.'application_charges.json', array(), array($url.'application_charge'=>$data));
 			$confirmation_url = $result['confirmation_url'];
-			die("<script> location.href='".$confirmation_url."'</script>");
+			die("<script> top.location.href='".$confirmation_url."'</script>");
 			//print_r($get);
 			/*
 			print_r($result);
