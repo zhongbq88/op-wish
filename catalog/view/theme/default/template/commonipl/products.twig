@@ -120,7 +120,10 @@ display: -webkit-box;-webkit-line-clamp: 2;-webkit-box-orient: vertical;">{{ pro
                                     {%if home %}
                                     <li style="width:100%;"><a onclick="cart.add('{{ product.product_id }}');" style="width:100%;" data-toggle="tooltip" data-original-title="{{ button_cart }}">{{ button_cart }}</a></li>
                                     {% else %}
-                                    <li style="width:100%;"><a onclick="wishlist.add('{{ product.product_id }}');" style="width:100%;" data-toggle="tooltip" data-original-title="{{ button_wishlist }}">{{ button_wishlist }}</a></li>
+                                    {% if product.added %}
+                                     <li style="width:100%;"><a onclick="wishlist.add('{{ product.product_id }}');" style="width:100%;" data-toggle="tooltip" id="button_add_wishlist{{ product.product_id }}" data-original-title="{{ button_wishlist }}"><i class="fa fa-check-circle"></i> Added</a></li>	
+                                      {% else %}
+                                    <li style="width:100%;"><a onclick="wishlist.add('{{ product.product_id }}');" style="width:100%;" data-toggle="tooltip" id="button_add_wishlist{{ product.product_id }}" data-original-title="{{ button_wishlist }}">{{ button_wishlist }}</a></li>									{% endif %}
                                     {% endif %}
                                       
                                     </ul>

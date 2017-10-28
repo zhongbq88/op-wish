@@ -284,7 +284,8 @@ var wishlist = {
 				}
 
 				if (json['success']) {
-					$('#content').parent().before('<div class="alert alert-success alert-dismissible"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+					$('#button_add_wishlist' + product_id).html('<i class="fa fa-check-circle"></i> Added');
+					/*$('#content').parent().before('<div class="alert alert-success alert-dismissible"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');*/
 				}
 
 				$('#wishlist-total span').html(json['total']);
