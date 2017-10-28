@@ -18,10 +18,12 @@ class ControllerAccountWishList extends Controller {
 		if (isset($this->request->get['remove'])) {
 			// Remove Wishlist
 			$this->model_account_wishlist->deleteWishlist($this->request->get['remove']);
-
-			$this->session->data['success'] = $this->language->get('text_remove');
-
-			$this->response->redirect($this->url->link('account/wishlist'));
+			$json = array();
+			$json['product_id'] = $this->request->get['remove'];
+			$json['success'] = $this->language->get('text_remove');
+			$this->response->addHeader('Content-Type: application/json');
+			$this->response->setOutput(json_encode($json));
+			//$this->response->redirect($this->url->link('account/wishlist'));
 		}
 
 		$this->document->setTitle($this->language->get('heading_title'));

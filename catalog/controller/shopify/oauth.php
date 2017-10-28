@@ -60,6 +60,45 @@ class ControllerShopifyOauth extends Controller {
 		//echo $permission_url;
 		die("<script> top.location.href='$permission_url'</script>");
 	}
+	
+	public function checkChargeApp(){
+		try
+		{
+			
+			if(isset($this->request->get['charge_id'])){
+				$charge_id = $this->request->get['charge_id'];
+				$charging = $this->config->get('config_charging');
+				//print_r($charging);
+				//return;
+				$url = ($charging['charge_type']==1)?'':'recurring_';
+				$shopify = shopify\client($this->session->data['shop'], SHOPIFY_APP_API_KEY,$this->session->data['oauth_token']);
+				$result =  $shopify('GET /admin/'.$url.'application_charges/'.$charge_id.'.json');
+				//print_r($result);
+				if(isset($result['status'])&&$result['status']!='accepted'){
+					$return_url= explode('?',$result['return_url']);
+					echo("<script> window.open('".$return_url[0]."')</script>");
+					return false;
+				}
+			}
+		}
+		catch (shopify\ApiException $e)
+		{
+			# HTTP status code was >= 400 or response contained the key 'errors'
+			//echo $e;
+			print_r($e->getRequest());
+			print_r($e->getResponse());
+			
+		}
+		catch (shopify\CurlException $e)
+		{
+			# cURL error
+			//echo $e;
+			print_r($e->getRequest());
+			print_r($e->getResponse());
+			
+		}
+		return true;
+	}
 }
 
 ?>
