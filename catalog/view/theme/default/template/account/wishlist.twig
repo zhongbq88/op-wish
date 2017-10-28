@@ -62,14 +62,17 @@
                       </br>
                       <input  type="text" style="width:100%"  id="product_title" value="{{ product.name}}" name="product[{{product.product_id}}][title]">
                     </div>
+                    {% if collection %}
                     <div class="col-md-12 input-block js-build-wrapper" style="margin-top:10px;">
                       <label>Collections:</label>
                       </br>
                       <select style="width:100%" name="product[{{product.product_id}}][coll]"  >
-                        <option value="0">- None -</option>
-                        <option value="459306312">Home page</option>
+                      {%for coll in collection %}
+                        <option value="{{coll.collection_id}}">{{ coll.title }}</option>
+                       {%endfor%}
                       </select>
                     </div>
+                    {%endif%}
                     <div class="col-md-12 input-block" style="margin-top:10px;">
                       <label>Tags:</label>
                       </br>

@@ -76,9 +76,9 @@
               <div style="float: right"><a class="thumbnail" style="border:none;"><img src="{{  product.design_file }}"   style="width: auto; height: 120px;" /></a></div>
               {% endif %} </td>
             <td class="text-left">{{ product.model }}</td>
-             <td class="text-left"><div class="input-group btn-block" >
+             <td class="text-left"><div class="input-group btn-block" style="width:320px;" >
              {% if product.option_select %}
-             <select name="size_name{{product.order_product_id}}"  {% if (order_status_id!=1 and order_status_id!=18) or product.total==0 %} disabled {% endif %} id="input-size" class="form-control" style="float:left; width:50%;">
+           <select name="size_name{{product.order_product_id}}"  {% if (order_status_id!=1 and order_status_id!=18) or product.total==0 %} disabled {% endif %} id="input-size" class="form-control" style="float:left; width:50%;">
                 <!--<option value="">{{ product.selected_name }}</option>-->
                 
                 {% for option_select in product.option_select %}
@@ -97,15 +97,15 @@
                 <input type="text"  style="width:50%;" {% if (order_status_id!=1 and order_status_id!=18) or product.total==0 %} disabled {% endif %} name="quantity[{{ product.order_product_id }}]" id="input{{ product.order_product_id }}" value="{{ product.quantity }}" size="1" class="form-control" />
                 
                 {% else %}
-                
+               
                  <input type="text"  style="width:100%;" {% if (order_status_id!=1 and order_status_id!=18) or product.total==0 %} disabled {% endif %} name="quantity[{{ product.order_product_id }}]" id="input{{ product.order_product_id }}" value="{{ product.quantity }}" size="1" class="form-control" />
                   {% endif %}
                   
                 <span class="input-group-btn">
-                <button type="button" id="button-update{{ product.order_product_id }}" {% if  (order_status_id!=1 and order_status_id!=18) or product.total==0  %} disabled {% endif %} data-toggle="tooltip" onclick="update('{{ product.order_product_id }}','{{ product.design_file }}',this);"  id="button-remove{{ product.order_product_id }}"  title="{{ button_update }}" {% if (order_status_id!=1 and order_status_id!=18) %} disabled {% endif %} class="btn btn-primary">
+                <button type="button" id="button-update{{ product.order_product_id }}" {% if  (order_status_id!=1 and order_status_id!=18) or product.total==0  %} disabled {% endif %} data-toggle="tooltip" onclick="update('{{ product.order_product_id }}','{{ product.design_file }}',this);"  id="button-remove{{ product.order_product_id }}"  title="{{ button_update }}" {% if (order_status_id!=1 and order_status_id!=18) %} disabled {% endif %} class="btn btn-primary" style="padding-left:20px; padding-right:20px;">
                 <i class="fa fa-refresh"></i>
                 </button>
-                <button type="button" {% if (order_status_id!=1 and order_status_id!=18) or product.total==0  %} disabled {% endif %} data-toggle="tooltip" title="{{ text_remove }}" class="btn btn-danger" onclick="removeItem('{{ product.order_product_id }}',0);">
+                <button type="button" {% if (order_status_id!=1 and order_status_id!=18) or product.total==0  %} disabled {% endif %} data-toggle="tooltip" title="{{ text_remove }}" class="btn btn-danger" onclick="removeItem('{{ product.order_product_id }}',0);" style="padding-left:20px; padding-right:20px;">
                 <i class="fa fa-times-circle"></i>
                 </button>
                 </span></div></td>

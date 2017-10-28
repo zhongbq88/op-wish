@@ -10,7 +10,7 @@
       <div id="mk-text-block-221" style=" margin-bottom:0px;text-align: left;" class="mk-text-block  "> {% if success %}
         <div class="alert alert-success alert-dismissible" style="margin-bottom:10px;"><i class="fa fa-check-circle"></i> {{ success }} </div>
         {% endif %}
-       <a href="op/index.php?route=product/designermore">Desiger</a>
+       
         <div class="row" id="tips" style="display:none;">
           <div class="col-md-12">
             <div class="alert alert-warning">
@@ -112,15 +112,15 @@
               {% for product in products %}
               <tr>
                 <td class="text-center"><img src="{{ product.image }}" style="width: auto; height:100px;" alt="{{ product.name }}" class="img-thumbnail" /></td>
-                <td class="text-center" style="vertical-align:middle; text-align:center;">{{ product.name }}</td>
+                <td class="text-center" style="vertical-align:middle; text-align:center; max-width:260px;">{{ product.name }}</td>
                 <td class="text-center" style="vertical-align:middle; text-align:center;">{{ product.status }}</td>
                 <td class="text-center" style="vertical-align:middle; text-align:center;">{{ product.sales }}</td>
                 <td class="text-center" style="vertical-align:middle; text-align:center;">{{ product.published_at }}</td>
                 <td class="text-center" style="vertical-align:middle; text-align:center;"> {% if product.view %} <a href="{{ product.view }}" target="_parent" data-toggle="tooltip" title="{{ button_view }}" class="btn btn-primary"><i class="fa fa-eye"></i>{{ button_view }}</a> {% else %}
-                  <div class="btn-group" >
+                  <!--<div class="btn-group" >
                     <button type="button" onClick="addproduct();" id="pay{{order.order_id}}"   class="btn btn-success btn-xs" > {{ add_product }}</button>
-                  </div>
-                  <div class="btn-group"  style=" margin-left:20px;"> <a href="{{ product.href }}" target="_parent" data-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fa fa-pencil"></i>{{ button_edit }}</a> </div>
+                  </div>-->
+                  <div class="btn-group"  style=" margin-left:20px;"> <a href="{{ product.href }}" target="_parent" data-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fa fa-pencil"></i> &nbsp;&nbsp; {{ button_edit }}</a> </div>
                   {% endif %} </td>
               </tr>
               {% endfor %}
