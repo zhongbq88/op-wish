@@ -232,7 +232,8 @@ class ControllerCommoniplProduct extends Controller {
 			$data['recurrings'] = $this->model_commonipl_product->getProfiles($this->request->get['product_id']);
 
 			$this->model_commonipl_product->updateViewed($this->request->get['product_id']);
-			
+			$this->load->model('account/wishlist');
+			$data['added']  = $this->model_account_wishlist->getWishlistByProductId($this->request->get['product_id']);
 			$data['footer'] = $this->load->controller('common/footer');
 			$data['header'] = $this->load->controller('common/header');
 			if(isset($this->session->data['home'])){
@@ -300,7 +301,7 @@ class ControllerCommoniplProduct extends Controller {
 			$data['continue'] = $this->url->link('common/home');
 
 			$this->response->addHeader($this->request->server['SERVER_PROTOCOL'] . ' 404 Not Found');
-
+			
 			$data['column_left'] = $this->load->controller('common/column_left');
 			$data['column_right'] = $this->load->controller('common/column_right');
 			$data['content_top'] = $this->load->controller('common/content_top');

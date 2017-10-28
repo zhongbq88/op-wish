@@ -1,7 +1,7 @@
 <?php
 // Text
 $_['text_home']          = 'Home';
-$_['text_wishlist']      = 'Wish List (%s)';
+$_['text_wishlist']      = 'Import List (%s)';
 $_['text_shopping_cart'] = 'Shopping Cart';
 $_['text_category']      = 'Categories';
 $_['text_account']       = 'My Account';
@@ -18,7 +18,7 @@ $_['text_logout']        = 'Logout';
 $_['add_products']      = 'ADD PRODUCTS';
 $_['orders']        = 'ORDERS';
 $_['account_settings']        = 'ACCOUNT SETTINGS';
-$_['wish_list']        = 'WISH LIST';
+$_['wish_list']        = 'IMPORT LIST';
 $_['dashboard']        = 'DASHBOARD';
 $_['faq']        = 'FAQ';
 $_['add_products']        = 'ADD PRODUCTS';
