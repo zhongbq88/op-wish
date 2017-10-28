@@ -56,7 +56,7 @@ class ControllerShopifyOauth extends Controller {
 		if(isset($this->session->data['shop'])){
 			unset($this->session->data['shop']);
 		}
-		$permission_url = shopify\authorization_url($_GET['shop'], SHOPIFY_APP_API_KEY, array('read_products',/* 'read_customers',*/ 'write_products','read_orders', 'write_orders', 'read_fulfillments', 'write_fulfillments'),REDIRECTION_URL);
+		$permission_url = shopify\authorization_url($_GET['shop'], SHOPIFY_APP_API_KEY, array('read_products',/* 'read_customers',*/ 'write_products','read_product_listings','read_orders', 'write_orders', 'read_fulfillments', 'write_fulfillments'),REDIRECTION_URL);
 		//echo $permission_url;
 		die("<script> top.location.href='$permission_url'</script>");
 	}

@@ -294,6 +294,31 @@ class ControllerShopifyLoadorders extends Controller {
 		}
 		return 1;
 	}
+	
+	public function collection(){
+		
+		  $shopify = shopify\client($this->session->data['shop'], SHOPIFY_APP_API_KEY, $this->session->data['oauth_token']);
+		  
+		  try
+		  {
+
+			  $collection = $shopify('GET /admin/collection_listings.json');
+			  return $collection['collections'];
+		  }
+		  catch (shopify\ApiException $e)
+		  {
+			  	//print_r($e->getRequest());
+				//print_r($e->getResponse());
+			  
+		  }
+		  catch (shopify\CurlException $e)
+		  {
+			  	//print_r($e->getRequest());
+				//print_r($e->getResponse());
+			 
+		  }
+		  return false;
+	}
 }
 
 ?>

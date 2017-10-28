@@ -56,6 +56,9 @@ class ControllerAccountWishList extends Controller {
 		$data['products'] = array();
 
 		$results = $this->model_account_wishlist->getWishlist();
+		if(isset($results)){
+			$data['collection'] = $this->load->controller('shopify/loadorders/collection');
+		}
 
 		foreach ($results as $result) {
 			$product_info = $this->model_commonipl_product->getProduct($result['product_id']);
@@ -181,7 +184,7 @@ class ControllerAccountWishList extends Controller {
 
 				$this->session->data['wishlist'] = array_unique($this->session->data['wishlist']);
 
-				$json['success'] = sprintf($this->language->get('text_login'), $this->url->link('account/login', '', true), $this->url->link('account/register', '', true), $this->url->link('product/product', 'product_id=' . (int)$this->request->post['product_id']), $product_info['name'], $this->url->link('account/wishlist'));
+				$json['success'] = sprintf($this->language->get('text_login'), $this->url->link('account/login', '', true), $this->url->link('account/register', '', true), $this->url->link('commonipl/product', 'product_id=' . (int)$this->request->post['product_id']), $product_info['name'], $this->url->link('account/wishlist'));
 
 				$json['total'] = sprintf($this->language->get('text_wishlist'), (isset($this->session->data['wishlist']) ? count($this->session->data['wishlist']) : 0));
 			}

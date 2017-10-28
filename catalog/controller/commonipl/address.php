@@ -451,7 +451,7 @@ class ControllerCommoniplAddress extends Controller {
 
 		$data['back'] = $this->url->link('account/address', '', true);
 		$this->response->addHeader('Content-Type: application/json');
-		$json['success'] = $this->load->view('shopify/address_form', $data);
+		$json['success'] = $this->load->view('commonipl/address_form', $data);
 		$this->response->setOutput(json_encode($json));
 	}
 
