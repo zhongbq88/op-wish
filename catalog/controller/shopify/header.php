@@ -13,6 +13,22 @@ class ControllerShopifyHeader extends Controller {
 				$data['analytics'][] = $this->load->controller('extension/analytics/' . $analytic['code'], $this->config->get('analytics_' . $analytic['code'] . '_status'));
 			}
 		}
+		
+		$data['informations'] = array();
+		$informations = $this->model_catalog_information->getInformations();
+		//print_r($informations);
+		foreach ($informations as $result) {
+			
+			if (!$result['bottom']) {
+				$data['informations'][] = array(
+					'title' => $result['title'],
+					'information_id' => $result['information_id'],
+					'href'  => $this->url->link('information/information', 'information_id=' . $result['information_id'])
+				);
+			}
+		}
+		
+		$data['information_id'] =  isset($this->request->get['information_id'])?$this->request->get['information_id']:0;
 
 		if ($this->request->server['HTTPS']) {
 			$server = $this->config->get('config_ssl');

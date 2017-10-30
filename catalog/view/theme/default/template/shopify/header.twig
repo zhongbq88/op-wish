@@ -488,6 +488,36 @@ div.pagination-results ul li a, div.pagination-results ul li span {
     width: 30px;
     height: 30px;
 }
+header {
+	height: 65px;
+	min-height: 0px;
+	background: #FFFFFF;
+	border-bottom: 1px solid #d8d8d8;
+	margin: 0;
+	padding: 0;
+	box-shadow: 0px 0px 4px #ccc;
+}
+header .panel {
+	border: 1px solid #d8d8d8;
+	padding: 5px;
+	padding-left: 20px;
+	padding-right: 20px;
+	font-size: 15px;
+	color: #818892;
+}
+.activie {
+	background: #5563c1;
+	font-size: 15px;
+	color: #FFF;
+	border: 1px solid #3f4eae;
+}
+#header a:hover {
+	background: #F4F6F7;
+	color: #818892;
+	ilter: alpha(Opacity=60);
+	-moz-opacity: 0.6;
+	opacity: 0.6
+}
 </style>
 <link rel="stylesheet" type="text/css" href="catalog/view/javascript/jquery/magnific/magnific-popup.css" media="screen" />
 <style type="text/css">
@@ -567,17 +597,17 @@ div.pagination-results ul li a, div.pagination-results ul li span {
 		   window.location.href="index.php?route=commonipl/transaction";
           }
          },*/
-		 {
+         {
           label: '{{ wish_list }}',
           message: '{{ wish_list }}',
           callback: function(){
-		   window.location.href="index.php?route=account/wishlist";
+		   window.location.href="index.php?route=account/wishlist&shopify=true";
           }
 		 },{
-          label: '{{ faq }}',
-          message: '{{ faq }}',
+          label: '{{ account_settings }}',
+          message: '{{ account_settings }}',
 		  callback: function(){
-		   window.location.href="index.php?route=information/information&information_id=7";
+		   window.location.href="index.php?route=commonipl/edit";
           }
 		 }
 			
@@ -613,4 +643,19 @@ s0.parentNode.insertBefore(s1,s0);
 
 </head>
 <body class="common-home body-full-width product-list-type-3 product-grid-type-3              no-box-type-7 box-type-5     footer-type-3 breadcrumb-style-7 border-width-1 body-white    body-header-type-4">
-<!--<div style="height:30px;"></div>-->
+
+<header id="header" class="navbar navbar-static-top">
+  <div class="container"> 
+    <div class="nav pull-left" style=" padding-top:23px; margin-right:50px;">
+      <ul class="list-inline">
+      
+      {% if informations %}
+        {% for info in informations%}
+        <li><a href="{{ info.href }}" class="panel {% if information_id == info.information_id %} activie {%endif%}" title="{{ info.title }}">{{ info.title }}</a></li>
+        {% endfor %}
+        {% endif %}
+      </ul>
+    </div>
+  </div>
+  </div>
+</header>
