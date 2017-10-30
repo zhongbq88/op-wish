@@ -10,7 +10,7 @@ class ControllerCommoniplOrders extends Controller {
 		$data['order_statuses'] = $this->model_localisation_order_status->getOrderStatuses();
 		$index = 0;
 		foreach($data['order_statuses'] as $result){
-			if($result['order_status_id']!=1 && $result['order_status_id']!=3 && $result['order_status_id']!=7&& $result['order_status_id']!=17&& $result[	'order_status_id']!=18){
+			if($result['order_status_id']!=1 && $result['order_status_id']!=3 && $result['order_status_id']!=7&& $result['order_status_id']!=2&& $result[	'order_status_id']!=18){
 				unset($data['order_statuses'][$index]);
 			}
 			$index++;
@@ -37,8 +37,8 @@ class ControllerCommoniplOrders extends Controller {
 			$filterstr =  $this->request->get['filter_order_status'];
 			if($filterstr=='Pending'){
 				$filter['filter_order_status_id'] = 1;
-			}elseif($filterstr=='InProd'){
-				$filter['filter_order_status_id'] = 17;
+			}elseif($filterstr=='processing'){
+				$filter['filter_order_status_id'] = 2;
 			}else if($filterstr=='Shipped'){
 				$filter['filter_order_status_id'] = 3;
 			}else if($filterstr=='OnHold'){
