@@ -75,6 +75,12 @@ class ControllerCommoniplProducts extends Controller {
 			$data['home'] = true;
 			
 		}
+		
+		if(isset($this->request->get['declined'])){
+			$charging = $this->config->get('config_charging');
+			$data['declined'] = $charging['tips'];
+			
+		}
 		return $this->load->view('commonipl/products', $data);	
 
 	}

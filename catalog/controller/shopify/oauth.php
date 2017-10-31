@@ -74,9 +74,12 @@ class ControllerShopifyOauth extends Controller {
 				$shopify = shopify\client($this->session->data['shop'], SHOPIFY_APP_API_KEY,$this->session->data['oauth_token']);
 				$result =  $shopify('GET /admin/'.$url.'application_charges/'.$charge_id.'.json');
 				//print_r($result);
-				if(isset($result['status'])&&$result['status']!='accepted'){
+				if(isset($result['status'])&&$result['status']=='declined'){
+					
+					//print_r($result);
 					$return_url= explode('?',$result['return_url']);
-					echo("<script> window.open('".$return_url[0]."')</script>");
+					echo("<script> window.open('".$return_url[0]."?declined=true')</script>");
+					$this->deteleApp();
 					return false;
 				}
 			}
@@ -98,6 +101,32 @@ class ControllerShopifyOauth extends Controller {
 			
 		}
 		return true;
+	}
+	
+	private function deteleApp(){
+		$access_token = $this->session->data['oauth_token'];
+ 		$revoke_url   = "https://".$this->session->data['shop']."/admin/api_permissions/current.json";
+
+		$headers = array("Content-Type: application/json","Accept: application/json","Content-Length: 0","X-Shopify-Access-Token: " . $access_token);
+	  
+		$handler = curl_init($revoke_url);
+		curl_setopt($handler, CURLOPT_CUSTOMREQUEST, "DELETE");
+		curl_setopt($handler, CURLOPT_RETURNTRANSFER, true);
+		curl_setopt($handler, CURLOPT_HTTPHEADER, $headers);
+	  
+		curl_exec($handler);
+		$result = false;
+		if(!curl_errno($handler))
+		{
+		  $info = curl_getinfo($handler);
+		  // $info['http_code'] == 200 for success
+		  //print_r($info);
+		  $result =$info['http_code'] == 200;
+		}
+	  
+		curl_close($handler);
+		
+		return $result;
 	}
 }
 

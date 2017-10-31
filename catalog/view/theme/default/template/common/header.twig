@@ -488,36 +488,7 @@ div.pagination-results ul li a, div.pagination-results ul li span {
 	width: 30px;
 	height: 30px;
 }
-header {
-	height: 65px;
-	min-height: 0px;
-	background: #FFFFFF;
-	border-bottom: 1px solid #d8d8d8;
-	margin: 0;
-	padding: 0;
-	box-shadow: 0px 0px 4px #ccc;
-}
-header .panel {
-	border: 1px solid #d8d8d8;
-	padding: 5px;
-	padding-left: 20px;
-	padding-right: 20px;
-	font-size: 15px;
-	color: #818892;
-}
-.activie {
-	background: #5563c1;
-	font-size: 15px;
-	color: #FFF;
-	border: 1px solid #3f4eae;
-}
-#header a:hover {
-	background: #F4F6F7;
-	color: #818892;
-	ilter: alpha(Opacity=60);
-	-moz-opacity: 0.6;
-	opacity: 0.6
-}
+
 </style>
 <link rel="stylesheet" type="text/css" href="catalog/view/javascript/jquery/magnific/magnific-popup.css" media="screen" />
 <style type="text/css">
@@ -556,6 +527,38 @@ header .panel {
 {% if ishome %}
 <script type="text/javascript" src="catalog/view/theme/fastor/js/common.js"></script>
 {%else%}
+<style>
+header {
+	height: 65px;
+	min-height: 0px;
+	background: #FFFFFF;
+	border-bottom: 1px solid #d8d8d8;
+	margin: 0;
+	padding: 0;
+	box-shadow: 0px 0px 4px #ccc;
+}
+header .panel {
+	border: 1px solid #d8d8d8;
+	padding: 5px;
+	padding-left: 20px;
+	padding-right: 20px;
+	font-size: 15px;
+	color: #818892;
+}
+.activie {
+	background: #5563c1;
+	font-size: 15px;
+	color: #FFF;
+	border: 1px solid #3f4eae;
+}
+#header a:hover {
+	background: #F4F6F7;
+	color: #818892;
+	ilter: alpha(Opacity=60);
+	-moz-opacity: 0.6;
+	opacity: 0.6
+}
+</style>
 <script type="text/javascript">
     ShopifyApp.init({
       apiKey: '{{ appkey }}',
