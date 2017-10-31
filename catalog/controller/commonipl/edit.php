@@ -73,7 +73,7 @@ class ControllercommoniplEdit extends Controller {
 		}
 
 	
-		$data['action'] = $this->url->link('shopify/edit', '', true);
+		$data['action'] = $this->url->link('commonipl/edit', '', true);
 
 		if ($this->request->server['REQUEST_METHOD'] != 'POST') {
 			$customer_info = $this->model_shopify_user->getUser($this->customer->getId());
