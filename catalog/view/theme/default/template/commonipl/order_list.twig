@@ -22,9 +22,9 @@
                     {% for order in orders %}
 <tr>
   <td class="text-center"> {% if order.order_id in selected %}
-    <input type="checkbox" id="checkbox{{order.order_id}}" {% if (order.status!='Pending' and order.status!='On-Hold') or  order.total=='$0'   %} disabled {% else %} name="selected[]"  {% endif%} value="{{ order.order_id }}"  />
+    <input type="checkbox" id="checkbox{{order.order_id}}" {% if (order.status!='To-Order' and order.status!='On-Hold') or  order.total=='$0'   %} disabled {% else %} name="selected[]"  {% endif%} value="{{ order.order_id }}"  />
     {% else %}
-    <input type="checkbox" id="checkbox{{order.order_id}}" {% if (order.status!='Pending' and order.status!='On-Hold') or order.total=='$0'%} disabled {% else %} name="selected[]"   {% endif%} value="{{ order.order_id }}" />
+    <input type="checkbox" id="checkbox{{order.order_id}}" {% if (order.status!='To-Order' and order.status!='On-Hold') or order.total=='$0'%} disabled {% else %} name="selected[]"   {% endif%} value="{{ order.order_id }}" />
     {% endif %}
     <input type="hidden" name="shipping_code[]" value="{{ order.shipping_code }}" /></td>
   <td class="text-right">{{ order.shopify_order_id }}</td>
@@ -37,17 +37,17 @@
   <!--<td class="text-left">{{ order.date_modified }}</td>-->
   <td calss="text-center" >
      
-        <button type="button" style="height:30px;padding:0px; padding-left:20px; padding-right:20px;"  {% if (order.status!='Pending' and order.status!='On-Hold') or  order.product_status == 0  %} disabled {% endif%} onClick="payclick('{{order.pay}}');" id="pay{{order.order_id}}"   class="btn btn-success btn-xs" >
+        <button type="button" style="height:30px;padding:0px; padding-left:20px; padding-right:20px;"  {% if (order.status!='To-Order' and order.status!='On-Hold') or  order.product_status == 0  %} disabled {% endif%} onClick="payclick('{{order.pay}}');" id="pay{{order.order_id}}"   class="btn btn-success btn-xs" >
         {% if order.status=='In-Production' or order.status=='Shipped' %}{{ text_paid }}{% else %}{{ text_checkout }}{% endif %}
         </button>
       </br>
       <div class="btn-group"> <a style="height:30px; padding:0px; padding-left:10px; padding-right:10px; padding-top:5px;" href="{{ order.view }}" data-toggle="tooltip" title="{{ button_view }}" class="btn btn-primary"><i class="fa fa-eye"></i>{{ button_view }}</a>
-        <button  style="height:30px; padding:0px; padding-left:20px; padding-right:20px;" type="button" {% if (order.status!='Pending' and order.status!='On-Hold') or order.product_status == 0  %} disabled {% endif%}  data-toggle="dropdown" class="btn btn-primary dropdown-toggle">
+        <button  style="height:30px; padding:0px; padding-left:20px; padding-right:20px;" type="button" {% if (order.status!='To-Order' and order.status!='On-Hold') or order.product_status == 0  %} disabled {% endif%}  data-toggle="dropdown" class="btn btn-primary dropdown-toggle">
         <span class="caret"></span>
         </button>
         <ul class="dropdown-menu dropdown-menu-right">
           <li><a href="{{ order.view }}"><i class="fa fa-pencil"></i> {{ text_edit }}</a></li>
-          {% if order.status=='Pending'  %}
+          {% if order.status=='To-Order'  %}
           <li><a href="javascript:onhod({{order.order_id}});"  data-toggle="tooltip" ><i class="fa fa-pencil"></i> {{ text_onhold }}</a></li>
           {% endif %}
           <li><a href="javascript:cancel({{order.order_id}});"  data-toggle="tooltip" ><i class="fa fa-reply"></i> {{ text_cancel }}</a></li>

@@ -58,7 +58,7 @@ class ControllerShopifyLoadorders extends Controller {
 			  if(count($orders)>0){
 				  $json['success'] = 'true';
 			  }
-			  print_r($orders);
+			  //print_r($orders);
 			  foreach($orders as $order){
 				 $od = $this->initOrder($order,$order_statuses,$customer_info);
 				 //print_r($od);
@@ -127,7 +127,7 @@ class ControllerShopifyLoadorders extends Controller {
 				'comment'                 => $order['note'],
 				//'total'                   => $order['total_price'],
 				'reward'                  => '',
-				'order_status_id'         => $this->getOrderStatus(!empty($order['financial_status'])?$order['financial_status']:$order['fulfillment_status']),
+				'order_status_id'         => $this->getOrderStatus(!empty($order['financial_status'])?$order['financial_status']:$order['fulfillment_status'],$order_statuses),
 				'order_status'            => !empty($order['financial_status'])?$order['financial_status']:$order['fulfillment_status'],
 				'affiliate_id'            => '',
 				'affiliate_firstname'     => '',
@@ -166,6 +166,8 @@ class ControllerShopifyLoadorders extends Controller {
 			$order_data['store_name'] = $this->config->get('config_name');
 			$od = array();
 			$total = 0;
+			print_r($order_data['financial_status']);
+			print_r($order_data['order_status_id']);
 			if($order['line_items']){
 				/*foreach($order['line_items'] as $items){
 					print_r($items['sku']);
@@ -182,7 +184,7 @@ class ControllerShopifyLoadorders extends Controller {
 					  }*/
 					  //echo $sk.",";
 					 $orderProducts = $this->model_shopify_order->getOrderProductsBySku($items['sku']);
-					  print_r( $orderProducts);
+					  //print_r( $orderProducts);
 					  if(isset($orderProducts['product_id'])){
 						  $od[] = array(
 						  'name'=> $items['name'],
@@ -280,17 +282,29 @@ class ControllerShopifyLoadorders extends Controller {
 		return '';
 	}
 	
-	public function getOrderStatus($status){
+	public function getOrderStatus($status,$order_statuses){
 		switch($status) {
 			case 'canceled':
-				return $this->config->get('payment_pp_express_canceled_reversal_status_id');
+				return $this->getStatus($order_statuses,'Canceled');
 				break;
 			case 'refunded':
-				return  $this->config->get('payment_pp_express_refunded_status_id');
+				return  $this->getStatus($order_statuses,'Refunded');
 			case 'reversed':
-				return  $this->config->get('payment_pp_express_reversed_status_id');
+				return  $this->getStatus($order_statuses,'Reversed');
 			case 'voided':
-				return  $this->config->get('payment_pp_express_voided_status_id');
+				return $this->getStatus($order_statuses,'Voided');
+			case 'paid':
+			case 'partially_paid':
+				return  $this->getStatus($order_statuses,'To-Order');
+		}
+		return  $this->getStatus($order_statuses,'Pending');
+	}
+	
+	public function getStatus($order_statuses,$key){
+		foreach($order_statuses as $status){
+			if($status['name']==$key){
+				return $status['order_status_id'];
+			}
 		}
 		return 1;
 	}

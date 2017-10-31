@@ -6,12 +6,12 @@ class ControllerCommoniplOrders extends Controller {
 			$this->response->redirect($this->url->link('account/login', '', true));
 		}
 		$this->load->model('localisation/order_status');
-
-		$data['order_statuses'] = $this->model_localisation_order_status->getOrderStatuses();
+		$data = array();
+		$order_statuses = $this->model_localisation_order_status->getOrderStatuses();
 		$index = 0;
-		foreach($data['order_statuses'] as $result){
-			if($result['order_status_id']!=1 && $result['order_status_id']!=3 && $result['order_status_id']!=7&& $result['order_status_id']!=2&& $result[	'order_status_id']!=18){
-				unset($data['order_statuses'][$index]);
+		foreach($order_statuses as $result){
+			if($result['name']=='To-Order' || $result['name']=='In-Processing' || $result['name']=='Shipped' || $result['name']=='On-Hold'|| $result[	'name']=='Refunded'){
+				$data['order_statuses'][] = $result;
 			}
 			$index++;
 		}
@@ -35,7 +35,9 @@ class ControllerCommoniplOrders extends Controller {
 		$filter = array();
 		if (isset($this->request->get['filter_order_status'])) {
 			$filterstr =  $this->request->get['filter_order_status'];
-			if($filterstr=='Pending'){
+			$this->load->model('localisation/order_status');
+			$filter['filter_order_status_id'] = $this->model_localisation_order_status->getOrderStatusByName($filterstr);
+			/*if($filterstr=='To-Order'){
 				$filter['filter_order_status_id'] = 1;
 			}elseif($filterstr=='processing'){
 				$filter['filter_order_status_id'] = 2;
@@ -45,9 +47,11 @@ class ControllerCommoniplOrders extends Controller {
 				$filter['filter_order_status_id'] = 18;
 			}else if($filterstr=='Cancelled'){
 				$filter['filter_order_status_id'] = 7;
-			}
+			}*/
 		}else if (isset($this->request->get['filter_order_status_id'])) {
 				$filter['filter_order_status_id'] = $this->request->get['filter_order_status_id'];
+		}else{
+			$filter['filter_order_status_id'] = array('1','7','16');
 		}
 		if (isset($this->request->get['filter_customer'])) {
 			$filter['filter_customer'] =  $this->request->get['filter_customer'];
@@ -111,6 +115,11 @@ class ControllerCommoniplOrders extends Controller {
 					$otherProduct = 1;
 				}
 			}
+			
+			if($selfProduct != 1){
+				continue;
+			}
+			//print_r($result['status']);
 			
 			$total = number_format($total,2);
 			//print_r($total);

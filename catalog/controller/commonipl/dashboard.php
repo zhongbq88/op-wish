@@ -35,7 +35,8 @@ class ControllerCommoniplDashboard extends Controller{
 		$this->load->model('commonipl/order');
 
 		$results = $this->model_commonipl_order->getStatusTotalOrders();
-
+ 		$this->load->model('localisation/order_status');
+		$order_statuses = $this->model_localisation_order_status->getOrderStatuses();
 		$pending =0;
 		$processing =0;
 		$shipped =0;
@@ -46,18 +47,18 @@ class ControllerCommoniplDashboard extends Controller{
 		$orderIds ='';
 		foreach ($results as $result) {
 			
-			if($result['order_status_id']==1){
+			if($result['order_status_id']==$this->getStatus($order_statuses,'To-Order')){
 				$pending+=1;
-			}else if($result['order_status_id']==2){
+			}else if($result['order_status_id']==$this->getStatus($order_statuses,'In-Processing')){
 				$processing+=1;
-			}else if($result['order_status_id']==3){
+			}else if($result['order_status_id']==$this->getStatus($order_statuses,'Shipped')){
 				$shipped+=1;
-			}else if($result['order_status_id']==18){
+			}else if($result['order_status_id']==$this->getStatus($order_statuses,'On-Hold')){
 				$on_hold+=1;
-			}else if($result['order_status_id']==7 || $result['order_status_id']==11||$result['order_status_id']==10||$result['order_status_id']==14){
+			}else if($result['order_status_id']==$this->getStatus($order_statuses,'Refunded')){
 				$cancelled+=1;
 			}
-			if($result['order_status_id']==2 || $result['order_status_id']==13 || $result['order_status_id']==5|| $result['order_status_id']==3){
+			if($result['order_status_id']==$this->getStatus($order_statuses,'In-Processing') || $result['order_status_id']==$this->getStatus($order_statuses,'Chargeback') || $result['order_status_id']==$this->getStatus($order_statuses,'Complete')|| $result['order_status_id']==$this->getStatus($order_statuses,'Shipped')){
 				$orderIds .=",'".$result['order_id']."'";
 				//$total+=(float)$result['total'];
 				//$charges+=(float)$result['total'];
@@ -153,7 +154,14 @@ class ControllerCommoniplDashboard extends Controller{
 		$this->response->setOutput($this->load->view('commonipl/dashboard', $data));
 	}
 	
-	
+	public function getStatus($order_statuses,$key){
+		foreach($order_statuses as $status){
+			if($status['name']==$key){
+				return $status['order_status_id'];
+			}
+		}
+		return 1;
+	}
 	
 }
 
