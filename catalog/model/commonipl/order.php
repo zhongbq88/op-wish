@@ -110,7 +110,7 @@ class ModelCommoniplOrder extends Model {
 		if ($limit < 1) {
 			$limit = 1;
 		}
-		$sql = "SELECT o.order_id, o.firstname, o.lastname, os.name as status, o.date_added, o.total, o.currency_code, o.currency_value,o.forwarded_ip FROM `" . DB_PREFIX . "order` o LEFT JOIN " . DB_PREFIX . "order_status os ON (o.order_status_id = os.order_status_id) WHERE o.customer_id = '" . (int)$this->customer->getId() . "' AND o.store_id = '" . (int)$this->config->get('config_store_id') . "' AND os.language_id = '" . (int)$this->config->get('config_language_id') . "'";
+		$sql = "SELECT o.order_id, o.firstname, o.lastname, os.name as status, o.date_added, o.total, o.currency_code, o.currency_value,o.forwarded_ip FROM `" . DB_PREFIX . "order` o LEFT JOIN " . DB_PREFIX . "order_status os ON (o.order_status_id = os.order_status_id) WHERE o.customer_id = '" . (int)$this->customer->getId() . "' AND o.store_id = '" . (int)$this->config->get('config_store_id') . "'  AND o.total > '0' AND os.language_id = '" . (int)$this->config->get('config_language_id') . "'";
 		if (!empty($data['filter_order_id'])) {
 			if(strpos($data['filter_order_id'], '#')!== false){
 				$sql .= " AND o.forwarded_ip = '" . $data['filter_order_id'] . "'";
@@ -122,6 +122,8 @@ class ModelCommoniplOrder extends Model {
 		if (isset($data['filter_order_status_id']) && $data['filter_order_status_id'] !== '') {
 			if($data['filter_order_status_id']==7){
 				$sql .= " AND o.order_status_id in('7','11','10','14')";
+			}else if(is_array($data['filter_order_status_id'])){
+				$sql .= " AND o.order_status_id not in(".implode( ", ", $data['filter_order_status_id']).")";
 			}else{
 				$sql .= " AND o.order_status_id = '" . (int)$data['filter_order_status_id'] . "'";
 			}
@@ -331,7 +333,7 @@ $sql .="ORDER BY o.date_added DESC LIMIT " . (int)$start . "," . (int)$limit;
 	}
 
 	public function getStatusTotalOrders() {
-		$query = $this->db->query("SELECT o.total,o.order_id,o.order_status_id FROM `" . DB_PREFIX . "order` o WHERE customer_id = '" . (int)$this->customer->getId() . "' AND o.order_status_id > '0' AND o.store_id = '" . (int)$this->config->get('config_store_id') . "'");
+		$query = $this->db->query("SELECT o.total,o.order_id,o.order_status_id FROM `" . DB_PREFIX . "order` o WHERE customer_id = '" . (int)$this->customer->getId() . "' AND o.order_status_id > '0' AND o.store_id = '" . (int)$this->config->get('config_store_id') . "'  AND o.total > '0'");
 
 		return $query->rows;
 	}
@@ -349,13 +351,15 @@ $sql .="ORDER BY o.date_added DESC LIMIT " . (int)$start . "," . (int)$limit;
 	
 	public function geFiltertTotalOrders($data) {
 		
-		$sql = "SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "order` o WHERE customer_id = '" . (int)$this->customer->getId() . "' AND o.store_id = '" . (int)$this->config->get('config_store_id') . "'";
+		$sql = "SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "order` o WHERE customer_id = '" . (int)$this->customer->getId() . "' AND o.store_id = '" . (int)$this->config->get('config_store_id') . "'  AND o.total > '0' ";
 		if (!empty($data['filter_order_id'])) {
 			$sql .= " AND o.order_id = '" . (int)$data['filter_order_id'] . "'";
 		}
 		if (isset($data['filter_order_status_id']) && $data['filter_order_status_id'] !== '') {
 			if($data['filter_order_status_id']==7){
 				$sql .= " AND o.order_status_id in('7','11','10','14')";
+			}else if(is_array($data['filter_order_status_id'])){
+				$sql .= " AND o.order_status_id not in(".implode( ", ", $data['filter_order_status_id']).")";
 			}else{
 				$sql .= " AND o.order_status_id = '" . (int)$data['filter_order_status_id'] . "'";
 			}

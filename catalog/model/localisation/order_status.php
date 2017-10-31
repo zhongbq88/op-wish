@@ -5,6 +5,12 @@ class ModelLocalisationOrderStatus extends Model {
 
 		return $query->row;
 	}
+	
+	public function getOrderStatusByName($order_status) {
+		$query = $this->db->query("SELECT order_status_id FROM " . DB_PREFIX . "order_status WHERE name = '" . $this->db->escape($order_status ). "' AND language_id = '" . (int)$this->config->get('config_language_id') . "'");
+
+		return $query->row['order_status_id'];
+	}
 
 	public function getOrderStatuses() {
 		$order_status_data = $this->cache->get('order_status.' . (int)$this->config->get('config_language_id'));
