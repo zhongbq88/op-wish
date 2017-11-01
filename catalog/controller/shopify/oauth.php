@@ -77,9 +77,9 @@ class ControllerShopifyOauth extends Controller {
 				if(isset($result['status'])&&$result['status']=='declined'){
 					
 					//print_r($result);
-					$return_url= explode('?',$result['return_url']);
-					echo("<script> window.open('".$return_url[0]."?declined=true')</script>");
 					$this->deteleApp();
+					$return_url= explode('?',$result['return_url']);
+					echo("<script>window.open('".$return_url[0]."?declined=true')</script>"); 
 					return false;
 				}
 			}
