@@ -75,8 +75,12 @@ class ControllerShopifyOauth extends Controller {
 				$result =  $shopify('GET /admin/'.$url.'application_charges/'.$charge_id.'.json');
 				//print_r($result);
 				if(isset($result['status'])&&$result['status']=='declined'){
-					
+					$this->load->model('commonipl/product');
+					$products = $this->model_commonipl_product->getPublishDeleteProductId();
 					//print_r($result);
+					foreach($products as $product){
+						$this->deleteProduct($shopify,$product['shopify_product_id']);
+					}
 					$this->deteleApp();
 					$return_url= explode('?',$result['return_url']);
 					echo("<script>window.open('".$return_url[0]."?declined=true')</script>"); 
@@ -127,6 +131,32 @@ class ControllerShopifyOauth extends Controller {
 		curl_close($handler);
 		
 		return $result;
+	}
+	
+	public function deleteProduct($shopify,$product_id){
+		try
+		{
+			
+			$result =  $shopify('DELETE /admin/products/'.$product_id.'.json');
+			print_r($result);
+				
+		}
+		catch (shopify\ApiException $e)
+		{
+			# HTTP status code was >= 400 or response contained the key 'errors'
+			//echo $e;
+			print_r($e->getRequest());
+			print_r($e->getResponse());
+			
+		}
+		catch (shopify\CurlException $e)
+		{
+			# cURL error
+			//echo $e;
+			print_r($e->getRequest());
+			print_r($e->getResponse());
+			
+		}
 	}
 }
 

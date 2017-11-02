@@ -47,11 +47,11 @@ class ControllerCommonContentTop extends Controller {
 
 		foreach ($modules as $module) {
 			$part = explode('.', $module['code']);
-
+			print_r($part);
 			if (isset($part[0]) && $this->config->get('module_' . $part[0] . '_status')) {
 				$module_data = $this->load->controller('extension/module/' . $part[0]);
 
-				if ($module_data) {
+				if (isset($module_data)) {
 					$data['modules'][] = $module_data;
 				}
 			}
@@ -62,13 +62,14 @@ class ControllerCommonContentTop extends Controller {
 				if ($setting_info && $setting_info['status']) {
 					$output = $this->load->controller('extension/module/' . $part[0], $setting_info);
 
-					if ($output) {
+					if (isset($output)) {
 						$data['modules'][] = $output;
 					}
 				}
 			}
 		}
-		//print_r($data);
+		
+		
 		return $this->load->view('common/content_top', $data);
 	}
 }

@@ -1,0 +1,879 @@
+{{ header }}{{ column_left }}
+<div id="content">
+  <div class="page-header">
+    <div class="container-fluid">
+      <div class="pull-right"><a href="javascript:addNew();" data-toggle="tooltip" title="" class="btn btn-primary" data-original-title="Add New"><i class="fa fa-plus"></i></a><a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-default"><i class="fa fa-reply"></i></a></div>
+      <h1>{{ heading_title }}</h1>
+      <ul class="breadcrumb">
+        {% for breadcrumb in breadcrumbs %}
+        <li><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+  <div class="container-fluid">
+    
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title"><i class="fa fa-info-circle"></i>运费列表</h3>
+      </div>
+      <div class="panel-body">
+        <table class="table table-bordered table-hover">
+          <thead>
+            <tr>
+              <td class="text-center">名称</td>
+              <td class="text-center">国家</td>
+              <td class="text-center">计费详情</td>
+              <td class="text-center">创建时间</td>
+            </tr>
+          </thead>
+          <tbody valign="middle" >
+          
+          {% if shippings %}
+          {% for shipping in shippings %}
+          <tr>
+            <td class="text-center"><a href="{{ shipping.href }}">{{ shipping.name }}</a></td>
+            <td class="text-center">{{ shipping.scountry }}</td>
+            <td class="text-center">{{ shipping.option }}</td>
+            <td class="text-center">{{ shipping.date_added }}</td>
+          </tr>
+          {% endfor %}
+          {% else %}
+          <tr>
+            <td class="text-center" colspan="8">{{ text_no_results }}</td>
+          </tr>
+          {% endif %}
+            </tbody>
+          
+        </table>
+      </div>
+      <div class="row">
+        <div class="col-sm-6 text-left">{{ pagination }}</div>
+        <div class="col-sm-6 text-right">{{ results }}</div>
+      </div>
+    </div>
+  </div>
+</div>
+ <div id="des-body" >
+  <div id="input-body" >
+    <div class="modal-backdrop in"></div>
+    <div id="modal-text" class="modal in" style="display: block;" >
+    <div class="modal-dialog ui-draggable" style="width:900px;"><div class="modal-content"><form name="theFormArea" id="theFormArea" class="form-horizontal" action="http://www.i8956.com/index.php?m=customshippingfee&amp;a=doSaveArea" onkeydown="if(event.keyCode==13){return false;}" novalidate="novalidate">
+	<div class="modal-header">
+		<button type="button" id="btnClose" class="close" data-dismiss="modal" aria-label="Close">
+			<span aria-hidden="true">×</span>
+		</button>
+		<h4 class="modal-title">区域组国家报价-运费设置</h4>
+	</div>
+	<div class="modal-body" style="overflow-y: auto; max-height: 500px;">
+		<div class="row">
+			<div class="form-group form-group-sm col-md-6">
+				<label class="col-md-4 control-label">区域名称：<span class="text-danger">*</span></label>
+				<div class="col-md-8">
+					<input class="form-control" required="true" name="name" type="text" placeholder="创建组名" value="tset" aria-required="true">
+				</div>
+			</div>
+		</div>
+		<div class="panel panel-default select_destination">
+			<div class="panel-heading">选择本组目的地所含国家地区：<div class="btn-group"><input class="form-control" placeholder="国家" value="" type="text" id="Country-screen" style="font-weight: normal;"></div><a href="javascript:;"><i class="glyphicon glyphicon-menu-up"></i></a></div>
+			<div class="panel-body panel-group" id="selectDestinationWrap" aria-multiselectable="true">
+	                        	<div class="row">
+					<div class="col-lg-12 select_destination_continent">
+						<h3 class="col-lg-10">
+							<a href="#continent1" data-parent="#selectDestinationWrap" data-toggle="collapse" aria-expanded="false"><i class="glyphicon glyphicon-menu-down"></i><span>亚洲</span></a>
+						</h3>
+						<label class="col-lg-2"> <input type="checkbox" onclick="$('input[name*=\'countryCode\']').prop('checked', this.checked);" /><span>亚洲全选</span>
+						</label>
+					</div>
+				</div>
+				<div class="row panel">
+					<div class="col-lg-12 select_destination_country asia collapse " id="continent1">
+			            	           			<label class="checkbox-inline"><input name="countryCode[]" type="checkbox" id="AE" value="AE"><span>阿联酋 - AE</span></label>
+		            			           			<label class="checkbox-inline"><input name="countryCode[]" type="checkbox" id="AF" value="AF"><span>阿富汗 - AF</span></label>
+		            			           			<label class="checkbox-inline"><input name="countryCode[]" type="checkbox" id="AM" value="AM"><span>亚美尼亚 - AM</span></label>
+		            			           			<label class="checkbox-inline"><input name="countryCode[]" type="checkbox" id="AZ" value="AZ"><span>阿塞拜疆 - AZ</span></label>
+		            			           			<label class="checkbox-inline"><input name="countryCode[]" type="checkbox" id="BD" value="BD"><span>孟加拉 - BD</span></label>
+		            			           			<label class="checkbox-inline"><input name="countryCode[]" type="checkbox" id="BH" value="BH"><span>巴林 - BH</span></label>
+		            			           			<label class="checkbox-inline"><input name="countryCode[]" type="checkbox" id="BN" value="BN"><span>文莱 - BN</span></label>
+		            			           			<label class="checkbox-inline"><input name="countryCode[]" type="checkbox" id="BT" value="BT"><span>不丹 - BT</span></label>
+		            			           			<label class="checkbox-inline"><input name="countryCode[]" type="checkbox" id="CC" value="CC"><span>科科斯（基林）群岛 - CC</span></label>
+		            			           			<label class="checkbox-inline"><input name="countryCode[]" type="checkbox" id="CN" value="CN"><span>中国 - CN</span></label>
+		            			           			<label class="checkbox-inline"><input name="countryCode[]" type="checkbox" id="GE" value="GE"><span>格鲁吉亚 - GE</span></label>
+		            			           			<label class="checkbox-inline"><input name="countryCode[]" type="checkbox" id="HK" value="HK"><span>香港 - HK</span></label>
+		            			           			<label class="checkbox-inline"><input name="countryCode[]" type="checkbox" id="ID" value="ID"><span>印度尼西亚 - ID</span></label>
+		            			           			<label class="checkbox-inline"><input name="countryCode[]" type="checkbox" id="IL" value="IL"><span>以色列 - IL</span></label>
+		            			           			<label class="checkbox-inline"><input name="countryCode[]" type="checkbox" id="IN" value="IN"><span>印度 - IN</span></label>
+		            			           			<label class="checkbox-inline"><input name="countryCode[]" type="checkbox" id="IO" value="IO"><span>英属印度洋领地 - IO</span></label>
+		            			           			<label class="checkbox-inline"><input name="countryCode[]" type="checkbox" id="IQ" value="IQ"><span>伊拉克 - IQ</span></label>
+		            			           			<label class="checkbox-inline"><input name="countryCode[]" type="checkbox" id="IR" value="IR"><span>伊朗 - IR</span></label>
+		            			           			<label class="checkbox-inline"><input name="countryCode[]" type="checkbox" id="JO" value="JO"><span>约旦 - JO</span></label>
+		            			           			<label class="checkbox-inline"><input name="countryCode[]" type="checkbox" id="JP" value="JP"><span>日本 - JP</span></label>
+		            			           			<label class="checkbox-inline"><input name="countryCode[]" type="checkbox" id="KG" value="KG"><span>吉尔吉斯坦 - KG</span></label>
+		            			           			<label class="checkbox-inline"><input name="countryCode[]" type="checkbox" id="KH" value="KH"><span>柬埔寨 - KH</span></label>
+		            			           			<label class="checkbox-inline"><input name="countryCode[]" type="checkbox" id="KP" value="KP"><span>朝鲜 - KP</span></label>
+		            			           			<label class="checkbox-inline"><input name="countryCode[]" type="checkbox" id="KR" value="KR"><span>韩国 - KR</span></label>
+		            			           			<label class="checkbox-inline"><input name="countryCode[]" type="checkbox" id="KW" value="KW"><span>科威特 - KW</span></label>
+		            			           			<label class="checkbox-inline"><input name="countryCode[]" type="checkbox" id="KZ" value="KZ"><span>哈萨克 - KZ</span></label>
+		            			           			<label class="checkbox-inline"><input name="countryCode[]" type="checkbox" id="LA" value="LA"><span>老挝 - LA</span></label>
+		            			           			<label class="checkbox-inline"><input name="countryCode[]" type="checkbox" id="LB" value="LB"><span>黎巴嫩 - LB</span></label>
+		            			           			<label class="checkbox-inline"><input name="countryCode[]" type="checkbox" id="LK" value="LK"><span>斯里兰卡 - LK</span></label>
+		            			           			<label class="checkbox-inline"><input name="countryCode[]" type="checkbox" id="MM" value="MM"><span>缅甸 - MM</span></label>
+		            			           			<label class="checkbox-inline"><input name="countryCode[]" type="checkbox" id="MN" value="MN"><span>蒙古 - MN</span></label>
+		            			           			<label class="checkbox-inline"><input name="countryCode[]" type="checkbox" id="MO" value="MO"><span>澳门 - MO</span></label>
+		            			           			<label class="checkbox-inline"><input name="countryCode[]" type="checkbox" id="MV" value="MV"><span>马尔代夫 - MV</span></label>
+		            			           			<label class="checkbox-inline"><input name="countryCode[]" type="checkbox" id="MY" value="MY"><span>马来西亚 - MY</span></label>
+		            			           			<label class="checkbox-inline"><input name="countryCode[]" type="checkbox" id="NP" value="NP"><span>尼泊尔 - NP</span></label>
+		            			           			<label class="checkbox-inline"><input name="countryCode[]" type="checkbox" id="OM" value="OM"><span>阿曼 - OM</span></label>
+		            			           			<label class="checkbox-inline"><input name="countryCode[]" type="checkbox" id="PH" value="PH"><span>菲律宾 - PH</span></label>
+		            			           			<label class="checkbox-inline"><input name="countryCode[]" type="checkbox" id="PK" value="PK"><span>巴基斯坦 - PK</span></label>
+		            			           			<label class="checkbox-inline"><input name="countryCode[]" type="checkbox" id="PS" value="PS"><span>巴勒斯坦 - PS</span></label>
+		            			           			<label class="checkbox-inline"><input name="countryCode[]" type="checkbox" id="QA" value="QA"><span>卡塔尔 - QA</span></label>
+		            			           			<label class="checkbox-inline"><input name="countryCode[]" type="checkbox" id="SA" value="SA"><span>沙特阿拉伯 - SA</span></label>
+		            			           			<label class="checkbox-inline"><input name="countryCode[]" type="checkbox" id="SG" value="SG"><span>新加坡 - SG</span></label>
+		            			           			<label class="checkbox-inline"><input name="countryCode[]" type="checkbox" id="SY" value="SY"><span>叙利亚 - SY</span></label>
+		            			           			<label class="checkbox-inline"><input name="countryCode[]" type="checkbox" id="TH" value="TH"><span>泰国 - TH</span></label>
+		            			           			<label class="checkbox-inline"><input name="countryCode[]" type="checkbox" id="TJ" value="TJ"><span>塔吉克斯坦 - TJ</span></label>
+		            			           			<label class="checkbox-inline"><input name="countryCode[]" type="checkbox" id="TL" value="TL"><span>东帝汶 - TL</span></label>
+		            			           			<label class="checkbox-inline"><input name="countryCode[]" type="checkbox" id="TM" value="TM"><span>土库曼 - TM</span></label>
+		            			           			<label class="checkbox-inline"><input name="countryCode[]" type="checkbox" id="TR" value="TR"><span>土耳其 - TR</span></label>
+		            			           			<label class="checkbox-inline"><input name="countryCode[]" type="checkbox" id="TW" value="TW"><span>台湾省 - TW</span></label>
+		            			           			<label class="checkbox-inline"><input name="countryCode[]" type="checkbox" id="UZ" value="UZ"><span>乌兹别克 - UZ</span></label>
+		            			           			<label class="checkbox-inline"><input name="countryCode[]" type="checkbox" id="VN" value="VN"><span>越南 - VN</span></label>
+		            			           			<label class="checkbox-inline"><input name="countryCode[]" type="checkbox" id="YE" value="YE"><span>也门 - YE</span></label>
+		            							</div>
+				</div>
+				            	<div class="row">
+					<div class="col-lg-12 select_destination_continent">
+						<h3 class="col-lg-10">
+							<a href="#continent2" data-parent="#selectDestinationWrap" data-toggle="collapse" aria-expanded="false"><i class="glyphicon glyphicon-menu-down"></i><span>北美洲</span></a>
+						</h3>
+						<label class="col-lg-2"> <input type="checkbox" onclick="$('input[name*=\'countryCode\']').prop('checked', this.checked);" /><span>北美洲全选</span>
+						</label>
+					</div>
+				</div>
+				<div class="row panel">
+					<div class="col-lg-12 select_destination_country NAmerica collapse " id="continent2">
+			            	           			<label class="checkbox-inline checked"><input name="countryCode[]" type="checkbox" id="AG" value="AG" checked=""><span>安提瓜和巴布达 - AG</span></label>
+		            			           			<label class="checkbox-inline checked"><input name="countryCode[]" type="checkbox" id="AI" value="AI" checked=""><span>安圭拉岛 - AI</span></label>
+		            			           			<label class="checkbox-inline checked"><input name="countryCode[]" type="checkbox" id="AW" value="AW" checked=""><span>阿鲁巴 - AW</span></label>
+		            			           			<label class="checkbox-inline checked"><input name="countryCode[]" type="checkbox" id="BB" value="BB" checked=""><span>巴巴多斯 - BB</span></label>
+		            			           			<label class="checkbox-inline checked"><input name="countryCode[]" type="checkbox" id="BM" value="BM" checked=""><span>百慕大群岛 - BM</span></label>
+		            			           			<label class="checkbox-inline checked"><input name="countryCode[]" type="checkbox" id="BQ" value="BQ" checked=""><span>荷兰加勒比区 - BQ</span></label>
+		            			           			<label class="checkbox-inline checked"><input name="countryCode[]" type="checkbox" id="BZ" value="BZ" checked=""><span>伯利兹 - BZ</span></label>
+		            			           			<label class="checkbox-inline checked"><input name="countryCode[]" type="checkbox" id="CA" value="CA" checked=""><span>加拿大 - CA</span></label>
+		            			           			<label class="checkbox-inline checked"><input name="countryCode[]" type="checkbox" id="CR" value="CR" checked=""><span>哥斯达黎加 - CR</span></label>
+		            			           			<label class="checkbox-inline checked"><input name="countryCode[]" type="checkbox" id="CU" value="CU" checked=""><span>古巴 - CU</span></label>
+		            			           			<label class="checkbox-inline checked"><input name="countryCode[]" type="checkbox" id="DM" value="DM" checked=""><span>多米尼加 - DM</span></label>
+		            			           			<label class="checkbox-inline checked"><input name="countryCode[]" type="checkbox" id="GD" value="GD" checked=""><span>格林纳达 - GD</span></label>
+		            			           			<label class="checkbox-inline checked"><input name="countryCode[]" type="checkbox" id="GL" value="GL" checked=""><span>格陵兰 - GL</span></label>
+		            			           			<label class="checkbox-inline checked"><input name="countryCode[]" type="checkbox" id="GT" value="GT" checked=""><span>危地马拉 - GT</span></label>
+		            			           			<label class="checkbox-inline checked"><input name="countryCode[]" type="checkbox" id="GU" value="GU" checked=""><span>关岛 - GU</span></label>
+		            			           			<label class="checkbox-inline checked"><input name="countryCode[]" type="checkbox" id="HN" value="HN" checked=""><span>洪都拉斯 - HN</span></label>
+		            			           			<label class="checkbox-inline checked"><input name="countryCode[]" type="checkbox" id="HT" value="HT" checked=""><span>海地 - HT</span></label>
+		            			           			<label class="checkbox-inline checked"><input name="countryCode[]" type="checkbox" id="KN" value="KN" checked=""><span>圣基茨和尼维斯 - KN</span></label>
+		            			           			<label class="checkbox-inline checked"><input name="countryCode[]" type="checkbox" id="KY" value="KY" checked=""><span>开曼群岛 - KY</span></label>
+		            			           			<label class="checkbox-inline checked"><input name="countryCode[]" type="checkbox" id="LC" value="LC" checked=""><span>圣卢西亚 - LC</span></label>
+		            			           			<label class="checkbox-inline checked"><input name="countryCode[]" type="checkbox" id="MX" value="MX" checked=""><span>墨西哥 - MX</span></label>
+		            			           			<label class="checkbox-inline checked"><input name="countryCode[]" type="checkbox" id="NI" value="NI" checked=""><span>尼加拉瓜 - NI</span></label>
+		            			           			<label class="checkbox-inline checked"><input name="countryCode[]" type="checkbox" id="PM" value="PM" checked=""><span>圣皮埃尔和密克隆 - PM</span></label>
+		            			           			<label class="checkbox-inline checked"><input name="countryCode[]" type="checkbox" id="PR" value="PR" checked=""><span>波多黎各 - PR</span></label>
+		            			           			<label class="checkbox-inline checked"><input name="countryCode[]" type="checkbox" id="TC" value="TC" checked=""><span>特克斯和凯科斯群岛 - TC</span></label>
+		            			           			<label class="checkbox-inline checked"><input name="countryCode[]" type="checkbox" id="TT" value="TT" checked=""><span>特立尼达和多巴哥 - TT</span></label>
+		            			           			<label class="checkbox-inline checked"><input name="countryCode[]" type="checkbox" id="UM" value="UM" checked=""><span>美国周边小岛屿 - UM</span></label>
+		            			           			<label class="checkbox-inline checked"><input name="countryCode[]" type="checkbox" id="US" value="US" checked=""><span>美国 - US</span></label>
+		            			           			<label class="checkbox-inline checked"><input name="countryCode[]" type="checkbox" id="VC" value="VC" checked=""><span>圣文森特和格林纳丁斯 - VC</span></label>
+		            			           			<label class="checkbox-inline checked"><input name="countryCode[]" type="checkbox" id="VI" value="VI" checked=""><span>美属维尔京群岛 - VI</span></label>
+		            			           			<label class="checkbox-inline checked"><input name="countryCode[]" type="checkbox" id="WS" value="WS" checked=""><span>萨摩亚 - WS</span></label>
+		            			           			<label class="checkbox-inline checked"><input name="countryCode[]" type="checkbox" id="CW" value="CW" checked=""><span>库拉索 - CW</span></label>
+		            							</div>
+				</div>
+				            	<div class="row">
+					<div class="col-lg-12 select_destination_continent">
+						<h3 class="col-lg-10">
+							<a href="#continent3" data-parent="#selectDestinationWrap" data-toggle="collapse" aria-expanded="false"><i class="glyphicon glyphicon-menu-down"></i><span>南美洲</span></a>
+						</h3>
+						<label class="col-lg-2"><input type="checkbox" onclick="$('input[name*=\'countryCode\']').prop('checked', this.checked);" /><span>南美洲全选</span>
+						</label>
+					</div>
+				</div>
+				<div class="row panel">
+					<div class="col-lg-12 select_destination_country SAmerica collapse " id="continent3">
+			            	           			<label class="checkbox-inline"><input name="countryCode[]" type="checkbox" id="AN" value="AN"><span>安的列斯 - AN</span></label>
+		            			           			<label class="checkbox-inline"><input name="countryCode[]" type="checkbox" id="AR" value="AR"><span>阿根廷 - AR</span></label>
+		            			           			<label class="checkbox-inline"><input name="countryCode[]" type="checkbox" id="BO" value="BO"><span>玻利维亚 - BO</span></label>
+		            			           			<label class="checkbox-inline"><input name="countryCode[]" type="checkbox" id="BR" value="BR"><span>巴西 - BR</span></label>
+		            			           			<label class="checkbox-inline"><input name="countryCode[]" type="checkbox" id="BS" value="BS"><span>巴哈马 - BS</span></label>
+		            			           			<label class="checkbox-inline"><input name="countryCode[]" type="checkbox" id="CL" value="CL"><span>智利 - CL</span></label>
+		            			           			<label class="checkbox-inline"><input name="countryCode[]" type="checkbox" id="CO" value="CO"><span>哥伦比亚 - CO</span></label>
+		            			           			<label class="checkbox-inline"><input name="countryCode[]" type="checkbox" id="EC" value="EC"><span>厄瓜多尔 - EC</span></label>
+		            			           			<label class="checkbox-inline"><input name="countryCode[]" type="checkbox" id="FK" value="FK"><span>福克兰群岛（马尔维纳斯群岛） - FK</span></label>
+		            			           			<label class="checkbox-inline"><input name="countryCode[]" type="checkbox" id="GF" value="GF"><span>法属圭亚那 - GF</span></label>
+		            			           			<label class="checkbox-inline"><input name="countryCode[]" type="checkbox" id="GP" value="GP"><span>瓜德罗普 - GP</span></label>
+		            			           			<label class="checkbox-inline"><input name="countryCode[]" type="checkbox" id="GY" value="GY"><span>圭亚那 - GY</span></label>
+		            			           			<label class="checkbox-inline"><input name="countryCode[]" type="checkbox" id="JM" value="JM"><span>牙买加 - JM</span></label>
+		            			           			<label class="checkbox-inline"><input name="countryCode[]" type="checkbox" id="MS" value="MS"><span>蒙特塞拉特岛 - MS</span></label>
+		            			           			<label class="checkbox-inline"><input name="countryCode[]" type="checkbox" id="PA" value="PA"><span>巴拿马 - PA</span></label>
+		            			           			<label class="checkbox-inline"><input name="countryCode[]" type="checkbox" id="PE" value="PE"><span>秘鲁 - PE</span></label>
+		            			           			<label class="checkbox-inline"><input name="countryCode[]" type="checkbox" id="PY" value="PY"><span>巴拉圭 - PY</span></label>
+		            			           			<label class="checkbox-inline"><input name="countryCode[]" type="checkbox" id="SR" value="SR"><span>苏里南 - SR</span></label>
+		            			           			<label class="checkbox-inline"><input name="countryCode[]" type="checkbox" id="UY" value="UY"><span>乌拉圭 - UY</span></label>
+		            			           			<label class="checkbox-inline"><input name="countryCode[]" type="checkbox" id="VE" value="VE"><span>委内瑞拉 - VE</span></label>
+		            							</div>
+				</div>
+				            	<div class="row">
+					<div class="col-lg-12 select_destination_continent">
+						<h3 class="col-lg-10">
+							<a href="#continent4" data-parent="#selectDestinationWrap" data-toggle="collapse" aria-expanded="false"><i class="glyphicon glyphicon-menu-down"></i><span>大洋洲</span></a>
+						</h3>
+						<label class="col-lg-2"> <input type="checkbox" onclick="$('input[name*=\'countryCode\']').prop('checked', this.checked);" /><span>大洋洲全选</span>
+						</label>
+					</div>
+				</div>
+				<div class="row panel">
+					<div class="col-lg-12 select_destination_country oceania collapse " id="continent4">
+			            	           			<label class="checkbox-inline"><input name="countryCode[]" type="checkbox" id="AQ" value="AQ"><span>南极洲 - AQ</span></label>
+		            			           			<label class="checkbox-inline"><input name="countryCode[]" type="checkbox" id="AS" value="AS"><span>美国萨摩亚 - AS</span></label>
+		            			           			<label class="checkbox-inline"><input name="countryCode[]" type="checkbox" id="AU" value="AU"><span>澳大利亚 - AU</span></label>
+		            			           			<label class="checkbox-inline"><input name="countryCode[]" type="checkbox" id="CK" value="CK"><span>库克群岛 - CK</span></label>
+		            			           			<label class="checkbox-inline"><input name="countryCode[]" type="checkbox" id="CX" value="CX"><span>圣诞岛 - CX</span></label>
+		            			           			<label class="checkbox-inline"><input name="countryCode[]" type="checkbox" id="FJ" value="FJ"><span>斐济 - FJ</span></label>
+		            			           			<label class="checkbox-inline"><input name="countryCode[]" type="checkbox" id="FM" value="FM"><span>密克罗尼西亚联邦 - FM</span></label>
+		            			           			<label class="checkbox-inline"><input name="countryCode[]" type="checkbox" id="HM" value="HM"><span>赫德和麦克唐纳群岛 - HM</span></label>
+		            			           			<label class="checkbox-inline"><input name="countryCode[]" type="checkbox" id="KI" value="KI"><span>基里巴斯 - KI</span></label>
+		            			           			<label class="checkbox-inline"><input name="countryCode[]" type="checkbox" id="MH" value="MH"><span>马绍尔群岛 - MH</span></label>
+		            			           			<label class="checkbox-inline"><input name="countryCode[]" type="checkbox" id="MP" value="MP"><span>北马里亚纳群岛 - MP</span></label>
+		            			           			<label class="checkbox-inline"><input name="countryCode[]" type="checkbox" id="NC" value="NC"><span>新喀里多尼亚 - NC</span></label>
+		            			           			<label class="checkbox-inline"><input name="countryCode[]" type="checkbox" id="NF" value="NF"><span>诺福克岛 - NF</span></label>
+		            			           			<label class="checkbox-inline"><input name="countryCode[]" type="checkbox" id="NR" value="NR"><span>瑙鲁 - NR</span></label>
+		            			           			<label class="checkbox-inline"><input name="countryCode[]" type="checkbox" id="NU" value="NU"><span>纽埃 - NU</span></label>
+		            			           			<label class="checkbox-inline"><input name="countryCode[]" type="checkbox" id="NZ" value="NZ"><span>新西兰 - NZ</span></label>
+		            			           			<label class="checkbox-inline"><input name="countryCode[]" type="checkbox" id="PF" value="PF"><span>波利尼西亚 - PF</span></label>
+		            			           			<label class="checkbox-inline"><input name="countryCode[]" type="checkbox" id="PG" value="PG"><span>巴布亚新几内亚 - PG</span></label>
+		            			           			<label class="checkbox-inline"><input name="countryCode[]" type="checkbox" id="PN" value="PN"><span>皮特凯恩 - PN</span></label>
+		            			           			<label class="checkbox-inline"><input name="countryCode[]" type="checkbox" id="PW" value="PW"><span>帕劳 - PW</span></label>
+		            			           			<label class="checkbox-inline"><input name="countryCode[]" type="checkbox" id="SB" value="SB"><span>所罗门群岛 - SB</span></label>
+		            			           			<label class="checkbox-inline"><input name="countryCode[]" type="checkbox" id="TK" value="TK"><span>托克劳 - TK</span></label>
+		            			           			<label class="checkbox-inline"><input name="countryCode[]" type="checkbox" id="TO" value="TO"><span>汤加 - TO</span></label>
+		            			           			<label class="checkbox-inline"><input name="countryCode[]" type="checkbox" id="TV" value="TV"><span>图瓦卢 - TV</span></label>
+		            			           			<label class="checkbox-inline"><input name="countryCode[]" type="checkbox" id="VG" value="VG"><span>英属维尔京群岛 - VG</span></label>
+		            			           			<label class="checkbox-inline"><input name="countryCode[]" type="checkbox" id="VU" value="VU"><span>瓦努阿图 - VU</span></label>
+		            			           			<label class="checkbox-inline"><input name="countryCode[]" type="checkbox" id="WL" value="WL"><span>瓦利斯和富图纳 - WL</span></label>
+		            							</div>
+				</div>
+				            	<div class="row">
+					<div class="col-lg-12 select_destination_continent">
+						<h3 class="col-lg-10">
+							<a href="#continent5" data-parent="#selectDestinationWrap" data-toggle="collapse" aria-expanded="false"><i class="fa fa-shopping-cart fw"></i><span>欧洲</span></a>
+						</h3>
+						<label class="col-lg-2"> <input type="checkbox" onclick="$('input[name*=\'countryCode\']').prop('checked', this.checked);" /><span>欧洲全选</span>
+						</label>
+					</div>
+				</div>
+				<div class="row panel">
+					<div class="col-lg-12 select_destination_country europe collapse " id="continent5">
+			            	           			<label class="checkbox-inline"><input name="countryCode[]" type="checkbox" id="AD" value="AD"><span>安道尔 - AD</span></label>
+		            			           			<label class="checkbox-inline"><input name="countryCode[]" type="checkbox" id="AL" value="AL"><span>阿尔巴尼亚 - AL</span></label>
+		            			           			<label class="checkbox-inline"><input name="countryCode[]" type="checkbox" id="AT" value="AT"><span>奥地利 - AT</span></label>
+		            			           			<label class="checkbox-inline"><input name="countryCode[]" type="checkbox" id="AX" value="AX"><span>奥兰群岛 - AX</span></label>
+		            			           			<label class="checkbox-inline"><input name="countryCode[]" type="checkbox" id="BA" value="BA"><span>波黑 - BA</span></label>
+		            			           			<label class="checkbox-inline"><input name="countryCode[]" type="checkbox" id="BE" value="BE"><span>比利时 - BE</span></label>
+		            			           			<label class="checkbox-inline"><input name="countryCode[]" type="checkbox" id="BG" value="BG"><span>保加利亚 - BG</span></label>
+		            			           			<label class="checkbox-inline"><input name="countryCode[]" type="checkbox" id="BL" value="BL"><span>圣巴泰勒米 - BL</span></label>
+		            			           			<label class="checkbox-inline"><input name="countryCode[]" type="checkbox" id="BV" value="BV"><span>布维岛 - BV</span></label>
+		            			           			<label class="checkbox-inline"><input name="countryCode[]" type="checkbox" id="BY" value="BY"><span>白俄罗斯 - BY</span></label>
+		            			           			<label class="checkbox-inline"><input name="countryCode[]" type="checkbox" id="CH" value="CH"><span>瑞士 - CH</span></label>
+		            			           			<label class="checkbox-inline"><input name="countryCode[]" type="checkbox" id="CV" value="CV"><span>佛得角 - CV</span></label>
+		            			           			<label class="checkbox-inline"><input name="countryCode[]" type="checkbox" id="CY" value="CY"><span>塞浦路斯 - CY</span></label>
+		            			           			<label class="checkbox-inline"><input name="countryCode[]" type="checkbox" id="CZ" value="CZ"><span>捷克 - CZ</span></label>
+		            			           			<label class="checkbox-inline"><input name="countryCode[]" type="checkbox" id="DE" value="DE"><span>德国 - DE</span></label>
+		            			           			<label class="checkbox-inline"><input name="countryCode[]" type="checkbox" id="DK" value="DK"><span>丹麦 - DK</span></label>
+		            			           			<label class="checkbox-inline"><input name="countryCode[]" type="checkbox" id="DO" value="DO"><span>多米尼加共和国 - DO</span></label>
+		            			           			<label class="checkbox-inline"><input name="countryCode[]" type="checkbox" id="EE" value="EE"><span>爱沙尼亚 - EE</span></label>
+		            			           			<label class="checkbox-inline"><input name="countryCode[]" type="checkbox" id="ES" value="ES"><span>西班牙 - ES</span></label>
+		            			           			<label class="checkbox-inline"><input name="countryCode[]" type="checkbox" id="FI" value="FI"><span>芬兰 - FI</span></label>
+		            			           			<label class="checkbox-inline"><input name="countryCode[]" type="checkbox" id="FO" value="FO"><span>法罗群岛 - FO</span></label>
+		            			           			<label class="checkbox-inline"><input name="countryCode[]" type="checkbox" id="FR" value="FR"><span>法国 - FR</span></label>
+		            			           			<label class="checkbox-inline"><input name="countryCode[]" type="checkbox" id="GB" value="GB"><span>英国 - GB</span></label>
+		            			           			<label class="checkbox-inline"><input name="countryCode[]" type="checkbox" id="GG" value="GG"><span>根西岛 - GG</span></label>
+		            			           			<label class="checkbox-inline"><input name="countryCode[]" type="checkbox" id="GI" value="GI"><span>直布罗陀 - GI</span></label>
+		            			           			<label class="checkbox-inline"><input name="countryCode[]" type="checkbox" id="GR" value="GR"><span>希腊 - GR</span></label>
+		            			           			<label class="checkbox-inline"><input name="countryCode[]" type="checkbox" id="HR" value="HR"><span>克罗地亚 - HR</span></label>
+		            			           			<label class="checkbox-inline"><input name="countryCode[]" type="checkbox" id="HU" value="HU"><span>匈牙利 - HU</span></label>
+		            			           			<label class="checkbox-inline"><input name="countryCode[]" type="checkbox" id="IE" value="IE"><span>爱尔兰 - IE</span></label>
+		            			           			<label class="checkbox-inline"><input name="countryCode[]" type="checkbox" id="IM" value="IM"><span>马恩岛 - IM</span></label>
+		            			           			<label class="checkbox-inline"><input name="countryCode[]" type="checkbox" id="IS" value="IS"><span>冰岛 - IS</span></label>
+		            			           			<label class="checkbox-inline"><input name="countryCode[]" type="checkbox" id="IT" value="IT"><span>意大利 - IT</span></label>
+		            			           			<label class="checkbox-inline"><input name="countryCode[]" type="checkbox" id="JE" value="JE"><span>泽西岛 - JE</span></label>
+		            			           			<label class="checkbox-inline"><input name="countryCode[]" type="checkbox" id="LI" value="LI"><span>列支敦士登 - LI</span></label>
+		            			           			<label class="checkbox-inline"><input name="countryCode[]" type="checkbox" id="LT" value="LT"><span>立陶宛 - LT</span></label>
+		            			           			<label class="checkbox-inline"><input name="countryCode[]" type="checkbox" id="LU" value="LU"><span>卢森堡 - LU</span></label>
+		            			           			<label class="checkbox-inline"><input name="countryCode[]" type="checkbox" id="LV" value="LV"><span>拉脱维亚 - LV</span></label>
+		            			           			<label class="checkbox-inline"><input name="countryCode[]" type="checkbox" id="MC" value="MC"><span>摩纳哥 - MC</span></label>
+		            			           			<label class="checkbox-inline"><input name="countryCode[]" type="checkbox" id="MD" value="MD"><span>摩尔多瓦 - MD</span></label>
+		            			           			<label class="checkbox-inline"><input name="countryCode[]" type="checkbox" id="ME" value="ME"><span>黑山共和国 - ME</span></label>
+		            			           			<label class="checkbox-inline"><input name="countryCode[]" type="checkbox" id="MK" value="MK"><span>马其顿 - MK</span></label>
+		            			           			<label class="checkbox-inline"><input name="countryCode[]" type="checkbox" id="MQ" value="MQ"><span>马提尼克 - MQ</span></label>
+		            			           			<label class="checkbox-inline"><input name="countryCode[]" type="checkbox" id="MT" value="MT"><span>马耳他 - MT</span></label>
+		            			           			<label class="checkbox-inline"><input name="countryCode[]" type="checkbox" id="NL" value="NL"><span>荷兰 - NL</span></label>
+		            			           			<label class="checkbox-inline"><input name="countryCode[]" type="checkbox" id="NO" value="NO"><span>挪威 - NO</span></label>
+		            			           			<label class="checkbox-inline"><input name="countryCode[]" type="checkbox" id="PL" value="PL"><span>波兰 - PL</span></label>
+		            			           			<label class="checkbox-inline"><input name="countryCode[]" type="checkbox" id="PT" value="PT"><span>葡萄牙 - PT</span></label>
+		            			           			<label class="checkbox-inline"><input name="countryCode[]" type="checkbox" id="RE" value="RE"><span>留尼旺岛 - RE</span></label>
+		            			           			<label class="checkbox-inline"><input name="countryCode[]" type="checkbox" id="RO" value="RO"><span>罗马尼亚 - RO</span></label>
+		            			           			<label class="checkbox-inline"><input name="countryCode[]" type="checkbox" id="RS" value="RS"><span>塞尔维亚 - RS</span></label>
+		            			           			<label class="checkbox-inline"><input name="countryCode[]" type="checkbox" id="RU" value="RU"><span>俄罗斯 - RU</span></label>
+		            			           			<label class="checkbox-inline"><input name="countryCode[]" type="checkbox" id="SE" value="SE"><span>瑞典 - SE</span></label>
+		            			           			<label class="checkbox-inline"><input name="countryCode[]" type="checkbox" id="SI" value="SI"><span>斯洛文尼亚 - SI</span></label>
+		            			           			<label class="checkbox-inline"><input name="countryCode[]" type="checkbox" id="SJ" value="SJ"><span>斯瓦尔巴群岛和扬马延岛 - SJ</span></label>
+		            			           			<label class="checkbox-inline"><input name="countryCode[]" type="checkbox" id="SK" value="SK"><span>斯洛伐克 - SK</span></label>
+		            			           			<label class="checkbox-inline"><input name="countryCode[]" type="checkbox" id="SM" value="SM"><span>圣马力诺 - SM</span></label>
+		            			           			<label class="checkbox-inline"><input name="countryCode[]" type="checkbox" id="SV" value="SV"><span>萨尔瓦多 - SV</span></label>
+		            			           			<label class="checkbox-inline"><input name="countryCode[]" type="checkbox" id="TF" value="TF"><span>法国南部的领土 - TF</span></label>
+		            			           			<label class="checkbox-inline"><input name="countryCode[]" type="checkbox" id="UA" value="UA"><span>乌克兰 - UA</span></label>
+		            			           			<label class="checkbox-inline"><input name="countryCode[]" type="checkbox" id="UK" value="UK"><span>英国 - UK</span></label>
+		            			           			<label class="checkbox-inline"><input name="countryCode[]" type="checkbox" id="VA" value="VA"><span>梵蒂冈 - VA</span></label>
+		            			           			<label class="checkbox-inline"><input name="countryCode[]" type="checkbox" id="YK" value="YK"><span>科索沃 - YK</span></label>
+		            							</div>
+				</div>
+				            	<div class="row">
+					<div class="col-lg-12 select_destination_continent">
+						<h3 class="col-lg-10">
+							<a href="#continent6" data-parent="#selectDestinationWrap" data-toggle="collapse" aria-expanded="false"><i class="glyphicon glyphicon-menu-down"></i><span>非洲</span></a>
+						</h3>
+						<label class="col-lg-2"><input type="checkbox" onclick="$('input[name*=\'countryCode\']').prop('checked', this.checked);" /><span>非洲全选</span>
+						</label>
+					</div>
+				</div>
+				<div class="row panel">
+					<div class="col-lg-12 select_destination_country africa collapse " id="continent6">
+			            	           			<label class="checkbox-inline"><input name="countryCode[]" type="checkbox" id="AO" value="AO"><span>安哥拉 - AO</span></label>
+		            			           			<label class="checkbox-inline"><input name="countryCode[]" type="checkbox" id="BF" value="BF"><span>布基纳法索 - BF</span></label>
+		            			           			<label class="checkbox-inline"><input name="countryCode[]" type="checkbox" id="BI" value="BI"><span>布隆迪 - BI</span></label>
+		            			           			<label class="checkbox-inline"><input name="countryCode[]" type="checkbox" id="BJ" value="BJ"><span>贝宁 - BJ</span></label>
+		            			           			<label class="checkbox-inline"><input name="countryCode[]" type="checkbox" id="BW" value="BW"><span>博茨瓦纳 - BW</span></label>
+		            			           			<label class="checkbox-inline"><input name="countryCode[]" type="checkbox" id="CD" value="CD"><span>刚果民主共和国 - CD</span></label>
+		            			           			<label class="checkbox-inline"><input name="countryCode[]" type="checkbox" id="CF" value="CF"><span>中非 - CF</span></label>
+		            			           			<label class="checkbox-inline"><input name="countryCode[]" type="checkbox" id="CG" value="CG"><span>刚果 - CG</span></label>
+		            			           			<label class="checkbox-inline"><input name="countryCode[]" type="checkbox" id="CI" value="CI"><span>科特迪瓦 - CI</span></label>
+		            			           			<label class="checkbox-inline"><input name="countryCode[]" type="checkbox" id="KT" value="KT"><span>科特迪瓦 - KT</span></label>
+		            			           			<label class="checkbox-inline"><input name="countryCode[]" type="checkbox" id="CM" value="CM"><span>喀麦隆 - CM</span></label>
+		            			           			<label class="checkbox-inline"><input name="countryCode[]" type="checkbox" id="DJ" value="DJ"><span>吉布提 - DJ</span></label>
+		            			           			<label class="checkbox-inline"><input name="countryCode[]" type="checkbox" id="DZ" value="DZ"><span>阿尔及利亚 - DZ</span></label>
+		            			           			<label class="checkbox-inline"><input name="countryCode[]" type="checkbox" id="EG" value="EG"><span>埃及 - EG</span></label>
+		            			           			<label class="checkbox-inline"><input name="countryCode[]" type="checkbox" id="EH" value="EH"><span>西撒哈拉 - EH</span></label>
+		            			           			<label class="checkbox-inline"><input name="countryCode[]" type="checkbox" id="ER" value="ER"><span>厄立特里亚 - ER</span></label>
+		            			           			<label class="checkbox-inline"><input name="countryCode[]" type="checkbox" id="ET" value="ET"><span>埃塞俄比亚 - ET</span></label>
+		            			           			<label class="checkbox-inline"><input name="countryCode[]" type="checkbox" id="GA" value="GA"><span>加蓬 - GA</span></label>
+		            			           			<label class="checkbox-inline"><input name="countryCode[]" type="checkbox" id="GH" value="GH"><span>加纳 - GH</span></label>
+		            			           			<label class="checkbox-inline"><input name="countryCode[]" type="checkbox" id="GM" value="GM"><span>冈比亚 - GM</span></label>
+		            			           			<label class="checkbox-inline"><input name="countryCode[]" type="checkbox" id="GN" value="GN"><span>几内亚 - GN</span></label>
+		            			           			<label class="checkbox-inline"><input name="countryCode[]" type="checkbox" id="GQ" value="GQ"><span>赤道几内亚 - GQ</span></label>
+		            			           			<label class="checkbox-inline"><input name="countryCode[]" type="checkbox" id="GS" value="GS"><span>南乔治亚和南桑德威奇群岛 - GS</span></label>
+		            			           			<label class="checkbox-inline"><input name="countryCode[]" type="checkbox" id="GW" value="GW"><span>几内亚比绍 - GW</span></label>
+		            			           			<label class="checkbox-inline"><input name="countryCode[]" type="checkbox" id="KE" value="KE"><span>肯尼亚 - KE</span></label>
+		            			           			<label class="checkbox-inline"><input name="countryCode[]" type="checkbox" id="KM" value="KM"><span>科摩罗伊斯兰联邦共和国 - KM</span></label>
+		            			           			<label class="checkbox-inline"><input name="countryCode[]" type="checkbox" id="LR" value="LR"><span>利比里亚 - LR</span></label>
+		            			           			<label class="checkbox-inline"><input name="countryCode[]" type="checkbox" id="LS" value="LS"><span>莱索托 - LS</span></label>
+		            			           			<label class="checkbox-inline"><input name="countryCode[]" type="checkbox" id="LY" value="LY"><span>利比亚 - LY</span></label>
+		            			           			<label class="checkbox-inline"><input name="countryCode[]" type="checkbox" id="MA" value="MA"><span>摩洛哥 - MA</span></label>
+		            			           			<label class="checkbox-inline"><input name="countryCode[]" type="checkbox" id="MF" value="MF"><span>圣马丁 - MF</span></label>
+		            			           			<label class="checkbox-inline"><input name="countryCode[]" type="checkbox" id="MG" value="MG"><span>马达加斯加 - MG</span></label>
+		            			           			<label class="checkbox-inline"><input name="countryCode[]" type="checkbox" id="ML" value="ML"><span>马里 - ML</span></label>
+		            			           			<label class="checkbox-inline"><input name="countryCode[]" type="checkbox" id="MR" value="MR"><span>毛里塔尼亚 - MR</span></label>
+		            			           			<label class="checkbox-inline"><input name="countryCode[]" type="checkbox" id="MU" value="MU"><span>毛里求斯 - MU</span></label>
+		            			           			<label class="checkbox-inline"><input name="countryCode[]" type="checkbox" id="MW" value="MW"><span>马拉维 - MW</span></label>
+		            			           			<label class="checkbox-inline"><input name="countryCode[]" type="checkbox" id="MZ" value="MZ"><span>莫桑比克 - MZ</span></label>
+		            			           			<label class="checkbox-inline"><input name="countryCode[]" type="checkbox" id="NA" value="NA"><span>纳米比亚 - NA</span></label>
+		            			           			<label class="checkbox-inline"><input name="countryCode[]" type="checkbox" id="NE" value="NE"><span>尼日尔 - NE</span></label>
+		            			           			<label class="checkbox-inline"><input name="countryCode[]" type="checkbox" id="NG" value="NG"><span>尼日利亚 - NG</span></label>
+		            			           			<label class="checkbox-inline"><input name="countryCode[]" type="checkbox" id="RW" value="RW"><span>卢旺达 - RW</span></label>
+		            			           			<label class="checkbox-inline"><input name="countryCode[]" type="checkbox" id="SC" value="SC"><span>塞舌尔 - SC</span></label>
+		            			           			<label class="checkbox-inline"><input name="countryCode[]" type="checkbox" id="SD" value="SD"><span>苏丹 - SD</span></label>
+		            			           			<label class="checkbox-inline"><input name="countryCode[]" type="checkbox" id="SH" value="SH"><span>圣海伦娜 - SH</span></label>
+		            			           			<label class="checkbox-inline"><input name="countryCode[]" type="checkbox" id="SL" value="SL"><span>塞拉利昂 - SL</span></label>
+		            			           			<label class="checkbox-inline"><input name="countryCode[]" type="checkbox" id="SN" value="SN"><span>塞内加尔 - SN</span></label>
+		            			           			<label class="checkbox-inline"><input name="countryCode[]" type="checkbox" id="SO" value="SO"><span>索马里 - SO</span></label>
+		            			           			<label class="checkbox-inline"><input name="countryCode[]" type="checkbox" id="SS" value="SS"><span>南苏丹 - SS</span></label>
+		            			           			<label class="checkbox-inline"><input name="countryCode[]" type="checkbox" id="ST" value="ST"><span>圣多美和普林西比 - ST</span></label>
+		            			           			<label class="checkbox-inline"><input name="countryCode[]" type="checkbox" id="SZ" value="SZ"><span>斯威士兰 - SZ</span></label>
+		            			           			<label class="checkbox-inline"><input name="countryCode[]" type="checkbox" id="TD" value="TD"><span>乍得 - TD</span></label>
+		            			           			<label class="checkbox-inline"><input name="countryCode[]" type="checkbox" id="TG" value="TG"><span>多哥 - TG</span></label>
+		            			           			<label class="checkbox-inline"><input name="countryCode[]" type="checkbox" id="TN" value="TN"><span>突尼斯 - TN</span></label>
+		            			           			<label class="checkbox-inline"><input name="countryCode[]" type="checkbox" id="TZ" value="TZ"><span>坦桑尼亚 - TZ</span></label>
+		            			           			<label class="checkbox-inline"><input name="countryCode[]" type="checkbox" id="UG" value="UG"><span>乌干达 - UG</span></label>
+		            			           			<label class="checkbox-inline"><input name="countryCode[]" type="checkbox" id="YT" value="YT"><span>马约特岛 - YT</span></label>
+		            			           			<label class="checkbox-inline"><input name="countryCode[]" type="checkbox" id="ZA" value="ZA"><span>南非 - ZA</span></label>
+		            			           			<label class="checkbox-inline"><input name="countryCode[]" type="checkbox" id="ZM" value="ZM"><span>赞比亚 - ZM</span></label>
+		            			           			<label class="checkbox-inline"><input name="countryCode[]" type="checkbox" id="ZW" value="ZW"><span>津巴布韦 - ZW</span></label>
+		            							</div>
+				</div>
+				        		<div class="row">
+					<div class="bootstrap-tagsinput"><span class="tag label label-default">安提瓜和巴布达 - AG<span data-role="remove"></span></span> <span class="tag label label-default">安圭拉岛 - AI<span data-role="remove"></span></span> <span class="tag label label-default">阿鲁巴 - AW<span data-role="remove"></span></span> <span class="tag label label-default">巴巴多斯 - BB<span data-role="remove"></span></span> <span class="tag label label-default">百慕大群岛 - BM<span data-role="remove"></span></span> <span class="tag label label-default">荷兰加勒比区 - BQ<span data-role="remove"></span></span> <span class="tag label label-default">伯利兹 - BZ<span data-role="remove"></span></span> <span class="tag label label-default">加拿大 - CA<span data-role="remove"></span></span> <span class="tag label label-default">哥斯达黎加 - CR<span data-role="remove"></span></span> <span class="tag label label-default">古巴 - CU<span data-role="remove"></span></span> <span class="tag label label-default">多米尼加 - DM<span data-role="remove"></span></span> <span class="tag label label-default">格林纳达 - GD<span data-role="remove"></span></span> <span class="tag label label-default">格陵兰 - GL<span data-role="remove"></span></span> <span class="tag label label-default">危地马拉 - GT<span data-role="remove"></span></span> <span class="tag label label-default">关岛 - GU<span data-role="remove"></span></span> <span class="tag label label-default">洪都拉斯 - HN<span data-role="remove"></span></span> <span class="tag label label-default">海地 - HT<span data-role="remove"></span></span> <span class="tag label label-default">圣基茨和尼维斯 - KN<span data-role="remove"></span></span> <span class="tag label label-default">开曼群岛 - KY<span data-role="remove"></span></span> <span class="tag label label-default">圣卢西亚 - LC<span data-role="remove"></span></span> <span class="tag label label-default">墨西哥 - MX<span data-role="remove"></span></span> <span class="tag label label-default">尼加拉瓜 - NI<span data-role="remove"></span></span> <span class="tag label label-default">圣皮埃尔和密克隆 - PM<span data-role="remove"></span></span> <span class="tag label label-default">波多黎各 - PR<span data-role="remove"></span></span> <span class="tag label label-default">特克斯和凯科斯群岛 - TC<span data-role="remove"></span></span> <span class="tag label label-default">特立尼达和多巴哥 - TT<span data-role="remove"></span></span> <span class="tag label label-default">美国周边小岛屿 - UM<span data-role="remove"></span></span> <span class="tag label label-default">美国 - US<span data-role="remove"></span></span> <span class="tag label label-default">圣文森特和格林纳丁斯 - VC<span data-role="remove"></span></span> <span class="tag label label-default">美属维尔京群岛 - VI<span data-role="remove"></span></span> <span class="tag label label-default">萨摩亚 - WS<span data-role="remove"></span></span> <span class="tag label label-default">库拉索 - CW<span data-role="remove"></span></span> <input type="text" placeholder=""></div><div class="form-group form-group-sm col-lg-12 select_country_input" style="display: none;">
+						<div class="col-lg-10">
+							<input class="form-control" type="text" value="">
+						</div>
+					</div>
+				</div>
+				<div class="row ">
+					<div class="checkbox col-lg-12 select_destination_all">
+						<div class="col-lg-10 text-left">
+							<strong></strong>
+						</div>
+						<a class=" col-lg-2" href="javascript:destinationAllRemove();">清空</a>
+						<label class="col-lg-offset-10 col-lg-2" style="display: none;"> <input type="checkbox" value=""> 全选/全不选
+						</label>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="panel panel-default select_destination_settings">
+			<div class="panel-heading">
+				设置区域运费：
+			</div>
+			<div class="panel-body" id="weightUnit">
+          		          <div class="panel-group">
+					<input type="hidden" name="dSingleAreaId" value="106418">
+					<input type="hidden" name="SingleAreaId[]" value="26950">
+            	                		<div class="row">
+						<div class="form-group col-lg-12 form-group-sm">
+							<label class="col-lg-2 control-label">重量范围：</label>
+							<div class="col-lg-10 form-inline">
+								<div class="input-group col-lg-4">
+									<div class="input-group-addon">起始</div>
+									<input class="form-control" type="number" name="minWeight[]" placeholder="" value="0" min="0">
+									<div class="input-group-addon">g</div>
+								</div>
+								<div class="input-group col-lg-4">
+									<div class="input-group-addon">截止(&lt;=)</div>
+									<input class="form-control" type="number" name="maxWeight[]" placeholder="2000" value="2000" min="0">
+									<div class="input-group-addon">g</div>
+								</div>
+								<div class="input-group col-lg-3">
+									<label class="checkbox-inline"><input type="checkbox" value="0" name="isWXD[]">不限重</label>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="form-group col-lg-12 form-group-sm">
+							<label class="col-lg-2 control-label">首重设置：</label>
+							<div class="col-lg-10 form-inline">
+								<div class="input-group col-lg-4">
+									<div class="input-group-addon">首重重量</div>
+									<input class="form-control" type="number" name="firstWeight[]" placeholder="" value="10" min="0">
+									<div class="input-group-addon">g</div>
+								</div>
+								<div class="input-group col-lg-4">
+									<div class="input-group-addon">首重价</div>
+									<input class="form-control" type="number" name="firstWeightPrice[]" placeholder="" value="5.0000" min="0">
+									<div class="input-group-addon">元</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="form-group col-lg-12 form-group-sm">
+							<label class="col-lg-2 control-label">续重设置：</label>
+							<div class="col-lg-10 form-inline">
+								<div class="input-group col-lg-4">
+									<div class="input-group-addon">单位重量</div>
+									<input class="form-control" type="number" name="perWeight[]" placeholder="" value="10" min="0">
+									<div class="input-group-addon">g</div>
+								</div>
+								<div class="input-group col-lg-4">
+									<div class="input-group-addon">单价</div>
+									<input class="form-control" type="number" name="perWeightPrice[]" placeholder="" value="2.0000" min="0">
+									<div class="input-group-addon">元</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+            	          <div class="col-lg-offset-2 col-lg-10">
+					<a href="javascript:void(0)" onclick="addDestinationSettings();">增加一组运费设置</a>
+				</div>
+			</div>
+		</div>
+		<div class="panel panel-default select_destination_settings">
+			<div class="panel-heading">
+				其他费用设置：
+			</div>
+			<div class="panel-body">
+				<div class="panel-group">
+					<div class="row">
+						<div class="form-group form-group-sm col-md-6">
+							<label class="col-sm-5 control-label">挂号费：</label>
+							<div class="col-sm-7">
+								<div class="input-group">
+									<input type="number" min="0" value="5.00" class="form-control" name="registeredFee" aria-required="true">
+									<div class="input-group-addon">元</div>
+								</div>
+							</div>
+						</div>
+						<div class="form-group form-group-sm col-md-6">
+							<label class="col-sm-5 control-label">附加费：</label>
+							<div class="col-sm-7">
+								<div class="input-group">
+									<input type="number" min="0" value="0.00" class="form-control" name="additionalFee" aria-required="true">
+									<div class="input-group-addon">元</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="form-group form-group-sm col-md-6">
+							<label class="col-sm-5 control-label">操作单位重量：</label>
+							<div class="col-sm-7">
+								<div class="input-group">
+									<input type="number" min="0" value="2" class="form-control" name="unitWeight" aria-required="true">
+									<div class="input-group-addon">g</div>
+								</div>
+							</div>
+						</div>
+						<div class="form-group form-group-sm col-md-6">
+							<label class="col-sm-5 control-label">操作单位价格：</label>
+							<div class="col-sm-7">
+								<div class="input-group">
+									<input type="number" min="0" value="0.5000" class="form-control" name="unitWeightPrice" aria-required="true">
+									<div class="input-group-addon">元</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="form-group form-group-sm col-md-6">
+							<label class="col-sm-5 control-label">燃油附加费百分比：</label>
+							<div class="col-sm-7">
+								<div class="input-group">
+									<input type="number" min="0" value="0" class="form-control" name="fuelOilFeePercent" aria-required="true">
+									<div class="input-group-addon">%</div>
+								</div>
+							</div>
+						</div>
+						<div class="form-group form-group-sm col-md-6">
+							<label class="col-sm-5 control-label">时效天数：<span class="text-danger">*</span></label>
+							<div class="col-sm-7">
+								<div class="input-group">
+									<input type="number" min="0" value="10" class="form-control" required="true" name="daysFrom" aria-required="true">
+									<div class="input-group-addon" style="border-width: 1px 0;">-</div>
+									<input type="number" min="0" value="14" class="form-control" required="true" name="daysTo" aria-required="true">
+									<div class="input-group-addon">天</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="modal-footer">
+		<input type="hidden" name="expressChannelId" value="">
+		<input type="hidden" name="areaId" value="26950">
+		<button type="submit" class="btn btn-success">保存</button>
+		<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+	</div>
+</form>
+
+<script>
+var iptObj = $('.select_country_input');
+iptObj.tagsinput({
+  tagClass: function(item) {
+    switch (item.continent) {
+      case '欧洲'   : return 'label label-primary';
+      case '北美洲'  : return 'label label-default';
+	  case '南美洲'  : return 'label label-success';
+      case '大洋洲': return 'label label-info';
+      case '亚洲'   : return 'label label-warning';
+      case '非洲'     : return 'label label-danger';
+    }
+  },
+  itemValue: 'value',
+  itemText: 'text',
+  freeInput: false
+});
+iptObj.on('beforeItemRemove', function(event) {
+  	var delVal=event.item.value;
+	var removeObj=$(".select_destination_country input[value='"+delVal+"']");
+	removeObj.prop("checked",false);
+	removeObj.parents("label").removeClass("checked");
+	removeObj.parents(".row").prev(".row").find(".select_destination_continent input:checkbox").prop("checked",false);
+	$(".select_destination_all input:checkbox").prop("checked",false);
+	
+});
+	$(".select_destination_country input:checkbox:checked").each(function(index) {
+      var iptVal,iptText,iptContinent;  
+	  iptVal = $(this).val();
+	  iptText = $(this).next("span").html();
+	  iptContinent = $(this).parents(".row").prev(".row").find(".select_destination_continent").find("span").html();
+	  iptObj.tagsinput('add', {"value": iptVal,"text":iptText,"continent":iptContinent});
+	  $(this).parent("label").addClass("checked");
+    });
+	$(".bootstrap-tagsinput input").keydown(function(e){
+		if (e.keyCode === 8){
+			return true;
+			}else{
+				return false;
+				}
+		});
+	function shipcheck(x){
+		var shipType='2';
+		if(shipType!=x&&shipType!=''){
+ 
+			$.gritter.add({
+				text: "<i class='glyphicon glyphicon-remove-sign'></i>如需更改当前渠道的计费方式，建议删除所有已设数据，重新导入区域运费。",
+				sticky: false,
+				class_name: 'alert alert-danger',
+				time: '2000'
+			});
+		}
+		
+		if(x==1){
+			$('#weightUnit').addClass('active').next().removeClass('active');
+			}else if(x==2){
+				$('#firstWeight').addClass('active').prev().removeClass('active');
+				}
+	}
+function deleteArea(obj,areaId,rangeId){
+	$(obj).parent().remove();
+	var expressChannelId='';
+	$(".loading").show();
+	$.ajax({
+		url:"http://www.i8956.com/index.php?m=customshippingfee&a=deleteArea",
+		type:"post",
+		dataType:"json",
+		data:{areaId:areaId,rangeId:rangeId,expressChannelId:expressChannelId},
+		success:function(r)
+		{
+			$(".loading").hide();
+			if(r.success)
+			{
+				$.gritter.add({
+					text: "<i class='glyphicon glyphicon-ok-sign'></i>删除成功",
+					sticky: false,
+					class_name: 'alert alert-success',
+					time: '2000'
+				});
+			}
+			else
+			{
+				$.gritter.add({
+					text: "<i class='glyphicon glyphicon-remove-sign'></i>" + r.message,
+					sticky: false,
+					class_name: 'alert alert-danger',
+					time: '3000'
+				});
+			}
+		}
+	});
+}
+function addDestinationSettings(){
+	$("#weightUnit .col-lg-offset-2").before(
+            '<div class="panel-group">'+
+            	'<a onclick="$(this).parent().remove();" href="javascript:;" class="close_inputgroup">删除</a>'+
+              '<div class="row">'+
+                '<div class="form-group col-lg-12 form-group-sm">'+
+                  '<label class="col-lg-2 control-label">重量范围：</label>'+
+                  '<div class="col-lg-10 form-inline">'+
+                    '<div class="input-group col-lg-4">'+
+                      '<div class="input-group-addon">起始</div>	'+
+                      '<input class="form-control" type="number" name="minWeight[]" placeholder="" value="" min="0">'+ 
+                      '<div class="input-group-addon">g</div>'+ 
+                    '</div>'+ 
+                    '<div class="input-group col-lg-4 ml5">'+ 
+                      '<div class="input-group-addon">截止(<=)</div>	'+ 
+                      '<input class="form-control" type="number" name="maxWeight[]" placeholder="" value="" min="0">'+ 
+                      '<div class="input-group-addon">g</div>'+ 
+                    '</div>'+ 
+                    '<div class="input-group col-lg-3 ml5">'+ 
+                      '<label class="checkbox-inline"><input type="checkbox" value="0" name="isWXD[]">不限重</label>'+ 
+                    '</div>'+
+                  '</div>'+
+                '</div>'+
+              '</div>'+
+              '<div class="row">'+ 
+                '<div class="form-group col-lg-12 form-group-sm">'+ 
+                  '<label class="col-lg-2 control-label">首重设置：</label>'+ 
+                  '<div class="col-lg-10 form-inline">'+ 
+                    '<div class="input-group col-lg-4">'+ 
+                    	'<div class="input-group-addon">首重重量</div>'+
+                      '<input class="form-control" type="number" name="firstWeight[]" placeholder="" value="" min="0">'+ 
+                      '<div class="input-group-addon">g</div>'+ 
+                    '</div>'+ 
+                    '<div class="input-group col-lg-4 ml5">'+ 
+                     	'<div class="input-group-addon">首重价</div>	'+ 
+                      '<input class="form-control" type="number" name="firstWeightPrice[]" placeholder="" value="" min="0">'+  
+                      '<div class="input-group-addon">元</div>'+ 
+                    '</div>'+ 
+	                '</div>'+ 
+                '</div>'+ 
+              '</div>'+ 
+              '<div class="row">'+ 
+                '<div class="form-group col-lg-12 form-group-sm">'+ 
+                  '<label class="col-lg-2 control-label">续重设置：</label>'+ 
+                  '<div class="col-lg-10 form-inline">'+ 
+                    '<div class="input-group col-lg-4">'+ 
+                    	'<div class="input-group-addon">单位重量</div>	'+ 
+                      '<input class="form-control" type="number" name="perWeight[]" placeholder="" value="" min="0">'+ 
+                      '<div class="input-group-addon">g</div>'+ 
+                    '</div>'+ 
+                    '<div class="input-group col-lg-4 ml5">'+ 
+                     	'<div class="input-group-addon">单价</div>	'+ 
+                      '<input class="form-control" type="number" name="perWeightPrice[]" placeholder="" value="" min="0">'+ 
+                      '<div class="input-group-addon">元</div>'+ 
+
+                    '</div>'+ 
+	                '</div>'+ 
+                '</div>'+ 
+              '</div>'+ 
+            '</div>'
+	)
+	$(".select_destination_settings .panel-group:hidden").fadeIn(500);
+}
+
+function trim(ss){return ss.replace(/(^\s*)|(\s*$)/g, "");}
+function Countryscreen(obj){
+	var n=$(obj).parents(".select_destination_country").find(".checkbox-inline").length;
+	var i=$(obj).parents(".select_destination_country").find(".checkbox-inline.dis-none").length;
+	if (i==n){
+		setTimeout(function(){$(obj).parents(".select_destination_country").collapse('hide')}, 400);
+	}else{
+		$(obj).parents(".select_destination_country").collapse('show');
+	}
+}
+
+$(function(){
+	//国家筛选
+	$("#Country-screen").on("keyup",function(){
+		var val=$.trim($(this).val());
+		var sortName=$("#selectDestinationWrap").find(".checkbox-inline");
+		if(val.length===0){
+			sortName.removeClass("dis-none");
+			$("#selectDestinationWrap").find(".select_destination_country").collapse('hide');
+		}else{ 
+			sortName.each(function(){
+				if ($(this).children("span").text().indexOf(val)>-1){
+					$(this).removeClass("dis-none");
+				}else {
+					$(this).addClass("dis-none");
+				}
+				Countryscreen(this);
+			});
+		}
+	});
+	
+	//Form 表单提交
+	$("#theFormArea").validate({
+		errorElement : 'span',  
+        errorClass : 'validateError text-danger',
+		rules:{
+			countryCode:{
+				required: true
+				},
+			startingweight:{
+				required: true,
+				digits: true,
+				min:0
+				},
+			unitpricing:{
+				required: true,
+				number:true,
+				min:0
+				}	
+			},
+			messages:{
+				countryCode:{
+					required: "请至少选择一个国家!"
+					},
+				startingweight:{
+					required: "起始重量必填",
+					digits:"必须是整数",
+					min:"必须大于0"
+					},
+				unitpricing:{
+					required: "单位价格必须填写",
+					number:"必须是数字",
+					min:"必须大于0"
+					}
+				},
+		errorPlacement: function(error, element) {
+			if($(element[0].parentElement).hasClass("input-group")){
+				error.insertAfter(element.parent());  
+				}else if($(element).attr("type")=="checkbox"){
+					$(".select_destination_all>div:eq(0)>strong").append(error);
+					}else{
+					 error.appendTo(element.parent()); 
+					};
+		},
+		onfocusout: function(element){
+        $(element).valid();
+   		},
+   		submitHandler:function(form){
+			saveExpressChannelArea();
+        }
+		});
+	function saveExpressChannelArea()
+	{
+		var isWXD = '';
+		$("input[name='isWXD[]']").each(function(){
+			if($(this).prop('checked') == true){
+				isWXD = isWXD + '1,';
+			}else{
+				isWXD = isWXD + '0,';
+			}
+		});
+		$(".loading").show();
+		$.ajax({
+			url:"http://www.i8956.com/index.php?m=customshippingfee&a=doSaveArea",
+			type:"post",
+			dataType:"json",
+			data:$("#theFormArea").serialize()+"&isWXD="+isWXD+"&ruleId="+2820,
+			success:function(r)
+			{
+				$(".loading").hide();
+				$('input[type=submit]').prop('disabled', false);
+				if(r.success)
+				{
+					$.gritter.add({
+						text: "<i class='glyphicon glyphicon-ok-sign'></i>保存成功",
+						sticky: false,
+						class_name: 'alert alert-success',
+						time: '2000'
+					});
+					window.setTimeout('window.location.reload()', 1000);
+				}
+				else
+				{
+					$.gritter.add({
+						text: "<i class='glyphicon glyphicon-remove-sign'></i>" + r.message,
+						sticky: false,
+						class_name: 'alert alert-danger',
+						time: '3000'
+					});
+				}
+			}
+		});
+	}
+});
+</script></div></div>
+     </div>
+    </div>
+    </div>
+<script type="text/javascript"><!--
+  $('#close').on('click', function() {
+    $('#des-body').attr ("style","display:none;");
+   });
+   function addNew(){
+	   $('#des-body').attr ("style","display:block;");
+   }
+</script>
+
+<style>
+.form-group-sm .form-control {
+    height: 35px;
+    padding: 4px 9px;
+    font-size: 12px;
+    line-height: 1.5;
+    border-radius: 2px;
+}
+</style>
+{{ footer }} 

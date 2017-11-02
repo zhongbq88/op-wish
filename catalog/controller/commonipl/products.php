@@ -50,7 +50,7 @@ class ControllerCommoniplProducts extends Controller {
 			} else {
 				$rating = false;
 			}
-
+			//print_r($result);
 			$data['products'][] = array(
 				'product_id'  => $result['product_id'],
 				'thumb'       => $image,
@@ -76,11 +76,7 @@ class ControllerCommoniplProducts extends Controller {
 			
 		}
 		
-		if(isset($this->request->get['declined'])){
-			$charging = $this->config->get('config_charging');
-			$data['declined'] = $charging['tips'];
-			
-		}
+		
 		return $this->load->view('commonipl/products', $data);	
 
 	}
