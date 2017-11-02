@@ -339,6 +339,7 @@ class ControllerCommoniplOrders extends Controller {
 			$shipping=0;
 			$total=0;
 			$saletotal=0;
+			$weight = 0;
 			foreach ($products as $product) {
 				
 				$option_select = array();
@@ -405,6 +406,9 @@ class ControllerCommoniplOrders extends Controller {
 				$subtotal+= $product['price']*$product['quantity'];
 				$tax+= $product['tax'];
 				$saletotal+= $product['shopify_price']*$product['quantity'];
+				if(isset($options)){
+					$weight+=$options['weight']*$product['quantity'];
+				}
 				
 			}
 			$data['haspay'] = $subtotal==0?1:($data['order_status_id']!=1&&$data['order_status_id']!=18?1:0);
@@ -420,9 +424,16 @@ class ControllerCommoniplOrders extends Controller {
 					'text'  => number_format($tax,2),
 					'text2'  => 0
 				);
+				$shipping = $this->model_commonipl_order->getShippingCost($order_info['shipping_code'],$weight);
+				$shippingCost = $this->weight->formatCost($shipping,$weight);
+				$data['totals'][] = array(
+					'title' => "shippingCost:",
+					'text'  => $shippingCost,
+					'text2'  => 0
+				);
 				$data['totals'][] = array(
 					'title' => "Total:",
-					'text'  => number_format($subtotal+$tax,2),
+					'text'  => number_format($subtotal+$tax+$shippingCost,2),
 					'text2'  => ''
 				);
 			// Voucher

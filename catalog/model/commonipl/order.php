@@ -525,5 +525,15 @@ if (isset($data['products'])) {
 		}
 		return 1;
 	}
-	
+	public function getShippingCost($shipping_zone,$weight){
+		if(empty($shipping_zone)){
+			return ;
+		}
+		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "shipping WHERE shipping_country LIKE '%".$this->db->escape($shipping_id)."%'");
+		if(isset($query->row['shipping_option'])){
+			return json_decode($query->row['shipping_option']);
+		}
+
+		return ;
+	}
 }

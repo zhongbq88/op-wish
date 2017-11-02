@@ -213,6 +213,7 @@ class ControllerCatalogUpload extends Controller {
 							  'price'=>$product[2],
 							  'sale_price'=>$product[2]*1.5,
 							  'msrp'=>$product[12]*1.5,
+							  'weight'=>$product[8],
 							  'variants_image'=>$image
 						  );
 					}

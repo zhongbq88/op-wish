@@ -1,0 +1,456 @@
+<div id="input-body" >
+  <div class="modal-backdrop in"></div>
+  <div id="modal-text" class="modal in" style="display: block;" >
+    <div class="modal-dialog ui-draggable" style="width:900px;">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" id="btnClose" class="close" data-dismiss="modal" aria-label="Close" onclick="closeEdit()"> <span aria-hidden="true">×</span> </button>
+          <h4 class="modal-title">区域组国家报价-运费设置</h4>
+        </div>
+        <div class="modal-body" style="overflow-y: auto; max-height: 500px;">
+          <div class="row">
+            <div class="form-group form-group-sm col-md-6">
+            <input type="hidden"  name="shipping_id" value="{{shipping_id}}"/>
+              <label class="col-md-4 control-label">区域名称：<span class="text-danger">*</span></label>
+              <div class="col-md-8">
+                <input class="form-control" required="true" name="shipping[name]" type="text" placeholder="创建组名" value="{{ shipping.name }}" aria-required="true">
+              </div>
+            </div>
+          </div>
+          <div class="panel panel-default select_destination">
+            <div class="panel-heading">选择本组目的地所含国家地区：<label class="col-lg-2"><input type="checkbox" onclick="selectAll(1,this);" />
+<span>全选</span> </label></div>
+            <div class="panel-body panel-group" id="selectDestinationWrap" aria-multiselectable="true">
+          
+              <div class="row panel">
+                <div class="col-lg-12 select_destination_country asia collapse in" id="continent1" aria-expanded="true">
+                  {% for zone in zones%}
+                  <label class="checkbox-inline">
+                    <input name="shipping[countryCode][]" type="checkbox" id="{{ zone.code}}" value="{{ zone.code}}" {% if shipping.countryCode and ( zone.code in shipping.countryCode ) %} checked="checked"{% endif %}>
+                    <span>{{ zone.country }} - {{ zone.code}}</span></label>
+                     {% endfor %}
+                </div>
+              </div>
+              <div class="row">
+                <div class="bootstrap-tagsinput"></div>
+                <div class="form-group form-group-sm col-lg-12 select_country_input" style="display: none; ">
+                  <div class="col-lg-10">
+                    <input class="form-control" type="text" value="">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="panel panel-default select_destination_settings">
+            <div class="panel-heading"> 设置区域运费： </div>
+            <div class="panel-body" id="weightUnit">
+             {% if shipping.minWeight %}
+             {% for minWeight in shipping.minWeight %}
+             <div class="panel-group">
+                <div class="row">
+                  <div class="form-group col-lg-12 form-group-sm">
+                    <label class="col-lg-2 control-label">重量范围：</label>
+                    <div class="col-lg-10 form-inline">
+                      <div class="input-group col-lg-4">
+                        <div class="input-group-addon">起始</div>
+                        <input class="form-control" type="number" name="shipping[minWeight][]" placeholder="" value="{{ minWeight }}" min="0">
+                        <div class="input-group-addon">g</div>
+                      </div>
+                      <div class="input-group col-lg-4">
+                        <div class="input-group-addon">截止(&lt;=)</div>
+                        <input class="form-control" type="number" name="shipping[maxWeight][]" placeholder="2000" value="{{ shipping.maxWeight[loop.index-1] }}" min="0">
+                        <div class="input-group-addon">g</div>
+                      </div>
+                      <div class="input-group col-lg-3">
+                        <label class="checkbox-inline">
+                          <input type="checkbox" value="{{ shipping.isWXD[loop.index-1] }}" name="shipping[isWXD][]">
+                          不限重</label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="form-group col-lg-12 form-group-sm">
+                    <label class="col-lg-2 control-label">首重设置：</label>
+                    <div class="col-lg-10 form-inline">
+                      <div class="input-group col-lg-4">
+                        <div class="input-group-addon">首重重量</div>
+                        <input class="form-control" type="number" name="shipping[firstWeight][]" placeholder="" value="{{ shipping.firstWeight[loop.index-1] }}" min="0">
+                        <div class="input-group-addon">g</div>
+                      </div>
+                      <div class="input-group col-lg-4">
+                        <div class="input-group-addon">首重价</div>
+                        <input class="form-control" type="number" name="shipping[firstWeightPrice][]" placeholder="" value="{{ shipping.firstWeightPrice[loop.index-1] }}" min="0">
+                        <div class="input-group-addon">元</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="form-group col-lg-12 form-group-sm">
+                    <label class="col-lg-2 control-label">续重设置：</label>
+                    <div class="col-lg-10 form-inline">
+                      <div class="input-group col-lg-4">
+                        <div class="input-group-addon">单位重量</div>
+                        <input class="form-control" type="number" name="shipping[perWeight][]" placeholder="" value="{{ shipping.perWeight[loop.index-1] }}" min="0">
+                        <div class="input-group-addon">g</div>
+                      </div>
+                      <div class="input-group col-lg-4">
+                        <div class="input-group-addon">单价</div>
+                        <input class="form-control" type="number" name="shipping[perWeightPrice][]" placeholder="" value="{{ shipping.perWeightPrice[loop.index-1] }}" min="0">
+                        <div class="input-group-addon">元</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+             {%endfor%}
+             {%else%}
+              <div class="panel-group">
+                <div class="row">
+                  <div class="form-group col-lg-12 form-group-sm">
+                    <label class="col-lg-2 control-label">重量范围：</label>
+                    <div class="col-lg-10 form-inline">
+                      <div class="input-group col-lg-4">
+                        <div class="input-group-addon">起始</div>
+                        <input class="form-control" type="number" name="shipping[minWeight][]" placeholder="" value="0" min="0">
+                        <div class="input-group-addon">g</div>
+                      </div>
+                      <div class="input-group col-lg-4">
+                        <div class="input-group-addon">截止(&lt;=)</div>
+                        <input class="form-control" type="number" name="shipping[maxWeight][]" placeholder="2000" value="0" min="0">
+                        <div class="input-group-addon">g</div>
+                      </div>
+                      <div class="input-group col-lg-3">
+                        <label class="checkbox-inline">
+                          <input type="checkbox" value="0" name="shipping[isWXD][]">
+                          不限重</label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="form-group col-lg-12 form-group-sm">
+                    <label class="col-lg-2 control-label">首重设置：</label>
+                    <div class="col-lg-10 form-inline">
+                      <div class="input-group col-lg-4">
+                        <div class="input-group-addon">首重重量</div>
+                        <input class="form-control" type="number" name="shipping[firstWeight][]" placeholder="" value="0" min="0">
+                        <div class="input-group-addon">g</div>
+                      </div>
+                      <div class="input-group col-lg-4">
+                        <div class="input-group-addon">首重价</div>
+                        <input class="form-control" type="number" name="shipping[firstWeightPrice][]" placeholder="" value="0" min="0">
+                        <div class="input-group-addon">元</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="form-group col-lg-12 form-group-sm">
+                    <label class="col-lg-2 control-label">续重设置：</label>
+                    <div class="col-lg-10 form-inline">
+                      <div class="input-group col-lg-4">
+                        <div class="input-group-addon">单位重量</div>
+                        <input class="form-control" type="number" name="shipping[perWeight][]" placeholder="" value="0" min="0">
+                        <div class="input-group-addon">g</div>
+                      </div>
+                      <div class="input-group col-lg-4">
+                        <div class="input-group-addon">单价</div>
+                        <input class="form-control" type="number" name="shipping[perWeightPrice][]" placeholder="" value="0" min="0">
+                        <div class="input-group-addon">元</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              {% endif %}
+              <div class="col-lg-offset-2 col-lg-10"> <a href="javascript:void(0)" onclick="addDestinationSettings();">增加一组运费设置</a> </div>
+            </div>
+          </div>
+          <div class="panel panel-default select_destination_settings">
+            <div class="panel-heading"> 其他费用设置： </div>
+            <div class="panel-body">
+              <div class="panel-group">
+                <div class="row">
+                  <div class="form-group form-group-sm col-md-6">
+                    <label class="col-sm-5 control-label">挂号费：</label>
+                    <div class="col-sm-7">
+                      <div class="input-group">
+                        <input type="number" min="0" value="{{ shipping.registeredFee }}" class="form-control" name="shipping[registeredFee]" aria-required="true">
+                        <div class="input-group-addon">元</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group form-group-sm col-md-6">
+                    <label class="col-sm-5 control-label">附加费：</label>
+                    <div class="col-sm-7">
+                      <div class="input-group">
+                        <input type="number" min="0" value="{{ shipping.additionalFee }}" class="form-control" name="shipping[additionalFee]" aria-required="true">
+                        <div class="input-group-addon">元</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="form-group form-group-sm col-md-6">
+                    <label class="col-sm-5 control-label">操作单位重量：</label>
+                    <div class="col-sm-7">
+                      <div class="input-group">
+                        <input type="number" min="0" value="{{ shipping.unitWeight }}" class="form-control" name="shipping[unitWeight]" aria-required="true">
+                        <div class="input-group-addon">g</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group form-group-sm col-md-6">
+                    <label class="col-sm-5 control-label">操作单位价格：</label>
+                    <div class="col-sm-7">
+                      <div class="input-group">
+                        <input type="number" min="0" value="{{ shipping.unitWeightPrice }}" class="form-control" name="shipping[unitWeightPrice]" aria-required="true">
+                        <div class="input-group-addon">元</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="form-group form-group-sm col-md-6">
+                    <label class="col-sm-5 control-label">燃油附加费百分比：</label>
+                    <div class="col-sm-7">
+                      <div class="input-group">
+                        <input type="number" min="0" value="{{ shipping.fuelOilFeePercent }}" class="form-control" name="shipping[fuelOilFeePercent]" aria-required="true">
+                        <div class="input-group-addon">%</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group form-group-sm col-md-6">
+                    <label class="col-sm-5 control-label">时效天数：<span class="text-danger">*</span></label>
+                    <div class="col-sm-7">
+                      <div class="input-group">
+                        <input type="number" min="0" value="{{ shipping.daysFrom }}" class="form-control" required="true" name="shipping[daysFrom]" aria-required="true">
+                        <div class="input-group-addon" style="border-width: 1px 0;">-</div>
+                        <input type="number" min="0" value="{{ shipping.daysTo }}" class="form-control" required="true" name="shipping[daysTo]" aria-required="true">
+                        <div class="input-group-addon">天</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-success" onclick="saveEdit()">保存</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal" onclick="closeEdit()">取消</button>
+        </div>
+        <script>
+var iptObj = $('.select_country_input');
+iptObj.tagsinput({
+  tagClass: function(item) {
+    switch (item.continent) {
+      case '欧洲'   : return 'label label-primary';
+      case '北美洲'  : return 'label label-default';
+	  case '南美洲'  : return 'label label-success';
+      case '大洋洲': return 'label label-info';
+      case '亚洲'   : return 'label label-warning';
+      case '非洲'     : return 'label label-danger';
+    }
+  },
+  itemValue: 'value',
+  itemText: 'text',
+  freeInput: false
+});
+iptObj.on('beforeItemRemove', function(event) {
+  	var delVal=event.item.value;
+	var removeObj=$(".select_destination_country input[value='"+delVal+"']");
+	removeObj.prop("checked",false);
+	removeObj.parents("label").removeClass("checked");
+	removeObj.parents(".row").prev(".row").find(".select_destination_continent input:checkbox").prop("checked",false);
+	$(".select_destination_all input:checkbox").prop("checked",false);
+	
+});
+	$(".select_destination_country input:checkbox:checked").each(function(index) {
+      var iptVal,iptText,iptContinent;  
+	  iptVal = $(this).val();
+	  iptText = $(this).next("span").html();
+	  iptContinent = $(this).parents(".row").prev(".row").find(".select_destination_continent").find("span").html();
+	  iptObj.tagsinput('add', {"value": iptVal,"text":iptText,"continent":iptContinent});
+	  $(this).parent("label").addClass("checked");
+    });
+	$(".bootstrap-tagsinput input").keydown(function(e){
+		if (e.keyCode === 8){
+			return true;
+			}else{
+				return false;
+				}
+		});
+	function shipcheck(x){
+		var shipType='2';
+		if(shipType!=x&&shipType!=''){
+ 
+			$.gritter.add({
+				text: "<i class='glyphicon glyphicon-remove-sign'></i>如需更改当前渠道的计费方式，建议删除所有已设数据，重新导入区域运费。",
+				sticky: false,
+				class_name: 'alert alert-danger',
+				time: '2000'
+			});
+		}
+		
+		if(x==1){
+			$('#weightUnit').addClass('active').next().removeClass('active');
+			}else if(x==2){
+				$('#firstWeight').addClass('active').prev().removeClass('active');
+				}
+	}
+function deleteArea(obj,areaId,rangeId){
+	$(obj).parent().remove();
+	var expressChannelId='';
+	$(".loading").show();
+}
+function addDestinationSettings(){
+	$("#weightUnit .col-lg-offset-2").before(
+            '<div class="panel-group">'+
+            	'<a onclick="$(this).parent().remove();" href="javascript:;" class="close_inputgroup">删除</a>'+
+              '<div class="row">'+
+                '<div class="form-group col-lg-12 form-group-sm">'+
+                  '<label class="col-lg-2 control-label">重量范围：</label>'+
+                  '<div class="col-lg-10 form-inline">'+
+                    '<div class="input-group col-lg-4">'+
+                      '<div class="input-group-addon">起始</div>	'+
+                      '<input class="form-control" type="number" name="shipping[minWeight][]" placeholder="" value="" min="0">'+ 
+                      '<div class="input-group-addon">g</div>'+ 
+                    '</div>'+ 
+                    '<div class="input-group col-lg-4 ml5">'+ 
+                      '<div class="input-group-addon">截止(<=)</div>	'+ 
+                      '<input class="form-control" type="number" name="shipping[maxWeight][]" placeholder="" value="" min="0">'+ 
+                      '<div class="input-group-addon">g</div>'+ 
+                    '</div>'+ 
+                    '<div class="input-group col-lg-3 ml5">'+ 
+                      '<label class="checkbox-inline"><input type="checkbox" value="0" name="shipping[isWXD][]">不限重</label>'+ 
+                    '</div>'+
+                  '</div>'+
+                '</div>'+
+              '</div>'+
+              '<div class="row">'+ 
+                '<div class="form-group col-lg-12 form-group-sm">'+ 
+                  '<label class="col-lg-2 control-label">首重设置：</label>'+ 
+                  '<div class="col-lg-10 form-inline">'+ 
+                    '<div class="input-group col-lg-4">'+ 
+                    	'<div class="input-group-addon">首重重量</div>'+
+                      '<input class="form-control" type="number" name="fshipping[irstWeight][]" placeholder="" value="" min="0">'+ 
+                      '<div class="input-group-addon">g</div>'+ 
+                    '</div>'+ 
+                    '<div class="input-group col-lg-4 ml5">'+ 
+                     	'<div class="input-group-addon">首重价</div>	'+ 
+                      '<input class="form-control" type="number" name="shipping[firstWeightPrice][]" placeholder="" value="" min="0">'+  
+                      '<div class="input-group-addon">元</div>'+ 
+                    '</div>'+ 
+	                '</div>'+ 
+                '</div>'+ 
+              '</div>'+ 
+              '<div class="row">'+ 
+                '<div class="form-group col-lg-12 form-group-sm">'+ 
+                  '<label class="col-lg-2 control-label">续重设置：</label>'+ 
+                  '<div class="col-lg-10 form-inline">'+ 
+                    '<div class="input-group col-lg-4">'+ 
+                    	'<div class="input-group-addon">单位重量</div>	'+ 
+                      '<input class="form-control" type="number" name="shipping[perWeight][]" placeholder="" value="" min="0">'+ 
+                      '<div class="input-group-addon">g</div>'+ 
+                    '</div>'+ 
+                    '<div class="input-group col-lg-4 ml5">'+ 
+                     	'<div class="input-group-addon">单价</div>	'+ 
+                      '<input class="form-control" type="number" name="shipping[perWeightPrice][]" placeholder="" value="" min="0">'+ 
+                      '<div class="input-group-addon">元</div>'+ 
+
+                    '</div>'+ 
+	                '</div>'+ 
+                '</div>'+ 
+              '</div>'+ 
+            '</div>'
+	)
+	$(".select_destination_settings .panel-group:hidden").fadeIn(500);
+}
+
+function trim(ss){return ss.replace(/(^\s*)|(\s*$)/g, "");}
+function Countryscreen(obj){
+	var n=$(obj).parents(".select_destination_country").find(".checkbox-inline").length;
+	var i=$(obj).parents(".select_destination_country").find(".checkbox-inline.dis-none").length;
+	if (i==n){
+		setTimeout(function(){$(obj).parents(".select_destination_country").collapse('hide')}, 400);
+	}else{
+		$(obj).parents(".select_destination_country").collapse('show');
+	}
+}
+function saveEdit(){
+		$.ajax({
+		url: 'index.php?route=sale/shipping/edit&user_token={{ user_token }}',
+		type: 'post',
+		data: $('#input-body input[type=\'text\'],#input-body input[type=\'number\'],#input-body input[type=\'hidden\'],#input-body input[type=\'checkbox\']:checked'),
+		dataType: 'json',
+		beforeSend: function() {
+			//$('#gopublish').button('loading');
+		},
+		complete: function() {
+			//$('#gopublish').button('reset');
+		},
+		success: function(json) {
+			if (json['success']) {
+				$('#input-body').remove();
+				$('#body_list').load('index.php?route=sale/shipping/loadList&user_token={{ user_token }}');
+				
+			}
+		},
+        error: function(xhr, ajaxOptions, thrownError) {
+            //alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+        }
+	});
+	}
+  function closeEdit() {
+    $('#input-body').remove();
+   };
+
+   function selectAll(index,none){
+	   	var checked = $(none).prop('checked');
+		//console.log(checked);
+	    $('#continent'+index+' input').each(function(e){
+            $(this).prop("checked", checked);
+			
+        })   
+		
+		/*$('#continent'+index+' span').each(function(e){
+			var val = $(this).get(0).innerHTML;
+           if(checked){
+				$('.bootstrap-tagsinput').append('<span class="tag label label-default" style="margin-bottom:15px;margin-top:15px;">'+val+'</span>  ');
+			}else{
+				 $('.bootstrap-tagsinput span').each(function(e){
+					 if(val == $(this).get(0).innerHTML){
+						  $(this).remove();
+					 }
+					 
+				 })
+			}
+			
+        })  */
+  }
+  function destinationAllRemove(){
+	  $('.bootstrap-tagsinput span').each(function(e){
+					 
+						 $(this).remove();
+					 
+		})
+}
+
+
+</script> 
+      </div>
+    </div>
+  </div>
+</div>
+<style>
+.form-group-sm .form-control {
+    height: 35px;
+    padding: 4px 9px;
+    font-size: 12px;
+    line-height: 1.5;
+    border-radius: 2px;
+}
+</style>

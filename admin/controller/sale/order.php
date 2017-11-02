@@ -223,7 +223,7 @@ class ControllerSaleOrder extends Controller {
 		$order_total = $this->model_sale_order->getTotalOrders($filter_data);
 
 		$results = $this->model_sale_order->getOrders($filter_data);
-
+		
 		foreach ($results as $result) {
 			$data['orders'][] = array(
 				'order_id'      => $result['order_id'],
@@ -231,6 +231,7 @@ class ControllerSaleOrder extends Controller {
 				'customer'      => $result['customer'],
 				'order_status'  => $result['order_status'] ? $result['order_status'] : $this->language->get('text_missing'),
 				'total'         => $result['total'],
+				
 				'date_added'    => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
 				'date_modified' => date($this->language->get('date_format_short'), strtotime($result['date_modified'])),
 				'shipping_code' => $result['shipping_code'],
@@ -925,6 +926,7 @@ class ControllerSaleOrder extends Controller {
 			$shipping=0;
 			$total=0;
 			$saletotal=0;
+			$weight = 0;
 			foreach ($products as $product) {
 				
 				$option_data1 = array();
@@ -938,6 +940,7 @@ class ControllerSaleOrder extends Controller {
 				$model ='';
 				$sku =$product['shopify_sku'];
 				if(!empty($options1)){
+					$weight+=$options1['weight'];
 				if (isset($options1['variants_image'])) {
 					$image = $this->model_tool_image->resize($options1['variants_image'], $this->config->get('theme_' . $this->config->get('config_theme') . '_image_product_width'), $this->config->get('theme_' . $this->config->get('config_theme') . '_image_product_height'));
 				} else {
@@ -995,9 +998,17 @@ class ControllerSaleOrder extends Controller {
 					'text'  => $tax,
 					'text2'  => 0
 				);
+				$this->load->model('sale/shipping');
+				$shipping = $this->model_sale_shipping->getShippingCost($order_info['shipping_code']);
+				$shippingCost = $this->weight->formatCost($shipping,$weight);
+				$data['totals'][] = array(
+					'title' => "shippingCost:",
+					'text'  => $shippingCost,
+					'text2'  => 0
+				);
 				$data['totals'][] = array(
 					'title' => "Total:",
-					'text'  => $subtotal+$tax,
+					'text'  => $subtotal+$tax+$shippingCost,
 					'text2'  => ''
 				);
 
