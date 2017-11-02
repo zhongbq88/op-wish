@@ -567,10 +567,12 @@ class ModelCommoniplProduct extends Model {
 	}
 	
 	public function getPublishDeleteProductId(){
-		$this->db->query("UPDATE " . DB_PREFIX . "shopify_add_product SET  status='0' WHERE customer_id = '" . (int)$this->customer->getId() . "' ");
-		$query = $this->db->query("SELECT shopify_product_id FROM " . DB_PREFIX . "shopify_add_product WHERE customer_id = '" . (int)$this->customer->getId() . "' ");
+		
+		$query = $this->db->query("SELECT shopify_product_id FROM " . DB_PREFIX . "shopify_add_product WHERE customer_id = '" . (int)$this->customer->getId() . "' AND status='1' ");
 
-		return $query->rows;
+		$products =  $query->rows;
+		$this->db->query("UPDATE " . DB_PREFIX . "shopify_add_product SET  status='0' WHERE customer_id = '" . (int)$this->customer->getId() . "' ");
+		return $products;
 	}
 	
 	public function getPublishProductById($add_product_id){
