@@ -10,7 +10,7 @@ class ControllerCommoniplDashboard extends Controller{
 		}*/
 		//print_r($this->session->data['home']);
 		if($this->load->controller('shopify/oauth/checkChargeApp')==false){
-			/*die('<script> top.location.href="https://'.$this->session->data['shop'].'/admin/apps"</script>');*/
+			die('<script> top.location.href="https://'.$this->session->data['shop'].'/admin/apps"</script>');
 			return;
 		}
 		
