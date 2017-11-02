@@ -10,7 +10,7 @@ class ControllerCommoniplDashboard extends Controller{
 		}*/
 		//print_r($this->session->data['home']);
 		if($this->load->controller('shopify/oauth/checkChargeApp')==false){
-			die('<script> top.location.href="https://'.$this->session->data['shop'].'/admin/apps"</script>');
+			/*die('<script> top.location.href="https://'.$this->session->data['shop'].'/admin/apps"</script>');*/
 			return;
 		}
 		
@@ -144,6 +144,15 @@ class ControllerCommoniplDashboard extends Controller{
 		}
 		//print_r($productList);
 		$data['products'] = $productList;
+		$this->load->model('setting/module');
+		$setting_info = $this->model_setting_module->getModule('27');
+
+		if ($setting_info && $setting_info['status']) {
+			$output = $this->load->controller('extension/module/banner', $setting_info);
+			if (isset($output)) {
+				 $data['content_top'] = $output;
+			}
+		}
 		
 		$data['footer'] = $this->load->controller('common/footer');
 		$data['header'] = $this->load->controller('common/header');

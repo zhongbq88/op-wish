@@ -223,9 +223,9 @@ class ModelCommoniplProduct extends Model {
 	public function getProductsByCategoryId($category_id) {
 		if(isset($category_id)&&!empty($category_id)){
 			
-		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "product p LEFT JOIN " . DB_PREFIX . "product_description pd ON (p.product_id = pd.product_id) LEFT JOIN " . DB_PREFIX . "product_to_category p2c ON (p.product_id = p2c.product_id) WHERE p.status = '1' AND pd.language_id = '" . (int)$this->config->get('config_language_id') . "' AND p2c.category_id = '" . (int)$category_id."' ORDER BY pd.name ASC");
+		$query = $this->db->query("SELECT *,p.product_id,pd.name FROM " . DB_PREFIX . "product p LEFT JOIN " . DB_PREFIX . "product_description pd ON (p.product_id = pd.product_id) LEFT JOIN " . DB_PREFIX . "product_to_category p2c ON (p.product_id = p2c.product_id) LEFT JOIN ". DB_PREFIX . "category_description cd ON (p2c.category_id=cd.category_id) WHERE p.status = '1' AND pd.language_id = '" . (int)$this->config->get('config_language_id') . "' AND p2c.category_id = '" . (int)$category_id."' ORDER BY pd.name ASC");
 		}else{
-			$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "product p LEFT JOIN " . DB_PREFIX . "product_description pd ON (p.product_id = pd.product_id) WHERE p.status = '1' AND pd.language_id = '" . (int)$this->config->get('config_language_id') . "'");
+			$query = $this->db->query("SELECT *,p.product_id,pd.name FROM " . DB_PREFIX . "product p LEFT JOIN " . DB_PREFIX . "product_description pd ON (p.product_id = pd.product_id) LEFT JOIN " . DB_PREFIX . "product_to_category p2c ON (p.product_id = p2c.product_id) LEFT JOIN ". DB_PREFIX . "category_description cd ON (p2c.category_id=cd.category_id) WHERE p.status = '1' AND pd.language_id = '" . (int)$this->config->get('config_language_id') . "' ORDER BY p.date_added DESC");
 		}
 		
 		return $query->rows;
@@ -561,7 +561,14 @@ class ModelCommoniplProduct extends Model {
 	
 	
 	public function getPublishProduct(){
-		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "shopify_add_product WHERE customer_id = '" . (int)$this->customer->getId() . "'  ORDER BY date_added DESC ");
+		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "shopify_add_product WHERE customer_id = '" . (int)$this->customer->getId() . "' AND status='1'  ORDER BY date_added DESC ");
+
+		return $query->rows;
+	}
+	
+	public function getPublishDeleteProductId(){
+		$this->db->query("UPDATE " . DB_PREFIX . "shopify_add_product SET  status='0' WHERE customer_id = '" . (int)$this->customer->getId() . "' ");
+		$query = $this->db->query("SELECT shopify_product_id FROM " . DB_PREFIX . "shopify_add_product WHERE customer_id = '" . (int)$this->customer->getId() . "' ");
 
 		return $query->rows;
 	}
