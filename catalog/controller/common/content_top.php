@@ -47,7 +47,7 @@ class ControllerCommonContentTop extends Controller {
 
 		foreach ($modules as $module) {
 			$part = explode('.', $module['code']);
-			print_r($part);
+			//print_r($part);
 			if (isset($part[0]) && $this->config->get('module_' . $part[0] . '_status')) {
 				$module_data = $this->load->controller('extension/module/' . $part[0]);
 
