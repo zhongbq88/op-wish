@@ -160,6 +160,7 @@ class ControllerCatalogUpload extends Controller {
 							'model' => $product[13],
 							'date_available' => $product[15],
 							'product_id' => $product[26],
+							'category_id' => $product[27],
 							'product_image'=>$images
 						);
 						$options1 = array();
@@ -213,6 +214,7 @@ class ControllerCatalogUpload extends Controller {
 							  'price'=>$product[2],
 							  'sale_price'=>$product[2]*1.5,
 							  'msrp'=>$product[12]*1.5,
+							  'weight'=>$product[8],
 							  'variants_image'=>$image
 						  );
 					}
@@ -242,6 +244,98 @@ class ControllerCatalogUpload extends Controller {
 						}
 				}
 				//print_r($products);
+				
+			//print_r(count($data));
+			//print_r($data);
+
+				$json['success'] = $this->language->get('text_success');
+			} else {
+				$json['error'] = $this->language->get('error_file');
+			}
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
+	}
+	
+	
+	public function qty() {
+		$this->load->language('catalog/product');
+		$json = array();
+		if (!$json) {
+			
+			
+			$file = DIR_UPLOAD .time().'_'.$this->request->files['file']['name'];
+			
+			move_uploaded_file($this->request->files['file']['tmp_name'], $file);
+
+			if (is_file($file)) {
+				$this->load->model('catalog/product');
+
+				$objPHPExcel = PHPExcel_IOFactory::load($file);
+
+				$variants = array();
+				$products = array();
+				$shopifys = array();
+				$skus = '';
+				
+				foreach($objPHPExcel->getWorksheetIterator() as $sheet){ //循环取sheet
+				
+					  foreach($sheet->getRowIterator() as $row){ //逐行处理
+							
+							if($row->getRowIndex()<2)continue;
+							$rowdata = array();
+							foreach($row->getCellIterator() as $cell){ //逐列读取
+								  $rowdata[] = $cell->getValue(); //获取单元格数据
+							}
+							if(isset($products[$rowdata[1]])){
+								$products[$rowdata[1]]['quantity'] += $rowdata[3];
+							}else{
+								$skus += ",'".$rowdata[1]."'";
+								$products[$rowdata[1]] = array(
+										'price' => $rowdata[2],
+										'quantity' =>$rowdata[3]
+								
+								);
+							}
+							$shopifys[$rowdata[0]] = $rowdata[3];
+							
+							$variants[] = array(
+								'variants_sku'=>$rowdata[0],
+								'quantity' => $rowdata[3],
+								'price'=>$rowdata[2],
+								'sale_price'=>$rowdata[2]*1.5,
+							    'msrp'=>$rowdata[5]*1.5,
+								'weight'=>$rowdata[4]
+							);
+					  }
+				
+				}
+				$this->model_catalog_product->updateProducts($variants);
+				$this->model_catalog_product->updateVariants($variants);
+				//$skus = substr($skus,1);
+				$shopifyProducts = $this->model_catalog_product->getShopifyProduct($skus);
+				if(isset($shopifyProducts)){
+					$variants = array();
+					foreach($shopifyProducts as $sp){
+						$product = json_decode($sp['shopify_product_json'],true);
+						if(isset($product['variants'])){
+							foreach($product['variants'] as $variant){
+								//print_r($variant);
+								if(isset($variant['id'])){
+									$variants[$sp['customer_id']][] = array(
+									'id'=>$variant['id'],
+									'inventory_quantity'=> $shopifys[$variant['sku']],
+									'old_inventory_quantity'=>$variant['inventory_quantity']
+									);
+								}
+							}
+						}
+					}
+					if(isset($variants)){
+						$json['variants'] = $variants;
+					}
+				}
 				
 			//print_r(count($data));
 			//print_r($data);

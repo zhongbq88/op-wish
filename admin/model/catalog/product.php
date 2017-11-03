@@ -799,7 +799,25 @@ class ModelCatalogProduct extends Model {
 		//print_r($variants);
 		if(isset($variants)){
 			foreach($variants as $data){
-				$this->db->query("INSERT INTO " . DB_PREFIX . "product_variants SET  option1_id = '" . (isset($data['option1_id'])?(int)$data['option1_id']:'')  . "', option2_id = '" . (isset($data['option2_id'])?(int)$data['option2_id']:'') . "', product_id = '" . (int)$product_id . "', variants_image = '" . (isset($data['variants_image'])?$this->db->escape($data['variants_image']):'') . "', variants_sku = '" . $this->db->escape($data['variants_sku']) . "', price = '" . (float)$data['price'] . "',sale_price = '" . (float)$data['sale_price'] . "', msrp = '" . (float)$data['msrp'] . "', option1 = '" . (isset($data['option1'])?$this->db->escape($data['option1']):'') . "', option2 = '" . (isset($data['option2'])?$this->db->escape($data['option2']):'') . "', quantity = '" . (int)$data['quantity'] . "'");
+				$this->db->query("INSERT INTO " . DB_PREFIX . "product_variants SET  option1_id = '" . (isset($data['option1_id'])?(int)$data['option1_id']:'')  . "', option2_id = '" . (isset($data['option2_id'])?(int)$data['option2_id']:'') . "', product_id = '" . (int)$product_id . "', variants_image = '" . (isset($data['variants_image'])?$this->db->escape($data['variants_image']):'') . "', variants_sku = '" . $this->db->escape($data['variants_sku']) . "', price = '" . (float)$data['price'] . "',sale_price = '" . (float)$data['sale_price'] . "', msrp = '" . (float)$data['msrp'] . "', option1 = '" . (isset($data['option1'])?$this->db->escape($data['option1']):'') . "', option2 = '" . (isset($data['option2'])?$this->db->escape($data['option2']):'') . "', quantity = '" . (int)$data['quantity'] . "',weight = '" . (float)$data['weight'] . "'");
+			}
+			
+		}
+	}
+	
+	public function updateVariants($variants){
+		if(isset($variants)){
+			foreach($variants as $data){
+				$this->db->query("UPDATE " . DB_PREFIX . "product_variants SET price = '" . (float)$data['price'] . "',sale_price = '" . (float)$data['sale_price'] . "', msrp = '" . (float)$data['msrp'] . "', quantity = '" . (int)$data['quantity'] . "',weight = '" . (float)$data['weight'] . "' WHERE variants_sku = '" . $this->db->escape($data['variants_sku']) . "'");
+			}
+			
+		}
+	}
+	
+	public function updateProducts($products){
+		if(isset($products)){
+			foreach($products as $key=> $data){
+				$this->db->query("UPDATE " . DB_PREFIX . "product SET price = '" . (float)$data['price'] . "', quantity = '" . (int)$data['quantity'] . "',weight = '" . (float)$data['weight'] . "' WHERE sku = '" . $this->db->escape($key) . "'");
 			}
 			
 		}
@@ -846,6 +864,8 @@ class ModelCatalogProduct extends Model {
 				$this->db->query("INSERT INTO " . DB_PREFIX . "product_image SET product_id = '" . (int)$product_id . "', image = '" . $this->db->escape($product_image) . "'");
 			}
 		}
+		
+		$this->db->query("INSERT INTO " . DB_PREFIX . "product_to_category SET product_id = '" . (int)$product_id . "', category_id = '" . (int)$data['category_id'] . "'");
 
 		return $product_id;
 	}
@@ -876,6 +896,14 @@ class ModelCatalogProduct extends Model {
 	
 	public function getOptionValue($option_id) {
 		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "option_value ov LEFT JOIN " . DB_PREFIX . "option_value_description ovd ON (ov.option_value_id = ovd.option_value_id) WHERE ov.option_id = '" . (int)$option_id . "' AND ovd.language_id = '" . (int)$this->config->get('config_language_id') . "'");
+
+		return $query->rows;
+	}
+	
+	
+	public function getShopifyProduct($sku) {
+		//print_r($sku);
+		$query = $this->db->query("SELECT sp.customer_id,sp.shopify_product_json FROM " . DB_PREFIX . "product p LEFT JOIN " . DB_PREFIX . "shopify_add_product sp ON (p.product_id = sp.product_id) WHERE sp.status = '1' AND p.sku in (" . $this->db->escape($sku). ")");
 
 		return $query->rows;
 	}

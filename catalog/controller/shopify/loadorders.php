@@ -166,8 +166,8 @@ class ControllerShopifyLoadorders extends Controller {
 			$order_data['store_name'] = $this->config->get('config_name');
 			$od = array();
 			$total = 0;
-			print_r($order_data['financial_status']);
-			print_r($order_data['order_status_id']);
+			//print_r($order_data['financial_status']);
+			//print_r($order_data['order_status_id']);
 			if($order['line_items']){
 				/*foreach($order['line_items'] as $items){
 					print_r($items['sku']);

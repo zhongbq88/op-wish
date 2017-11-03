@@ -71,6 +71,11 @@ class ControllerCommoniplPublishipl extends Controller {
 					'price' => $product['variant']['price'][$key],
 					'compare_at_price' => $product['variant']['compare_price'][$key],
 					"sku"=>$product['variant']['sku'][$key],
+					"inventory_policy"=> "continue",
+    				"inventory_management"=>"shopify",
+					"inventory_quantity"=> $product['variant']['quantity'][$key],
+   					"weight"=> $product['variant']['weight'][$key],
+   					"weight_unit"=>"g"
 				);	
 				if(isset($product['variant']['option1'])){
 					$variant['option1'] = $product['variant']['option1'][$key];

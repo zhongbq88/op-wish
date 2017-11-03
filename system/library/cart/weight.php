@@ -54,4 +54,25 @@ class Weight {
 			return '';
 		}
 	}
+	
+	public function formatCost($shipping, $weight) {
+		if(!isset($shipping)){
+			return 0;
+		}
+		//print_r($shipping['maxWeight']);
+		foreach($shipping['maxWeight'] as $key=> $maxWeight){
+			if($maxWeight<=$weight){
+				$cost = $shipping['firstWeightPrice'][$key];
+				if($shipping['firstWeight'][$key]<$weight){
+					$cost += ($weight-$shipping['firstWeight'][$key])/$shipping['perWeight'][$key]*$shipping['perWeightPrice'][$key];
+				}
+				$cost +=$shipping['registeredFee'][$key];
+				$cost +=$shipping['additionalFee'][$key];
+				$cost += ($weight)/$shipping['unitWeight'][$key]*$shipping['unitWeightPrice'][$key];
+				$cost += $cost*$shipping['fuelOilFeePercent'][$key]/100;
+				return $cost;
+			}
+		}
+		return 0;
+	}
 }

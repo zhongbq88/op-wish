@@ -339,6 +339,7 @@ class ControllerCommoniplOrders extends Controller {
 			$shipping=0;
 			$total=0;
 			$saletotal=0;
+			$weight = 0;
 			foreach ($products as $product) {
 				
 				$option_select = array();
@@ -405,9 +406,12 @@ class ControllerCommoniplOrders extends Controller {
 				$subtotal+= $product['price']*$product['quantity'];
 				$tax+= $product['tax'];
 				$saletotal+= $product['shopify_price']*$product['quantity'];
+				if(isset($options)){
+					$weight+=$options['weight']*$product['quantity'];
+				}
 				
 			}
-			$data['haspay'] = $subtotal==0?1:($data['order_status_id']!=1&&$data['order_status_id']!=18?1:0);
+			$data['haspay'] = $subtotal==0?1:($data['order_status_id']!=19&&$data['order_status_id']!=18?1:0);
 			$data['totals'] = array();
 			$data['totals'][] = array(
 					'title' => "Sub-Total:",
@@ -420,9 +424,22 @@ class ControllerCommoniplOrders extends Controller {
 					'text'  => number_format($tax,2),
 					'text2'  => 0
 				);
+				//print_r($weight);
+				if(isset($order_info['shipping_code'])){
+					$shipping = $this->model_commonipl_order->getShippingCost($order_info['shipping_code']);
+					//print_r($shipping);
+					$shippingCost = $this->weight->formatCost($shipping,$weight);
+				}else{
+					$shippingCost = 0;
+				}
+				$data['totals'][] = array(
+					'title' => "Express freight:",
+					'text'  => number_format($shippingCost,2),
+					'text2'  => 0
+				);
 				$data['totals'][] = array(
 					'title' => "Total:",
-					'text'  => number_format($subtotal+$tax,2),
+					'text'  => number_format($subtotal+$tax+$shippingCost,2),
 					'text2'  => ''
 				);
 			// Voucher
