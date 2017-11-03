@@ -32,6 +32,17 @@ class ModelLocalisationZone extends Model {
 		return $query->rows;
 	}
 	
+	public function getCountryMore($names) {
+		
+		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "country  WHERE iso_code_2 in (".$names.")");
+		$result = '';
+		foreach($query->rows as $country){
+			//print_r($country);
+			$result .= ', '.$country['name'].'—'.$country['iso_code_2'];
+		}
+		return substr($result,1);
+	}
+	
 	public function getZonesAll() {
 		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "country ");
 		$data = array();

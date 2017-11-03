@@ -65,20 +65,22 @@ class ControllerSaleShipping extends Controller {
 		}
 
 		$this->load->model('sale/shipping');
-
+		$this->load->model('localisation/zone');
+		$results = 
 		$shippings = $this->model_sale_shipping->getShippings();
 		
 		
 		foreach ($shippings as $shipping) {
 			
-
+			$country = $this->model_localisation_zone->getCountryMore(substr($shipping['shipping_country'],1,strlen($shipping['shipping_country'])-2));
 			$data['shippings'][] = array(
 			'id'=>$shipping['shipping_id'],
 				'name'       => $shipping['shipping_name'],
-				'scountry'     => $shipping['shipping_country'],
-				'option' => $shipping['shipping_option'],
+				'scountry'     => $country,
+				'option' => $this->fromat(json_decode($shipping['shipping_option'],true)),
 				'date_added'    => date($this->language->get('date_format_short'), strtotime($shipping['date_added'])),
-				'href' =>$this->url->link('sale/shipping/info', 'user_token=' . $this->session->data['user_token'] . '&shipping_id=' . $shipping['shipping_id'] , true)
+				'href' =>$this->url->link('sale/shipping/info', 'user_token=' . $this->session->data['user_token'] . '&shipping_id=' . $shipping['shipping_id'] , true),
+				'delete' =>$this->url->link('sale/shipping/delete', 'user_token=' . $this->session->data['user_token'] . '&shipping_id=' . $shipping['shipping_id'] , true)
 				
 			);
 		}
@@ -97,13 +99,15 @@ class ControllerSaleShipping extends Controller {
 		foreach ($shippings as $shipping) {
 			
 
+			$country = $this->model_localisation_zone->getCountryMore(substr($shipping['shipping_country'],1,strlen($shipping['shipping_country'])-2));
 			$data['shippings'][] = array(
 			'id'=>$shipping['shipping_id'],
 				'name'       => $shipping['shipping_name'],
-				'scountry'     => $shipping['shipping_country'],
-				'option' => $shipping['shipping_option'],
+				'scountry'     => $country,
+				'option' => $this->fromat(json_decode($shipping['shipping_option'],true)),
 				'date_added'    => date($this->language->get('date_format_short'), strtotime($shipping['date_added'])),
-				'href' =>$this->url->link('sale/shipping/info', 'user_token=' . $this->session->data['user_token'] . '&shipping_id=' . $shipping['shipping_id'] , true)
+				'href' =>$this->url->link('sale/shipping/info', 'user_token=' . $this->session->data['user_token'] . '&shipping_id=' . $shipping['shipping_id'] , true),
+				'delete' =>$this->url->link('sale/shipping/delete', 'user_token=' . $this->session->data['user_token'] . '&shipping_id=' . $shipping['shipping_id'] , true)
 				
 			);
 		}
@@ -113,6 +117,14 @@ class ControllerSaleShipping extends Controller {
 	public function edit(){
 		$this->load->model('sale/shipping');
 		$this->model_sale_shipping->saveShippings($this->request->post);
+		$json['success'] = 'true';
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
+	}
+	
+	public function delete(){
+		$this->load->model('sale/shipping');
+		$this->model_sale_shipping->deleteShipping($this->request->get['shipping_id']);
 		$json['success'] = 'true';
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
@@ -155,4 +167,26 @@ class ControllerSaleShipping extends Controller {
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}
+	
+	
+	public function fromat($shipping){
+		if (isset($shipping)){
+			$str ='设置区域运费：</br>';
+			$i=0;
+           foreach($shipping['minWeight'] as $minWeight){
+             $str .='重量范围：起始 '.$minWeight.'&nbsp;,&nbsp;&nbsp;&nbsp;&nbsp; 截止(&lt;=)'.$shipping['maxWeight'][$i].'</br>';
+			 $str .='首重设置：首重重量 '.$shipping['firstWeight'][$i].'&nbsp;,&nbsp;&nbsp;&nbsp;&nbsp;  首重价： '.$shipping['maxWeight'][$i].'</br>';
+			 $str .='续重设置：单位重量 '.$shipping['perWeight'][$i].'&nbsp;,&nbsp;&nbsp;&nbsp;&nbsp;  单价： '.$shipping['perWeightPrice'][$i].'</br></br>';
+			 $i++;
+			}
+			$str .='其他费用设置：</br>';
+			 $str .='挂号费： '.$shipping['registeredFee'].'&nbsp;,&nbsp;&nbsp;&nbsp;&nbsp;  附加费： '.$shipping['additionalFee'].'</br>';
+			 $str .='操作单位重量： '.$shipping['unitWeight'].'&nbsp;,&nbsp;&nbsp;&nbsp;&nbsp;  操作单位价格： '.$shipping['unitWeightPrice'].'</br>';
+			 $str .='燃油附加费百分比： '.$shipping['fuelOilFeePercent'].'%&nbsp;,&nbsp;&nbsp;&nbsp;&nbsp;  时效天数： '.$shipping['daysFrom'].'-'.$shipping['daysTo'].'</br>';
+			 return $str;
+		}
+		return;
+		
+	}
+	
 }
