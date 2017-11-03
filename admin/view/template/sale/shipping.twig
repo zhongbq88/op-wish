@@ -32,12 +32,12 @@
           
           {% if shippings %}
           {% for shipping in shippings %}
-          <tr>
+          <tr id="id{{ shipping.id }}">
             <td class="text-center"><a href="javascript:addNew('{{ shipping.id }}');" >{{ shipping.name }}</a></td>
             <td class="text-left">{{ shipping.scountry }}</td>
             <td class="text-left">{{ shipping.option }}</td>
             <td class="text-center">{{ shipping.date_added }}</td>
-            <td class="text-center"><a href="javascript:del('{{ shipping.delete }}');" >删除</a></td>
+            <td class="text-center"><a href="javascript:del('{{ shipping.delete }}','{{ shipping.id }}');" >删除</a></td>
           </tr>
           {% endfor %}
           {% else %}
@@ -82,8 +82,8 @@
         }
 	});
    }
-    function del(url){
-	   //alert(shipping_id);
+    function del(url,id){
+	  // alert(url);
 	   $.ajax({
 		url: url,
 		dataType: 'json',
@@ -96,7 +96,8 @@
 		success: function(json) {
 			
 			if (json['success']) {
-				$('#des-body').html(json['success']);
+				//$('#des-body').html(json['success']);
+				$('#id'+id).remove();
 			}
 		},
         error: function(xhr, ajaxOptions, thrownError) {

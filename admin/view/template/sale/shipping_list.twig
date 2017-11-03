@@ -6,7 +6,7 @@
             <td class="text-left">{{ shipping.scountry }}</td>
             <td class="text-left">{{ shipping.option }}</td>
             <td class="text-center">{{ shipping.date_added }}</td>
-            <td class="text-center"><a href="javascript:del('{{ shipping.delete }}');" >删除</a></td>
+            <td class="text-center"><a href="javascript:del('{{ shipping.delete }}','{{ shipping.id }}');" >删除</a></td>
             
           </tr>
           {% endfor %}

@@ -66,7 +66,7 @@ class ControllerSaleShipping extends Controller {
 
 		$this->load->model('sale/shipping');
 		$this->load->model('localisation/zone');
-		$results = 
+
 		$shippings = $this->model_sale_shipping->getShippings();
 		
 		
@@ -93,7 +93,7 @@ class ControllerSaleShipping extends Controller {
 	
 	public function loadList(){
 		$this->load->model('sale/shipping');
-
+		$this->load->model('localisation/zone');
 		$shippings = $this->model_sale_shipping->getShippings();
 		$data['shippings'] = array();
 		foreach ($shippings as $shipping) {
