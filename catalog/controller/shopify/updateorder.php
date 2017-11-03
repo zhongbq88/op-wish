@@ -1,8 +1,7 @@
 <?php 
 
-require __DIR__.'/vendor/autoload.php';
+require 'vendor/autoload.php';
 use phpish\shopify;
-require __DIR__.'/conf.php';
 
 class ControllerShopifyUpdateorder extends Controller {
 
