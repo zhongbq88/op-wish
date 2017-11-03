@@ -322,7 +322,7 @@ class ControllerCatalogUpload extends Controller {
 						if(isset($product['variants'])){
 							foreach($product['variants'] as $variant){
 								//print_r($variant);
-								if(isset($variant['id'])){
+								if(isset($variant['id'])&& isset($shopifys[$variant['sku']])){
 									$variants[$sp['customer_id']][] = array(
 									'id'=>$variant['id'],
 									'inventory_quantity'=> $shopifys[$variant['sku']],
