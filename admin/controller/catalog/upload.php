@@ -294,7 +294,8 @@ class ControllerCatalogUpload extends Controller {
 								$skus += ",'".$rowdata[1]."'";
 								$products[$rowdata[1]] = array(
 										'price' => $rowdata[2],
-										'quantity' =>$rowdata[3]
+										'quantity' =>$rowdata[3],
+										'weight'=>$rowdata[4]
 								
 								);
 							}
@@ -311,7 +312,7 @@ class ControllerCatalogUpload extends Controller {
 					  }
 				
 				}
-				$this->model_catalog_product->updateProducts($variants);
+				$this->model_catalog_product->updateProducts($products);
 				$this->model_catalog_product->updateVariants($variants);
 				//$skus = substr($skus,1);
 				$shopifyProducts = $this->model_catalog_product->getShopifyProduct($skus);
