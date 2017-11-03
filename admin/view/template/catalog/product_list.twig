@@ -313,18 +313,22 @@ $('#button-upload-qty').on('click', function() {
 				contentType: false,
 				processData: false,
 				beforeSend: function() {
-					$('#button-upload').button('loading');
+					$('#button-upload-qty').button('loading');
 				},
 				complete: function() {
-					$('#button-upload').button('reset');
+					$('#button-upload-qty').button('reset');
 				},
 				success: function(json) {
 					
 					if (json['success']) {
+						if(json['variants']){
+							updateVariant(json['variants']);
+						}
 						$('#product-body').load('index.php?route=catalog/product/loadList&user_token={{ user_token }}');
 						//location = 'index.php?route=catalog/product&user_token={{ user_token }}';
 						//window.location.reload();
 						//window.location.href='index.php?route=catalog/product&user_token={{ user_token }}';
+						
 					}
 					
 				},
@@ -335,6 +339,30 @@ $('#button-upload-qty').on('click', function() {
 		}
 	}, 500);
 });
+
+function updateVariant(variants){
+	$.ajax({
+		url: '/index.php?route=shopify/updatevariant',
+		type: 'post',
+		data: JSON.stringify(variants),
+		processData: false,
+		dataType: "json",
+		contentType: "application/json; charset=utf-8",	
+		beforeSend: function() {
+		},
+		complete: function() {
+			
+		},
+		success: function(json) {
+			//alert(json['success']);
+
+			
+		},
+        error: function(xhr, ajaxOptions, thrownError) {
+            //alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+        }
+	});
+}
 
 $('#button-upload').on('click', function() {
 	$('#form-upload').remove();

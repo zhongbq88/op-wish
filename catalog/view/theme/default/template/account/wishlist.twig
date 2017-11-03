@@ -114,6 +114,8 @@
                         <td class="text-center">Cost</td>
                         <td class="text-center">Sale Price</td>
                         <td class="text-center">MSRP</td>
+                        <td class="text-center">Quantity</td>
+                        <td class="text-center">Weight</td>
                       </tr>
                     </thead>
                     <tbody>
@@ -124,7 +126,7 @@
                       <td class="text-center">{% if variant.variants_image  %} <a href="{{ product.href }}"><img style="max-height:50px; max-width:50px;" src="{{ variant.thumb}}" alt="{{ product.name}}"  title="{{ product.name}}" /></a>
                         <input  type="hidden" name="product[{{product.product_id}}][variant][images][]" value="{{ variant.src }}"/>
                         {% endif %}</td>
-                      <td class="text-center"><input  disabled="disabled" type="text" name="product[{{product.product_id}}][variant][sku][]" value="{{ variant.variants_sku}}" /></td>
+                      <td class="text-center">{{ variant.variants_sku}}<input type="hidden" name="product[{{product.product_id}}][variant][sku][]" value="{{ variant.variants_sku}}" /></td>
                       {% if variant.option1 %}
                       <td class="text-center"><input type="text" name="product[{{product.product_id}}][variant][option1][]" value="{{ variant.option1}}"/></td>
                       {% endif %}
@@ -134,6 +136,8 @@
                       <td class="text-center"><label style="height:100%; margin-top:12px;">{{ variant.price}}</label></td>
                       <td class="text-center"><input  type="text" name="product[{{product.product_id}}][variant][price][]" value="{{ (variant.sale_price)|number_format(2, '.', ',')}}"/></td>
                       <td class="text-center"><input  type="text" name="product[{{product.product_id}}][variant][compare_price][]" value="{{ (variant.msrp)|number_format(2, '.', ',')}}"/></td>
+                      <td class="text-center">{{ variant.quantity}}<input type="hidden" name="product[{{product.product_id}}][variant][quantity][]" value="{{ variant.quantity}}" /></td>
+                      <td class="text-center">{{ variant.weight|number_format(2, '.', ',')}}g<input type="hidden" name="product[{{product.product_id}}][variant][weight][]" value="{{ variant.weight |number_format(2, '.', ',') }}" /></td>
                     </tr>
                     {% endfor %}
                       </tbody>

@@ -998,11 +998,17 @@ class ControllerSaleOrder extends Controller {
 					'text'  => $tax,
 					'text2'  => 0
 				);
-				$this->load->model('sale/shipping');
-				$shipping = $this->model_sale_shipping->getShippingCost($order_info['shipping_code']);
-				$shippingCost = $this->weight->formatCost($shipping,$weight);
+				
+				if(isset($order_info['shipping_code'])){
+					$this->load->model('sale/shipping');
+					$shipping = $this->model_sale_shipping->getShippingCost($order_info['shipping_code']);
+					$shippingCost = $this->weight->formatCost($shipping,$weight);
+				}else{
+					$shippingCost = 0;
+				}
+				
 				$data['totals'][] = array(
-					'title' => "shippingCost:",
+					'title' => "Express freight:",
 					'text'  => $shippingCost,
 					'text2'  => 0
 				);

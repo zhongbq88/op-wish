@@ -75,15 +75,15 @@ class ControllerShopifyOauth extends Controller {
 				$result =  $shopify('GET /admin/'.$url.'application_charges/'.$charge_id.'.json');
 				//print_r($result);
 				if(isset($result['status'])&&$result['status']=='declined'){
-					$this->load->model('commonipl/product');
+					/*$this->load->model('commonipl/product');
 					$products = $this->model_commonipl_product->getPublishDeleteProductId();
 					//print_r($result);
 					foreach($products as $product){
 						$this->deleteProduct($shopify,$product['shopify_product_id']);
-					}
-					$this->deteleApp();
+					}*/
 					$return_url= explode('?',$result['return_url']);
-					echo("<script>window.open('".$return_url[0]."?declined=true')</script>"); 
+					header('Location:'.$return_url[0].'?declined=true'); 
+					$this->deteleApp();
 					return false;
 				}
 			}

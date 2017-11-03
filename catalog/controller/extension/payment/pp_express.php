@@ -1258,23 +1258,60 @@ class ControllerExtensionPaymentPPExpress extends Controller {
 	public function paymentRequestInfo() {
 		$this->load->model('commonipl/order');
 		$order_product = $this->model_commonipl_order->getOrderProductsByIdList($this->session->data['order_id']);
+		//print_r($weight);
 		$paymentProduct = array();
 		$i = 0;
 		$item_total = 0;
+		$weights = array();
 		if ($order_product ) {
 			$paymentProduct['PAYMENTREQUEST_0_ITEMAMT'] = number_format($item_total, 2, '.', '');
 			$paymentProduct['PAYMENTREQUEST_0_AMT'] = number_format($item_total, 2, '.', '');
 			foreach ($order_product as $item) {
-				
-				$paymentProduct['L_PAYMENTREQUEST_0_NUMBER' . $i] = $item['model'];
+				//print_r($item);
+					$paymentProduct['L_PAYMENTREQUEST_0_NUMBER' . $i] = $item['model'];
 					$paymentProduct['L_PAYMENTREQUEST_0_NAME' . $i] = $item['name'];
 					$paymentProduct['L_PAYMENTREQUEST_0_AMT' . $i] = $this->currency->format($item['total'], $this->session->data['currency'], false, false);
 					$paymentProduct['L_PAYMENTREQUEST_0_QTY' . $i] = 1;
 			
-			$item_total += $item['total'];
-			$i++;
+					$item_total += $item['total'];
+					$i++;
+						
+					$options = $this->model_commonipl_order->getProductSku($item['shopify_sku']);
+					if(isset($options)){
+						if(isset($weights[$item['order_id']])){
+							$weights[$item['order_id']]['wight'] +=$options['weight']*$item['quantity'];
+						}else{
+							$weights[$item['order_id']]['wight'] =$options['weight']*$item['quantity'];
+						}
+						
+					}
+					
+					
 			}
 		}
+		$j = 1;
+		foreach($this->session->data['order_id'] as $order_id){
+			$order_info = $this->model_commonipl_order->getOrder($order_id);
+			//print_r($order_info['shipping_code']);
+			if(isset($order_info['shipping_code'])){
+				$shipping = $this->model_commonipl_order->getShippingCost($order_info['shipping_code']);
+				//print_r($shipping);
+				$shippingCost = $this->weight->formatCost($shipping,$weights[$order_id]['wight']);
+			}else{
+				$shippingCost = 0;
+			}
+			//print_r($shippingCost);
+			if($shippingCost>0){
+				$paymentProduct['L_PAYMENTREQUEST_0_NUMBER' . $i] = '';
+				$paymentProduct['L_PAYMENTREQUEST_0_NAME' . $i] = $j.' Order Express freight';
+				$paymentProduct['L_PAYMENTREQUEST_0_AMT' . $i] = $this->currency->format($shippingCost, $this->session->data['currency'], false, false);
+				$paymentProduct['L_PAYMENTREQUEST_0_QTY' . $i] = 1;
+				$item_total += $shippingCost;
+				$i++;
+				$j++;
+			}
+		}
+		$item_total =  $this->currency->format($item_total, $this->session->data['currency'], false, false);
 		$paymentProduct['PAYMENTREQUEST_0_ITEMAMT'] = $item_total ;
 		$paymentProduct['PAYMENTREQUEST_0_AMT']  = $item_total;
 		return $paymentProduct;
@@ -1287,8 +1324,9 @@ class ControllerExtensionPaymentPPExpress extends Controller {
 		$this->load->model('extension/payment/pp_express');
 		$this->load->model('tool/image');
 		$paymentProduct = $this->paymentRequestInfo();
+		//print_r($paymentProduct);
 		$max_amount = $paymentProduct['PAYMENTREQUEST_0_AMT']*1.5;
-		echo $max_amount;
+		//echo $max_amount;
 		$max_amount = $this->currency->format($max_amount, isset($this->session->data['currency'])?$this->session->data['currency']:'USD', '', false);
 		
 		$data = array(

@@ -66,6 +66,7 @@ class ModelCommoniplOrder extends Model {
 				'payment_country'         => $order_query->row['payment_country'],
 				'payment_iso_code_2'      => $payment_iso_code_2,
 				'payment_iso_code_3'      => $payment_iso_code_3,
+				'shipping_code'           => isset($order_query->row['shipping_code'])?$order_query->row['shipping_code']:$payment_iso_code_2,
 				'payment_address_format'  => $order_query->row['payment_address_format'],
 				'payment_method'          => $order_query->row['payment_method'],
 				'shipping_firstname'      => $order_query->row['shipping_firstname'],
@@ -525,13 +526,13 @@ if (isset($data['products'])) {
 		}
 		return 1;
 	}
-	public function getShippingCost($shipping_zone,$weight){
-		if(empty($shipping_zone)){
+	public function getShippingCost($shipping_code){
+		if(empty($shipping_code)){
 			return ;
 		}
-		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "shipping WHERE shipping_country LIKE '%".$this->db->escape($shipping_id)."%'");
+		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "shipping WHERE shipping_country LIKE '%".$this->db->escape($shipping_code)."%'");
 		if(isset($query->row['shipping_option'])){
-			return json_decode($query->row['shipping_option']);
+			return json_decode($query->row['shipping_option'],true);
 		}
 
 		return ;

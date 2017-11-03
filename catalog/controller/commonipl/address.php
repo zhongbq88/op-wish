@@ -66,13 +66,18 @@ class ControllerCommoniplAddress extends Controller {
 			$countries = $this->model_localisation_country->getCountries();
 
 			$country='';
+			$code ='';
+			
 			foreach($countries as $country){
 				if($country['country_id']==$this->request->post['country_id']){
+					//print_r($country);
+					$code = $country['iso_code_2'];
 					$country = $country['name'];
+					
 					break;
 				}
 			}
-			$this->model_shopify_order->editAddress($this->request->get['order_id'], $this->request->post,$country);
+			$this->model_shopify_order->editAddress($this->request->get['order_id'], $this->request->post,$country,$code);
 			$format = '{email}' . "\n" . '{telephone}' . "\n" .'{firstname} {lastname}' . "\n" . '{company}' . "\n" . '{address_1}' . "\n" . '{address_2}' . "\n" . '{city} {postcode}' . "\n" . "\n" . '{country}';
 
 			$find = array(
