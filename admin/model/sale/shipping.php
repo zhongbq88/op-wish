@@ -31,4 +31,10 @@ class ModelSaleShipping extends Model {
 		}
 		return;
 	}
+	
+	public function deleteShipping($shipping_id){
+		if(isset($shipping_id)){
+			$this->db->query("DELETE FROM " . DB_PREFIX . "shipping WHERE shipping_id='".(int)$data['shipping_id']."'");
+		}
+	}
 }

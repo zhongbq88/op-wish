@@ -25,6 +25,7 @@
               <td class="text-center">国家</td>
               <td class="text-center">计费详情</td>
               <td class="text-center">创建时间</td>
+              <td class="text-center">操作</td>
             </tr>
           </thead>
           <tbody valign="middle" id="body_list" >
@@ -33,9 +34,10 @@
           {% for shipping in shippings %}
           <tr>
             <td class="text-center"><a href="javascript:addNew('{{ shipping.id }}');" >{{ shipping.name }}</a></td>
-            <td class="text-center">{{ shipping.scountry }}</td>
-            <td class="text-center">{{ shipping.option }}</td>
+            <td class="text-left">{{ shipping.scountry }}</td>
+            <td class="text-left">{{ shipping.option }}</td>
             <td class="text-center">{{ shipping.date_added }}</td>
+            <td class="text-center"><a href="javascript:del('{{ shipping.delete }}');" >删除</a></td>
           </tr>
           {% endfor %}
           {% else %}
@@ -62,6 +64,28 @@
 	   //alert(shipping_id);
 	   $.ajax({
 		url: 'index.php?route=sale/shipping/info&user_token={{ user_token }}&shipping_id='+shipping_id,
+		dataType: 'json',
+		beforeSend: function() {
+			//$('#gopublish').button('loading');
+		},
+		complete: function() {
+			//$('#gopublish').button('reset');
+		},
+		success: function(json) {
+			
+			if (json['success']) {
+				$('#des-body').html(json['success']);
+			}
+		},
+        error: function(xhr, ajaxOptions, thrownError) {
+            //alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+        }
+	});
+   }
+    function del(url){
+	   //alert(shipping_id);
+	   $.ajax({
+		url: url,
 		dataType: 'json',
 		beforeSend: function() {
 			//$('#gopublish').button('loading');
