@@ -38,7 +38,7 @@
   <td calss="text-center" >
      
         <button type="button" style="height:30px;padding:0px; padding-left:20px; padding-right:20px;"  {% if (order.status!='To-Order' and order.status!='On-Hold') or  order.product_status == 0  %} disabled {% endif%} onClick="payclick('{{order.pay}}');" id="pay{{order.order_id}}"   class="btn btn-success btn-xs" >
-        {% if order.status=='In-Production' or order.status=='Shipped' %}{{ text_paid }}{% else %}{{ text_checkout }}{% endif %}
+        {% if order.status=='In-Production' or order.status=='Shipped' or order.status=='In-Processing' or order.status=='Complete' %}{{ text_paid }}{% else %}{{ text_checkout }}{% endif %}
         </button>
       </br>
       <div class="btn-group"> <a style="height:30px; padding:0px; padding-left:10px; padding-right:10px; padding-top:5px;" href="{{ order.view }}" data-toggle="tooltip" title="{{ button_view }}" class="btn btn-primary"><i class="fa fa-eye"></i>{{ button_view }}</a>
