@@ -216,7 +216,7 @@ $.ajax({
 					$("#Synchronize").stopRotate();
 					if (json['success']) {
 						//$json['order_list'] = $this->load->controller('');
-						$('#order_body').load('index.php?route=commonipl/orders/getList');
+						$('#order_body').load('index.php?route=commonipl/orders/loadList');
 					}
 				},
 				error: function(xhr, ajaxOptions, thrownError) {
