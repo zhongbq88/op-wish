@@ -155,6 +155,10 @@ class ControllerCommoniplOrders extends Controller {
 		
 		return $this->load->view('commonipl/order_list', $data);
 	}
+	
+	public function loadList() {
+		$this->response->setOutput($this->getList());
+	}
 
 	public function info() {
 		$this->load->language('commonipl/order');
