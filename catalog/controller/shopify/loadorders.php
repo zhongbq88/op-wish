@@ -58,10 +58,10 @@ class ControllerShopifyLoadorders extends Controller {
 			  if(count($orders)>0){
 				  $json['success'] = 'true';
 			  }
-			  print_r($orders);
+			  //print_r($orders);
 			  foreach($orders as $order){
 				 $od = $this->initOrder($order,$order_statuses,$customer_info);
-				 print_r($od);
+				 //print_r($od);
 				 $order_id = $this->model_shopify_order->addOrder($od);
 			  }
 			  
