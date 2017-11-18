@@ -8,47 +8,6 @@
         <div class="content">
           <h2>{{ declined }}</h2>
         </div>
-        <div class="newsletter" style="display:none;">
-          <input type="text" class="email" placeholder="E-mail">
-          <a class="button subscribe">Add</a></div>
-        <script type="text/javascript">
-               $(document).ready(function() {
-               	function Subscribe() {
-               		$.post('http://fastortheme.com/fashionsimple/index.php?route=module/newsletter/subscribe', 
-               			{ 
-               				email: $('#popup-11 .email').val() 
-               			}, function (e) {
-               				if(e.error === 1) {
-               					var r = confirm(e.message);
-               					if (r == true) {
-               					    $.post('http://fastortheme.com/fashionsimple/index.php?route=module/newsletter/unsubscribe', { 
-               					    	email: $('#popup-11 .email').val() 
-               					    }, function (e) {
-               					    	$('#popup-11 .email').val('');
-               					    	alert(e.message);
-               					    }, 'json');
-               					}
-               				} else {
-               					$('#popup-11 .email').val('');
-               					alert(e.message);
-               				}
-               			}
-               		, 'json');
-               	}
-               	
-               	$('#popup-11 .subscribe').click(Subscribe);
-               	$('#popup-11 .email').keypress(function (e) {
-               	    if (e.which == 13) {
-               	        Subscribe();
-               	    }
-               	});
-				
-               });
-			   function closeMfp(){
-					$('.mfp-bg').addClass('mfp-hide');
-					$('.mfp-wrap').addClass('mfp-hide');
-				};
-               </script>
         <button title="Close (Esc)" type="button" class="mfp-close" onclick="closeMfp()">×</button>
       </div>
     </div>
