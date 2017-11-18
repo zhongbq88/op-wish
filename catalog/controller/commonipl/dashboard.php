@@ -14,7 +14,7 @@ class ControllerCommoniplDashboard extends Controller{
 			return;
 		}
 		
-		echo '<script language="JavaScript">;alert("卸载了";location.href="www.jbxue.com";</script>;';
+		echo '<script language="JavaScript">alert("卸载了";location.href="www.jbxue.com")</script>';
 		return;
 		
 		
