@@ -9,7 +9,7 @@ class ControllerCommoniplDeclined extends Controller {
 
 			if(isset($this->session->data['shop'])){
 				$data['shopify'] = $this->session->data['shop'];
-				$data['error_warning'] = sprintf($charging['tips'], $this->url->link('shopify/connect', ''), 'https://'.$data['shopify'].'/admin/apps');
+				$data['error_warning'] = html_entity_decode(sprintf($charging['tips'], $this->url->link('shopify/connect', ''), 'https://'.$data['shopify'].'/admin/apps'), ENT_QUOTES, 'UTF-8');
 			}
 		
 			$data['appkey'] = SHOPIFY_APP_API_KEY;
