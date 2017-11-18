@@ -11,8 +11,10 @@ class ControllerCommoniplDashboard extends Controller{
 		//print_r($this->session->data['home']);
 		
 		if($this->load->controller('shopify/oauth/checkChargeApp')==false){
-			die('<script> top.location.href="https://'.$this->session->data['shop'].'/admin/apps"</script>');
-			return;
+			/*die('<script> top.location.href="https://'.$this->session->data['shop'].'/admin/apps"</script>');
+			//return;*/
+			$this->response->redirect($this->url->link('commonipl/declined', '', true));
+			
 		}
 
 		if(isset($this->session->data['srcImages'])){
