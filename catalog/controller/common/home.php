@@ -19,10 +19,10 @@ class ControllerCommonHome extends Controller {
 		$data['header'] = $this->load->controller('common/header');
 		
 		$data['productlist'] =  $this->load->controller('commonipl/products');
-		print_r($this->request->get['declined']);
+		//print_r($this->request->get['declined']);
 		if(isset($this->request->get['declined'])){
 			$charging = $this->config->get('config_charging');
-			print_r($charging);
+			//print_r($charging);
 			$data['declined'] = $charging['tips'];
 		}
 		$this->response->setOutput($this->load->view('common/index', $data));
