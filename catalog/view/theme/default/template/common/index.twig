@@ -1,6 +1,182 @@
 {{ header }}
+ {% if declined %}
+<div class="mfp-bg popup-module mfp-with-zoom popup-type-1 mfp-ready"></div>
+<div class="mfp-wrap mfp-close-btn-in mfp-auto-cursor popup-module mfp-with-zoom popup-type-1 mfp-ready" tabindex="-1" style="overflow-x: hidden; overflow-y: auto;">
+  <div class="mfp-container mfp-s-ready mfp-inline-holder">
+    <div class="mfp-content">
+      <div id="popup-11" class="popup" style="max-width: 750px;background-color: #f5f5f5;);background-position: top right;background-repeat: no-repeat;">
+        <div class="content">
+          <h2>{{ declined }}</h2>
+        </div>
+        <div class="newsletter" style="display:none;">
+          <input type="text" class="email" placeholder="E-mail">
+          <a class="button subscribe">Add</a></div>
+        <script type="text/javascript">
+               $(document).ready(function() {
+               	function Subscribe() {
+               		$.post('http://fastortheme.com/fashionsimple/index.php?route=module/newsletter/subscribe', 
+               			{ 
+               				email: $('#popup-11 .email').val() 
+               			}, function (e) {
+               				if(e.error === 1) {
+               					var r = confirm(e.message);
+               					if (r == true) {
+               					    $.post('http://fastortheme.com/fashionsimple/index.php?route=module/newsletter/unsubscribe', { 
+               					    	email: $('#popup-11 .email').val() 
+               					    }, function (e) {
+               					    	$('#popup-11 .email').val('');
+               					    	alert(e.message);
+               					    }, 'json');
+               					}
+               				} else {
+               					$('#popup-11 .email').val('');
+               					alert(e.message);
+               				}
+               			}
+               		, 'json');
+               	}
+               	
+               	$('#popup-11 .subscribe').click(Subscribe);
+               	$('#popup-11 .email').keypress(function (e) {
+               	    if (e.which == 13) {
+               	        Subscribe();
+               	    }
+               	});
+				
+               });
+			   function closeMfp(){
+					$('.mfp-bg').addClass('mfp-hide');
+					$('.mfp-wrap').addClass('mfp-hide');
+				};
+               </script>
+        <button title="Close (Esc)" type="button" class="mfp-close" onclick="closeMfp()">×</button>
+      </div>
+    </div>
+    <div class="mfp-preloader"></div>
+  </div>
+</div>
+{% endif %}
+<div class="standard-body">
+<div id="main" class="">
 
-    {{ productlist  }}
-    
+<!-- MAIN CONTENT
+	================================================== -->
+<div class="main-content full-width home">
+<div class="background-content"></div>
+<div class="background">
+  <div class="shadow"></div>
+  <div class="pattern">
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-12">
+          <div class="filter-product">
+            <div class="filter-tabs">
+              <div class="bg-filter-tabs">
+                <div class="bg-filter-tabs2 clearfix">
+                  <ul id="tab27832924">
+                    <li class="active"><a href="#latest-27832924-0">All</a></li>
+                    {% if categories%}
+                    {% for categorie in categories%}
+                     <li><a href="#{{ categorie.name }}-27832924-{{ loop.index }}">{{ categorie.name }}</a></li>
+                    {% endfor %}
+                    {% endif %}
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <div class="tab-content clearfix">
+              <div class="tab-pane active" id="latest-27832924-0">
+                <div class="box-product">
+                  <div id="myCarousel27832924-0" > 
+                    <!-- Carousel items -->
+                    <div class="carousel-inner">
+                      <div class="active item">
+                        <div class="product-grid">
+                          <div class="row"> {{ productlist }} </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              {% if categories%}
+              {% for categorie in categories%}
+                <div class="tab-pane" id="{{ categorie.name }}-27832924-{{loop.index}}">
+                <div class="box-product">
+                  <div id="myCarousel27832924-{{loop.index}}" > 
+                    <!-- Carousel items -->
+                    <div class="carousel-inner">
+                      <div class="active item">
+                        <div class="product-grid">
+                          <div class="row"> {{ categorie.productlist }} </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              {% endfor %}
+              {% endif %}
+            </div>
+            <script type="text/javascript">
+			var curItem = '#latest-27832924-0';
+$('#tab27832924 a').click(function (e) {
+   e.preventDefault();
+   $(curItem).removeClass('active');
+   curItem = $(this).get(0).getAttribute('href');
+   $(curItem).addClass('active');
+   $('#tab27832924 .active').removeClass('active');
+   $(this).parent().addClass('active');
+})
 
-{{ footer }}
+/*$('#tab27832924 a').click(function (e) {
+  
+  e.preventDefault();
+ $('.tab-pane .active').removeClass('active');
+   var id = $(this).get(0).getAttribute('href');
+   $(id).addClass('active');
+})*/
+</script> 
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="row">
+              <div class="col-md-12"> </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-12"> </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+    .products-buttons-action-type-2 .product-grid .product .only-hover ul li a {
+    border-radius: 0px;
+    -webkit-border-radius: 0px;
+    -moz-border-radius: 0px;
+}
+.product-grid .product .only-hover ul li a {
+    display: block;
+    width: 45px;
+    height: 45px;
+    border-radius: 100px;
+    -webkit-border-radius: 100px;
+    -moz-border-radius: 100px;
+    background: #fff;
+    border: 1px solid #ccc;
+    transition: all 0.2s ease-in;
+    -webkit-transition: all 0.2s ease-in;
+    -moz-transition: all 0.2s ease-in;
+    font-size: 16px;
+    padding: 10px 0px;
+    text-align: center;
+    cursor: pointer;
+}
+    </style>
+{{ footer }} 
