@@ -24,6 +24,38 @@
   </div>
 </div>
 <div class="mfp-hide"></div>
+<script type="text/javascript">
+$(document).ready(function() {
+
+if($(window).width() > 992) {
+
+     
+          var show_after = parseInt('200', 20);
+          var autoclose_after = parseInt('', 20);
+          setTimeout(function () {
+            $.magnificPopup.open({
+                items: {
+                    src: '#popup-11',
+                    type: 'inline'
+                },
+                tLoading: '',
+                mainClass: 'popup-module mfp-with-zoom popup-type-1',
+                removalDelay: 200,
+                            });
+     
+            if (autoclose_after > 0) {
+                setTimeout(function () {
+                    $.magnificPopup.close();
+                }, autoclose_after);
+            }
+          }, show_after);
+          
+               
+     
+}
+
+});
+</script>
 {% endif %}
 <div class="standard-body">
 <div id="main" class="">
