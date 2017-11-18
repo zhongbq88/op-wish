@@ -1,7 +1,45 @@
 {{ header }}
  {% if declined %}
 <div class="mfp-bg popup-module mfp-with-zoom popup-type-1 mfp-ready"></div>
-<div class="mfp-wrap mfp-close-btn-in mfp-auto-cursor popup-module mfp-with-zoom popup-type-1 mfp-ready" tabindex="-1" style="overflow-x: hidden; overflow-y: auto;">
+<div class="mfp-wrap mfp-close-btn-in mfp-auto-cursor popup-module mfp-with-zoom popup-type-1 mfp-ready" tabindex="-1" style="overflow-x: hidden; overflow-y: auto;"><div class="mfp-container mfp-s-ready mfp-inline-holder"><div class="mfp-content"><div id="popup-11" class="popup" style="max-width: 750px;background-color: #f5f5f5;background-image: url(image/catalog/fashionsimple/bg-newsletter.png);background-position: top right;background-repeat: no-repeat;">
+     <div class="content"><img src="image/catalog/fashionsimple/get-discount.png" style="display: block;margin-top: 30px;margin-bottom: 6px" alt="Get discount"></div><div class="newsletter">     <input type="text" class="email" placeholder="E-mail">     <a class="button subscribe">Add</a></div>          
+               <script type="text/javascript">
+               $(document).ready(function() {
+               	function Subscribe() {
+               		$.post('http://fastortheme.com/fashionsimple/index.php?route=module/newsletter/subscribe', 
+               			{ 
+               				email: $('#popup-11 .email').val() 
+               			}, function (e) {
+               				if(e.error === 1) {
+               					var r = confirm(e.message);
+               					if (r == true) {
+               					    $.post('http://fastortheme.com/fashionsimple/index.php?route=module/newsletter/unsubscribe', { 
+               					    	email: $('#popup-11 .email').val() 
+               					    }, function (e) {
+               					    	$('#popup-11 .email').val('');
+               					    	alert(e.message);
+               					    }, 'json');
+               					}
+               				} else {
+               					$('#popup-11 .email').val('');
+               					alert(e.message);
+               				}
+               			}
+               		, 'json');
+               	}
+               	
+               	$('#popup-11 .subscribe').click(Subscribe);
+               	$('#popup-11 .email').keypress(function (e) {
+               	    if (e.which == 13) {
+               	        Subscribe();
+               	    }
+               	});
+               });
+               </script>     
+          
+          
+     <button title="Close (Esc)" type="button" class="mfp-close">×</button></div></div><div class="mfp-preloader"></div></div></div>
+<!--<div class="mfp-wrap mfp-close-btn-in mfp-auto-cursor popup-module mfp-with-zoom popup-type-1 mfp-ready" tabindex="-1" style="overflow-x: hidden; overflow-y: auto;">
   <div class="mfp-container mfp-s-ready mfp-inline-holder">
     <div class="mfp-content">
       <div id="popup-11" class="popup" style="max-width: 750px;background-color: #f5f5f5;);background-position: top right;background-repeat: no-repeat;">
@@ -22,40 +60,9 @@
     </div>
     <div class="mfp-preloader"></div>
   </div>
-</div>
+</div>-->
 <div class="mfp-hide"></div>
-<script type="text/javascript">
-$(document).ready(function() {
 
-if($(window).width() > 992) {
-
-     
-          var show_after = parseInt('200', 20);
-          var autoclose_after = parseInt('', 20);
-          setTimeout(function () {
-            $.magnificPopup.open({
-                items: {
-                    src: '#popup-11',
-                    type: 'inline'
-                },
-                tLoading: '',
-                mainClass: 'popup-module mfp-with-zoom popup-type-1',
-                removalDelay: 200,
-                            });
-     
-            if (autoclose_after > 0) {
-                setTimeout(function () {
-                    $.magnificPopup.close();
-                }, autoclose_after);
-            }
-          }, show_after);
-          
-               
-     
-}
-
-});
-</script>
 {% endif %}
 <div class="standard-body">
 <div id="main" class="">
