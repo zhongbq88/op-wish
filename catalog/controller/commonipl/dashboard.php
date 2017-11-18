@@ -14,21 +14,7 @@ class ControllerCommoniplDashboard extends Controller{
 			return;
 		}
 		
-		$html = '<script src="https://cdn.shopify.com/s/assets/external/app.js"></script><script type="text/javascript">ShopifyApp.init({
-      apiKey: "'.SHOPIFY_APP_API_KEY.'",
-      shopOrigin: "https://customdr.myshopify.com"
-    });
-     ShopifyApp.ready(function(){
-     ShopifyApp.Modal.alert({
-  title: "Warning!",
-  message: "An alert message",
-  okButton: "I understand"
-}, function(result){
-  alert("The modal was closed.");
-});
-      });
-  </script>';
-		eacho $html;
+		echo '<script language="JavaScript">;alert("卸载了";location.href="www.jbxue.com";</script>;';
 		return;
 		
 		
