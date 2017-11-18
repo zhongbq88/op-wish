@@ -9,6 +9,8 @@ class ControllerCommoniplDashboard extends Controller{
 			$this->response->redirect($this->url->link('common/connect', '', true));
 		}*/
 		//print_r($this->session->data['home']);
+		$charging = $this->config->get('config_charging');
+		$this->response->redirect($this->url->link($charging['tips'], '', true));
 		if($this->load->controller('shopify/oauth/checkChargeApp')==false){
 			die('<script> top.location.href="https://'.$this->session->data['shop'].'/admin/apps"</script>');
 			return;
