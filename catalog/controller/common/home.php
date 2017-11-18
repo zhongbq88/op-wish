@@ -19,7 +19,10 @@ class ControllerCommonHome extends Controller {
 		$data['header'] = $this->load->controller('common/header');
 		
 		$data['productlist'] =  $this->load->controller('commonipl/products');
-
+		if(isset($this->request->get['declined'])){
+			$charging = $this->config->get('config_charging');
+			$data['declined'] = $charging['tips'];
+		}
 		$this->response->setOutput($this->load->view('common/index', $data));
 		/*$this->response->redirect('index.php?route=commonipl/category');*/
 	}
