@@ -13,11 +13,7 @@ class ControllerCommoniplDashboard extends Controller{
 			die('<script> top.location.href="https://'.$this->session->data['shop'].'/admin/apps"</script>');
 			return;
 		}
-		
-		echo '<script language="JavaScript">alert("卸载了";location.href="www.jbxue.com")</script>';
-		return;
-		
-		
+
 		if(isset($this->session->data['srcImages'])){
 			unset($this->session->data['srcImages']);
 		}
