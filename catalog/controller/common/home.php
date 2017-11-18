@@ -23,7 +23,7 @@ class ControllerCommonHome extends Controller {
 			$charging = $this->config->get('config_charging');
 			$data['declined'] = $charging['tips'];
 		}
-		$this->response->setOutput($this->load->view('common/index', $data));
+		//$this->response->setOutput($this->load->view('common/index', $data));
 		/*$this->response->redirect('index.php?route=commonipl/category');*/
 	}
 }
