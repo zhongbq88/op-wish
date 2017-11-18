@@ -85,9 +85,9 @@ class ControllerShopifyOauth extends Controller {
 					foreach($products as $product){
 						$this->deleteProduct($shopify,$product['shopify_product_id']);
 					}*/
-					$return_url= explode('?',$result['return_url']);
-					header('Location:'.$return_url[0].'?declined=true'); 
-					$this->deteleApp();
+					//$return_url= explode('?',$result['return_url']);
+					//header('Location:'.$return_url[0].'?declined=true'); 
+					//$this->deteleApp();
 					return false;
 				}
 			}

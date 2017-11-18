@@ -581,10 +581,9 @@ s0.parentNode.insertBefore(s1,s0);
 <body class="common-home body-full-width product-list-type-3 product-grid-type-3              no-box-type-7 box-type-5     footer-type-3 breadcrumb-style-7 border-width-1 body-white    body-header-type-4">
 <div id="account-transaction" class="container">
   <div class="row">
-    <div id="content" class="{{ class }}">
-      <h1>{{ heading_title }}</h1>
-      {{ description }}</div>
-    </div>
-    </div>
+    {% if error_warning %}
+  <div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}</div>
+  {% endif %}
+   </div>
 </div>
 </body></html>
