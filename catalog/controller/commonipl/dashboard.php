@@ -5,9 +5,9 @@
 class ControllerCommoniplDashboard extends Controller{
 
 	public function index(){
-		if (isset($_GET['hmac'])) {
+		/*if (isset($_GET['hmac'])) {
 			$this->response->redirect($this->url->link('shopify/connect', '', true));
-		}
+		}*/
 		//print_r($this->session->data['home']);
 		
 		if($this->load->controller('shopify/oauth/checkChargeApp')==false){
