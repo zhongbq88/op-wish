@@ -18,11 +18,11 @@ class ControllerShopifyOauth extends Controller {
 		$customer = $this->model_account_customer->getCustomerByEmail($email);
 		
 		//echo $shop;
-		/*if (isset($this->session->data['install']) || !isset($_GET['code']) && empty($customer))
+		if (isset($this->session->data['install']) || !isset($_GET['code']) && empty($customer))
 		{
-			unset($this->session->data['install']);*/
+			unset($this->session->data['install']);
 			$this->oauth();
-		/*}else{
+		}else{
 			try
 			{
 				$shopify = shopify\client($shop, SHOPIFY_APP_API_KEY, $customer['token']);
@@ -53,7 +53,7 @@ class ControllerShopifyOauth extends Controller {
 			}
 			
 			$this->oauth();
-		}*/
+		}
 	}
 	
 	public function oauth(){
