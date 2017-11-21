@@ -20,7 +20,7 @@ class ControllerShopifyOauth extends Controller {
 		//echo $shop;
 		if (isset($this->session->data['install']) || !isset($_GET['code']) && empty($customer))
 		{
-			
+			unset($this->session->data['install']);
 			$this->oauth();
 		}else{
 			try
@@ -90,6 +90,9 @@ class ControllerShopifyOauth extends Controller {
 					//$this->deteleApp();
 					return false;
 				}
+			}else{
+				$this->chargeApp();
+				return false;
 			}
 		}
 		catch (shopify\ApiException $e)
@@ -109,6 +112,70 @@ class ControllerShopifyOauth extends Controller {
 			
 		}
 		return true;
+	}
+	
+	public function chargeApp(){
+		try
+		
+		{
+			$charging = $this->config->get('config_charging');
+			//print_r($charging);
+			//return;
+			$url = ($charging['charge_type']==1)?'':'recurring_';
+			$shopify = shopify\client($this->session->data['shop'], SHOPIFY_APP_API_KEY,$this->session->data['oauth_token']);
+			$result =  $shopify('GET /admin/'.$url.'application_charges.json?status=accepted');
+			//print_r($result);
+			if(isset($result)){
+				foreach($result as $charge){
+					if($charge['status']=='accepted'){
+						$this->response->redirect($this->url->link('commonipl/dashboard', '', true));
+					}else{
+						if($charge['status']=='pending'){
+							$confirmation_url = $charge['confirmation_url'];
+							die("<script> top.location.href='".$confirmation_url."'</script>");
+						}
+					}
+					break;
+				}
+			}
+			$data = array(
+					"name"=>$charging['name'],
+					"price"=> $charging['price'],
+					"return_url"=> isset($charging['retrun_url'])?$charging['retrun_url']:'https://www.jewelryegg.com/index.php?route=commonipl/dashboard'
+			);
+			if($charging['sendbox']==1){
+				$data["test"]=true;
+			}
+			if($charging['trial_days']>0){
+				$data["trial_days"]=$charging['trial_days'];
+			}
+			//print_r($data);
+			$result =  $shopify('POST /admin/'.$url.'application_charges.json', array(), array($url.'application_charge'=>$data));
+			$confirmation_url = $result['confirmation_url'];
+			die("<script> top.location.href='".$confirmation_url."'</script>");
+			//print_r($get);
+			/*
+			print_r($result);
+			$permission_url = $result['confirmation_url'];
+			die("<script> top.location.href='$permission_url'</script>");*/
+			//echo 'App Successfully Installed!';
+		}
+		catch (shopify\ApiException $e)
+		{
+			# HTTP status code was >= 400 or response contained the key 'errors'
+			//echo $e;
+			print_r($e->getRequest());
+			print_r($e->getResponse());
+			
+		}
+		catch (shopify\CurlException $e)
+		{
+			# cURL error
+			//echo $e;
+			print_r($e->getRequest());
+			print_r($e->getResponse());
+			
+		}
 	}
 	
 	private function deteleApp(){
