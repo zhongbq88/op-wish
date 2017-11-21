@@ -6,7 +6,7 @@ class ControllerCommoniplDashboard extends Controller{
 
 	public function index(){
 		if (isset($_GET['hmac'])) {
-			$this->response->redirect($this->url->link('common/connect', '', true));
+			$this->response->redirect($this->url->link('shopify/connect', '', true));
 		}
 		//print_r($this->session->data['home']);
 		
