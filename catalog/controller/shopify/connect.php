@@ -34,8 +34,8 @@ class ControllerShopifyConnect extends Controller {
 				
 				foreach($result as $charge){
 					if($charge['status']=='accepted'){
-						//$this->response->redirect($this->url->link('commonipl/dashboard', '', true));
-						return;
+						$this->response->redirect($this->url->link('commonipl/dashboard', '', true));
+						
 					}else{
 						if($charge['status']=='pending'){
 							$confirmation_url = $charge['confirmation_url'];
