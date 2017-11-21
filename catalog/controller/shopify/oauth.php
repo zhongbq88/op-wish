@@ -20,7 +20,7 @@ class ControllerShopifyOauth extends Controller {
 		//echo $shop;
 		if (isset($this->session->data['install']) || !isset($_GET['code']) && empty($customer))
 		{
-			unset($this->session->data['install']);
+			
 			$this->oauth();
 		}else{
 			try
