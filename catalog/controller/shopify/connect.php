@@ -28,11 +28,13 @@ class ControllerShopifyConnect extends Controller {
 			$url = ($charging['charge_type']==1)?'':'recurring_';
 			$shopify = shopify\client($this->session->data['shop'], SHOPIFY_APP_API_KEY,$this->session->data['oauth_token']);
 			$result =  $shopify('GET /admin/'.$url.'application_charges.json?status=accepted');
-			//print_r($result);
+			print_r($this->session->data['install']);
 			if(isset($result)){
+				
 				foreach($result as $charge){
 					if($charge['status']=='accepted'){
 						//$this->response->redirect($this->url->link('commonipl/dashboard', '', true));
+						return;
 					}else{
 						if($charge['status']=='pending'){
 							$confirmation_url = $charge['confirmation_url'];
