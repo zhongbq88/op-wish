@@ -873,7 +873,7 @@ class ModelCatalogProduct extends Model {
 	public function getOption($name){
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "option` o LEFT JOIN " . DB_PREFIX . "option_description od ON (o.option_id = od.option_id) WHERE od.name = '" . $this->db->escape($name). "' AND od.language_id = '" . (int)$this->config->get('config_language_id') . "'");
 		$option = $query->row;
-		if(isset($option)){
+		if(isset($option)&&isset($option['option_id'])){
 			$option['option_value'] = $this->getOptionValue($option['option_id']);
 		}
 		return $option;
