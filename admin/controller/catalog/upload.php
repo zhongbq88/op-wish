@@ -99,6 +99,9 @@ class ControllerCatalogUpload extends Controller {
 					@mkdir(DIR_IMAGE . $path, 0777);
 				}
 				foreach($data as $product){
+					if(empty($product[9])){
+						continue;
+					}
 					$image =  $path.basename($product[9]);
 					if (!is_file(DIR_IMAGE . $image) && !empty($image)) {
 						file_put_contents(DIR_IMAGE . $image, file_get_contents($product[9]));
