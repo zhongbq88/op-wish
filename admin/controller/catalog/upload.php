@@ -106,6 +106,7 @@ class ControllerCatalogUpload extends Controller {
 					if (!is_file(DIR_IMAGE . $image) && !empty($image)) {
 						file_put_contents(DIR_IMAGE . $image, file_get_contents($product[9]));
 					}
+					
 					if($productId!=$product[1]){
 						//print_r(123);
 						if(isset($productar)&&count($productar)>0){
@@ -207,6 +208,12 @@ class ControllerCatalogUpload extends Controller {
 					} 
 					
 					if(!isset($variants[$key])){
+						if(!empty($product[14])){
+							$image =  $path.basename($product[14]);
+							if (!is_file(DIR_IMAGE . $image)) {
+								file_put_contents(DIR_IMAGE . $image, file_get_contents($product[14]));
+							}
+						}						
 						  $variants[$key] = array(
 							  'variants_sku'=>$product[0],
 							  'option1'=>$product[4],
