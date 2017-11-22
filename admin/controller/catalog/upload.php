@@ -122,10 +122,10 @@ class ControllerCatalogUpload extends Controller {
 							);
 							}
 							$productar['quantity'] = $quantity;
-							$product_id = $this->model_catalog_product->uploadProduct($productar);
+							/*$product_id = $this->model_catalog_product->uploadProduct($productar);
 							if(isset($product_id)){
 								$this->model_catalog_product->addVariants($variants,$product_id);
-							}
+							}*/
 							$products[] = $productar;
 						}
 						for($i=16;$i<=25;$i++){
@@ -238,12 +238,13 @@ class ControllerCatalogUpload extends Controller {
 							);
 							}
 						$productar['quantity'] = $quantity;
-						$product_id = $this->model_catalog_product->uploadProduct($productar);
+						print_r($productar);
+						/*$product_id = $this->model_catalog_product->uploadProduct($productar);
 						if(isset($product_id)){
 							$this->model_catalog_product->addVariants($variants,$product_id);
-						}
+						}*/
 				}
-				//print_r($products);
+				print_r($products);
 				
 			//print_r(count($data));
 			//print_r($data);
