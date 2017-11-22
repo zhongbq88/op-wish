@@ -100,7 +100,7 @@ class ControllerCatalogUpload extends Controller {
 				}
 				foreach($data as $product){
 					$image =  $path.basename($product[9]);
-					if (!is_file(DIR_IMAGE . $image)) {
+					if (!is_file(DIR_IMAGE . $image) && !empty($image)) {
 						file_put_contents(DIR_IMAGE . $image, file_get_contents($product[9]));
 					}
 					if($productId!=$product[1]){
