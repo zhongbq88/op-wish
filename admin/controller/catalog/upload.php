@@ -103,7 +103,7 @@ class ControllerCatalogUpload extends Controller {
 					if (!is_file(DIR_IMAGE . $image)) {
 						file_put_contents(DIR_IMAGE . $image, file_get_contents($product[9]));
 					}
-					if($productId!=$product[26]){
+					if($productId!=$product[1]){
 						//print_r(123);
 						if(isset($productar)&&count($productar)>0){
 						
@@ -219,7 +219,7 @@ class ControllerCatalogUpload extends Controller {
 						  );
 					}
 					$quantity +=$product[6];
-					$productId = $product[26];
+					$productId =$product[1];
 				}
 				if(isset($productar)&&count($productar)>0){
 						
