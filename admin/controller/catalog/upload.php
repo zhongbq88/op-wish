@@ -363,7 +363,9 @@ class ControllerCatalogUpload extends Controller {
 	}
 	
 	private function descriptionFormat($description){
-		return  str_replace(';','</br>',str_replace(':',':  ',$description));
+		$str =  str_replace(';','</br>',str_replace(':',':  ',$description));
+		$patten = array("\r\n", "\n", "\r"); 
+		return str_replace($patten, "</br>", $str); 
 		
 	}
 	
