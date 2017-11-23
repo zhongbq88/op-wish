@@ -14,6 +14,7 @@ class ControllerShopifyConnect extends Controller {
 			$this->session->data['redirect'] = $this->url->link('commonipl/dashboard', '', true);
 			$this->response->redirect($this->url->link('account/login', '', true));
 		}
+		$this->response->redirect($this->url->link('commonipl/dashboard', '', true));
 		//$this->chargeApp();
 		//
 	}
