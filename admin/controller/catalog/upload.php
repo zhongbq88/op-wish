@@ -214,7 +214,8 @@ class ControllerCatalogUpload extends Controller {
 							if (!is_file(DIR_IMAGE . $image)) {
 								file_put_contents(DIR_IMAGE . $image, file_get_contents($product[14]));
 							}
-						}						
+						}		
+						  $price = 	number_format($product[2],2);			
 						  $variants[$key] = array(
 							  'variants_sku'=>$product[0],
 							  'option1'=>$product[4],
@@ -222,9 +223,9 @@ class ControllerCatalogUpload extends Controller {
 							  'option2_id'=>$option_id2,
 							  'option2'=>$product[5],
 							  'quantity' => $product[6]*$this->multiple,
-							  'price'=>number_format($product[2],2),
-							  'sale_price'=>number_format($product[2]*1.5,2),
-							  'msrp'=>number_format($product[12]*1.5,2),
+							  'price'=>$price,
+							  'sale_price'=>$price*2+2,
+							  'msrp'=>$price*4+2,
 							  'weight'=>$product[8],
 							  'variants_image'=>$image
 						  );
@@ -312,13 +313,13 @@ class ControllerCatalogUpload extends Controller {
 								);
 							}
 							$shopifys[$rowdata[0]] = $rowdata[3];
-							
+							$price = number_format($rowdata[2],2);
 							$variants[] = array(
 								'variants_sku'=>$rowdata[0],
 								'quantity' => $rowdata[3]*$this->multiple,
-								'price'=>number_format($rowdata[2],2),
-								'sale_price'=>number_format($rowdata[2]*1.5,2),
-							    'msrp'=>number_format($rowdata[5]*1.5,2),
+								'price'=>$price,
+							  	'sale_price'=>$price*2+2,
+							  	'msrp'=>$price*4+2,
 								'weight'=>$rowdata[4]
 							);
 					  }
