@@ -410,7 +410,7 @@ class ControllerCommoniplOrders extends Controller {
 				$subtotal+= $product['price']*$product['quantity'];
 				$tax+= $product['tax'];
 				$saletotal+= $product['shopify_price']*$product['quantity'];
-				if(isset($options)&& $options['weight']){
+				if(isset($options)&& isset($options['weight'])){
 					$weight+=$options['weight']*$product['quantity'];
 				}
 				
