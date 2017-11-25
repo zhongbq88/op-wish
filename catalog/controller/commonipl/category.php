@@ -47,6 +47,15 @@ class ControllerCommoniplCategory extends Controller {
 			$data['home'] = true;
 			
 		}
+		$this->load->model('setting/module');
+		$setting_info = $this->model_setting_module->getModule('27');
+		print_r($setting_info);
+		if ($setting_info && $setting_info['status']) {
+			$output = $this->load->controller('extension/module/banner', $setting_info);
+			if (isset($output)) {
+				 $data['content_top'] = $output;
+			}
+		}
 		$data['footer'] = $this->load->controller($this->session->data['store'].'/footer');
 		$data['header'] = $this->load->controller($this->session->data['store'].'/header');
 		$this->response->setOutput($this->load->view('commonipl/category', $data));
