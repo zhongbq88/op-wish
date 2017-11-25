@@ -1327,9 +1327,9 @@ class ControllerExtensionPaymentPPExpress extends Controller {
 		$this->load->model('extension/payment/pp_express');
 		$this->load->model('tool/image');
 		$paymentProduct = $this->paymentRequestInfo();
-		//print_r($paymentProduct);
+		print_r($paymentProduct);
 		$max_amount = $paymentProduct['PAYMENTREQUEST_0_AMT']*1.5;
-		//echo $max_amount;
+		echo $max_amount;
 		$max_amount = $this->currency->format($max_amount, isset($this->session->data['currency'])?$this->session->data['currency']:'USD', '', false);
 		
 		$data = array(
