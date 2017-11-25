@@ -59,7 +59,7 @@ class Weight {
 		if(!isset($shipping)){
 			return 0;
 		}
-		//print_r($shipping['maxWeight']);
+		print_r($shipping['maxWeight']);
 		foreach($shipping['maxWeight'] as $key=> $maxWeight){
 			 if($maxWeight>=$weight){
 				$cost = $shipping['firstWeightPrice'][$key];
