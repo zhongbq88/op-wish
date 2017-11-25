@@ -70,9 +70,13 @@ class ControllerSaleShipping extends Controller {
 		$shippings = $this->model_sale_shipping->getShippings();
 		print_r($shippings);
 		
-		/*foreach ($shippings as $shipping) {
+		foreach ($shippings as $shipping) {
+			if(isset($shipping['shipping_country'])){
+				$country = $this->model_localisation_zone->getCountryMore(substr($shipping['shipping_country'],1,strlen($shipping['shipping_country'])-2));
+			}else{
+				$country='';
+			}
 			
-			$country = $this->model_localisation_zone->getCountryMore(substr($shipping['shipping_country'],1,strlen($shipping['shipping_country'])-2));
 			$data['shippings'][] = array(
 			'id'=>$shipping['shipping_id'],
 				'name'       => $shipping['shipping_name'],
@@ -83,7 +87,7 @@ class ControllerSaleShipping extends Controller {
 				'delete' =>$this->url->link('sale/shipping/delete', 'user_token=' . $this->session->data['user_token'] . '&shipping_id=' . $shipping['shipping_id'] , true)
 				
 			);
-		}*/
+		}
 		$data['user_token'] = $this->session->data['user_token'];
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
