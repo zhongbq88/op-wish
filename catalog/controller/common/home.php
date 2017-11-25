@@ -18,17 +18,17 @@ class ControllerCommonHome extends Controller {
 
 		$data['header'] = $this->load->controller('common/header');
 		
-		/*$this->load->model('catalog/category');
+		$this->load->model('catalog/category');
 		$category_info = $this->model_catalog_category->getCategories();
 		$data['categories'] = array();
 		if ($category_info) {
 			foreach ($category_info as $result) {
 				$data['categories'][] = array(
 					'name' => $result['name'],
-					'productlist' => $this->load($result['category_id'])
+					'productlist' => $this->load->controller('commonipl/category/load',$result['category_id'])
 				);
 			}
-		}*/
+		}
 		
 		$data['productlist'] =  $this->load->controller('commonipl/products');
 		//print_r($this->request->get['declined']);

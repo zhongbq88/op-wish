@@ -12,7 +12,7 @@ class ControllerCommoniplCategory extends Controller {
 		$category_info = $this->model_catalog_category->getCategories();
 		$this->load->language('commonipl/category');
 
-		$this->load->model('commonipl/product');
+		
 
 		$this->load->model('tool/image');
 		//print_r($category_info);
@@ -63,6 +63,7 @@ class ControllerCommoniplCategory extends Controller {
 	
 	public function load($category_id) {
 	
+		$this->load->model('commonipl/product');
 		$data['products'] = array();
 		$this->load->model('account/wishlist');
 		$wishlistProductId = $this->model_account_wishlist->getWishlistProductId();
