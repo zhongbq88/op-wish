@@ -660,7 +660,7 @@ class ControllerCatalogProduct extends Controller {
 				'product_id' => $result['product_id'],
 				'image'      => $image,
 				'name'       => utf8_substr(trim(strip_tags(html_entity_decode($result['name'], ENT_QUOTES, 'UTF-8'))), 0, 60) . '..',
-				'model'      => $result['model'],
+				'model'      =>  $this->model_catalog_product->getCategoryName($result['product_id']),
 				'sku'      => $result['sku'],
 				'price'      => $this->currency->format($result['price'], $this->config->get('config_currency')),
 				'special'    => $special,
@@ -1516,9 +1516,9 @@ class ControllerCatalogProduct extends Controller {
 			}
 		}
 
-		if ((utf8_strlen($this->request->post['model']) < 1) || (utf8_strlen($this->request->post['model']) > 64)) {
+		/*if ((utf8_strlen($this->request->post['model']) < 1) || (utf8_strlen($this->request->post['model']) > 64)) {
 			$this->error['model'] = $this->language->get('error_model');
-		}
+		}*/
 
 		if ($this->request->post['product_seo_url']) {
 			$this->load->model('design/seo_url');
