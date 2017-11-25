@@ -1,17 +1,26 @@
 {{ header }}
  {% if declined %}
 <div class="mfp-bg popup-module mfp-with-zoom popup-type-1 mfp-ready"></div>
-<div class="mfp-wrap mfp-close-btn-in mfp-auto-cursor popup-module mfp-with-zoom popup-type-1 mfp-ready" tabindex="-1" style="overflow-x: hidden; overflow-y: auto;"><div class="mfp-container mfp-s-ready mfp-inline-holder"><div class="mfp-content"><div id="popup-11" class="popup" style="max-width: 750px;background-color: #f5f5f5;background-image: url(image/catalog/fashionsimple/bg-newsletter.png);background-position: top right;background-repeat: no-repeat;">
-     <div class="content"> <h2>{{ declined }}</h2></div><div class="newsletter">    <a href="https://apps.shopify.com/" style="margin-left:0px;" class="button subscribe">Return to the App Store</a></div>          
-               <script type="text/javascript">
+<div class="mfp-wrap mfp-close-btn-in mfp-auto-cursor popup-module mfp-with-zoom popup-type-1 mfp-ready" tabindex="-1" style="overflow-x: hidden; overflow-y: auto;">
+  <div class="mfp-container mfp-s-ready mfp-inline-holder">
+    <div class="mfp-content">
+      <div id="popup-11" class="popup" style="max-width: 750px;background-color: #f5f5f5;background-image: url(image/catalog/fashionsimple/bg-newsletter.png);background-position: top right;background-repeat: no-repeat;">
+        <div class="content">
+          <h2>{{ declined }}</h2>
+        </div>
+        <div class="newsletter"> <a href="https://apps.shopify.com/" style="margin-left:0px;" class="button subscribe">Return to the App Store</a></div>
+        <script type="text/javascript">
                function closeMfp(){
 					$('.mfp-bg').addClass('mfp-hide');
 					$('.mfp-wrap').addClass('mfp-hide');
 				};
-               </script>     
-          
-          
-     <button title="Close (Esc)" type="button" class="mfp-close"  onclick="closeMfp()" >×</button></div></div><div class="mfp-preloader"></div></div></div>
+               </script>
+        <button title="Close (Esc)" type="button" class="mfp-close"  onclick="closeMfp()" >×</button>
+      </div>
+    </div>
+    <div class="mfp-preloader"></div>
+  </div>
+</div>
 <!--<div class="mfp-wrap mfp-close-btn-in mfp-auto-cursor popup-module mfp-with-zoom popup-type-1 mfp-ready" tabindex="-1" style="overflow-x: hidden; overflow-y: auto;">
   <div class="mfp-container mfp-s-ready mfp-inline-holder">
     <div class="mfp-content">
@@ -35,7 +44,6 @@
   </div>
 </div>-->
 <div class="mfp-hide"></div>
-
 {% endif %}
 <div class="standard-body">
 <div id="main" class="">
@@ -50,6 +58,7 @@
     <div class="container">
       <div class="row">
         <div class="col-sm-12">
+          <div class="fashionsimple-page-title text-center" style="padding:0px;"> {% if content_top %} {{ content_top }}{% endif %} </div>
           <div class="filter-product">
             <div class="filter-tabs">
               <div class="bg-filter-tabs">
@@ -58,7 +67,7 @@
                     <li class="active"><a href="#latest-27832924-0">All</a></li>
                     {% if categories%}
                     {% for categorie in categories%}
-                     <li><a href="#{{ categorie.name }}-27832924-{{ loop.index }}">{{ categorie.name }}</a></li>
+                    <li><a href="#{{ categorie.name }}-27832924-{{ loop.index }}">{{ categorie.name }}</a></li>
                     {% endfor %}
                     {% endif %}
                   </ul>
@@ -80,10 +89,9 @@
                   </div>
                 </div>
               </div>
-              
               {% if categories%}
               {% for categorie in categories%}
-                <div class="tab-pane" id="{{ categorie.name }}-27832924-{{loop.index}}">
+              <div class="tab-pane" id="{{ categorie.name }}-27832924-{{loop.index}}">
                 <div class="box-product">
                   <div id="myCarousel27832924-{{loop.index}}" > 
                     <!-- Carousel items -->
@@ -98,8 +106,7 @@
                 </div>
               </div>
               {% endfor %}
-              {% endif %}
-            </div>
+              {% endif %} </div>
             <script type="text/javascript">
 			var curItem = '#latest-27832924-0';
 $('#tab27832924 a').click(function (e) {
@@ -135,7 +142,6 @@ $('#tab27832924 a').click(function (e) {
     </div>
   </div>
 </div>
-
 <style>
     .products-buttons-action-type-2 .product-grid .product .only-hover ul li a {
     border-radius: 0px;

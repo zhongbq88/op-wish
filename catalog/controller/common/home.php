@@ -25,6 +25,14 @@ class ControllerCommonHome extends Controller {
 			//print_r($charging);
 			$data['declined'] = $charging['tips'];
 		}
+		$setting_info = $this->model_setting_module->getModule('27');
+		//print_r($setting_info);
+		if ($setting_info && $setting_info['status']) {
+			$output = $this->load->controller('extension/module/banner', $setting_info);
+			if (isset($output)) {
+				 $data['content_top'] = $output;
+			}
+		}
 		$this->response->setOutput($this->load->view('common/index', $data));
 		/*$this->response->redirect('index.php?route=commonipl/category');*/
 	}

@@ -1,22 +1,20 @@
+<!-- Swiper -->
 
-  <!-- Swiper -->
-  <div class="swiper-container">
-    <div class="swiper-wrapper">
-     {% for banner in banners %}
-      <div class="swiper-slide">{% if banner.link %}<a href="{{ banner.link }}"><img src="{{ banner.image }}" alt="{{ banner.title }}" class="img-responsive" /></a>{% else %}<img src="{{ banner.image }}" alt="{{ banner.title }}" class="img-responsive" />{% endif %}</div>
-      {% endfor %}</div>
-    </div>
-    <!-- Add Pagination -->
-   <!-- <div class="swiper-pagination"></div>-->
-    <!-- Add Arrows -->
-    <div class="swiper-button-next"></div>
-    <div class="swiper-button-prev"></div>
-  </div>
-  
-  <link rel="stylesheet" href="catalog/view/javascript/jquery/swiper/css/swiper.min.css">
+<div class="swiper-container">
+  <div class="swiper-wrapper"> {% for banner in banners %}
+    <div class="swiper-slide">{% if banner.link %}<a href="{{ banner.link }}"><img src="{{ banner.image }}" alt="{{ banner.title }}" class="img-responsive" /></a>{% else %}<img src="{{ banner.image }}" alt="{{ banner.title }}" class="img-responsive" />{% endif %}</div>
+    {% endfor %}</div>
+</div>
+<!-- Add Pagination --> 
+<!-- <div class="swiper-pagination"></div>--> 
+<!-- Add Arrows -->
+<div class="swiper-button-next"></div>
+<div class="swiper-button-prev"></div>
+</div>
+<link rel="stylesheet" href="catalog/view/javascript/jquery/swiper/css/swiper.min.css">
 
-  <!-- Demo styles -->
-  <style>
+<!-- Demo styles -->
+<style>
    
     .swiper-container {
       width: 100%;
@@ -55,11 +53,11 @@
     }
   </style>
 
-  <!-- Swiper JS -->
-  <script src="catalog/view/javascript/jquery/swiper/js/swiper.min.js"></script>
+<!-- Swiper JS --> 
+<script src="catalog/view/javascript/jquery/swiper/js/swiper.min.js"></script> 
 
-  <!-- Initialize Swiper -->
-  <script>
+<!-- Initialize Swiper --> 
+<script>
     var swiper = new Swiper('.swiper-container', {
       mode: 'horizontal',
 	slidesPerView: 1,
@@ -72,8 +70,4 @@
     autoplayDisableOnInteraction: true,
 	loop: true
     });
-  </script>
-
-
-
-
+  </script> 
