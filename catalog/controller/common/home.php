@@ -18,28 +18,17 @@ class ControllerCommonHome extends Controller {
 
 		$data['header'] = $this->load->controller('common/header');
 		
-		$this->load->model('catalog/category');
+		/*$this->load->model('catalog/category');
 		$category_info = $this->model_catalog_category->getCategories();
 		$data['categories'] = array();
 		if ($category_info) {
-
 			foreach ($category_info as $result) {
-				/*$filter_data = array(
-					'filter_category_id'  => $result['category_id'],
-					'filter_sub_category' => true
-				);
-				if ($result['image']) {
-					$image = $this->model_tool_image->resize($result['image'], $this->config->get('theme_' . $this->config->get('config_theme') . '_image_product_width'), $this->config->get('theme_' . $this->config->get('config_theme') . '_image_product_height'));
-				} else {
-					$image = $this->model_tool_image->resize('placeholder.png', $this->config->get('theme_' . $this->config->get('config_theme') . '_image_product_width'), $this->config->get('theme_' . $this->config->get('config_theme') . '_image_product_height'));
-				}*/
 				$data['categories'][] = array(
 					'name' => $result['name'],
-					/*'thumb' =>$image,*/
 					'productlist' => $this->load($result['category_id'])
 				);
 			}
-		}
+		}*/
 		
 		$data['productlist'] =  $this->load->controller('commonipl/products');
 		//print_r($this->request->get['declined']);
