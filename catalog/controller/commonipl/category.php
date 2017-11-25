@@ -49,7 +49,7 @@ class ControllerCommoniplCategory extends Controller {
 		}
 		$this->load->model('setting/module');
 		$setting_info = $this->model_setting_module->getModule('27');
-		print_r($setting_info);
+		//print_r($setting_info);
 		if ($setting_info && $setting_info['status']) {
 			$output = $this->load->controller('extension/module/banner', $setting_info);
 			if (isset($output)) {
