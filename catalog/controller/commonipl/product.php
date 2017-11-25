@@ -178,8 +178,11 @@ class ControllerCommoniplProduct extends Controller {
 					$image = $this->model_tool_image->resize('placeholder.png', $this->config->get('theme_' . $this->config->get('config_theme') . '_image_related_width'), $this->config->get('theme_' . $this->config->get('config_theme') . '_image_related_height'));
 				}
 
+				$ninMaxPrice = $this->model_commonipl_product->getMinMaxPrice($result['product_id']);
 				if ($this->customer->isLogged() || !$this->config->get('config_customer_price')) {
-					$price = $this->currency->format($this->tax->calculate($result['price'], $result['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency']);
+					$price = $this->currency->format($this->tax->calculate($ninMaxPrice['minprice'], $result['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency']);
+				if($ninMaxPrice['minprice']!=$ninMaxPrice['maxprice'])
+					$price .= "——".$this->currency->format($this->tax->calculate($ninMaxPrice['maxprice'], $result['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency']);
 				} else {
 					$price = false;
 				}
