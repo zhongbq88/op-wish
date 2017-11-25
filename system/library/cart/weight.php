@@ -59,16 +59,20 @@ class Weight {
 		if(!isset($shipping)){
 			return 0;
 		}
-		print_r($shipping['maxWeight']);
+		//print_r($shipping['maxWeight']);
 		foreach($shipping['maxWeight'] as $key=> $maxWeight){
 			 if($maxWeight>=$weight){
 				$cost = $shipping['firstWeightPrice'][$key];
 				if($shipping['firstWeight'][$key]<$weight){
 					$cost += ($weight-$shipping['firstWeight'][$key])/$shipping['perWeight'][$key]*$shipping['perWeightPrice'][$key];
 				}
+				if(isset($shipping['registeredFee'][$key]))
 				$cost +=$shipping['registeredFee'][$key];
+				if(isset($shipping['additionalFee'][$key]))
 				$cost +=$shipping['additionalFee'][$key];
+				if(isset($shipping['unitWeight'][$key]))
 				$cost += ($weight)/$shipping['unitWeight'][$key]*$shipping['unitWeightPrice'][$key];
+					if(isset($shipping['fuelOilFeePercent'][$key]))
 				$cost += $cost*$shipping['fuelOilFeePercent'][$key]/100;
 				return $cost;
 			}
