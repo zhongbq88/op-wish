@@ -17,7 +17,7 @@ class ControllerCommonHome extends Controller {
 		$data['footer'] = $this->load->controller('common/footer');
 
 		$data['header'] = $this->load->controller('common/header');
-		
+		$category_info = $this->model_catalog_category->getCategories();
 		$data['categories'] = array();
 		if ($category_info) {
 
