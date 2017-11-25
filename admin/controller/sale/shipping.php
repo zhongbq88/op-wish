@@ -68,7 +68,7 @@ class ControllerSaleShipping extends Controller {
 		$this->load->model('localisation/zone');
 
 		$shippings = $this->model_sale_shipping->getShippings();
-		//print_r($shippings);
+		print_r($shippings);
 		
 		foreach ($shippings as $shipping) {
 			if(isset($shipping['shipping_country'])){
@@ -77,7 +77,7 @@ class ControllerSaleShipping extends Controller {
 				$country='';
 			}
 			
-			$data['shippings'][] = array(
+			/*$data['shippings'][] = array(
 			'id'=>$shipping['shipping_id'],
 				'name'       => $shipping['shipping_name'],
 				'scountry'     => $country,
@@ -86,7 +86,7 @@ class ControllerSaleShipping extends Controller {
 				'href' =>$this->url->link('sale/shipping/info', 'user_token=' . $this->session->data['user_token'] . '&shipping_id=' . $shipping['shipping_id'] , true),
 				'delete' =>$this->url->link('sale/shipping/delete', 'user_token=' . $this->session->data['user_token'] . '&shipping_id=' . $shipping['shipping_id'] , true)
 				
-			);
+			);*/
 		}
 		print_r($data);
 		$data['user_token'] = $this->session->data['user_token'];
