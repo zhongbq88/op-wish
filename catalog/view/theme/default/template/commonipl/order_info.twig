@@ -78,8 +78,8 @@
             <td class="text-left">{{ product.model }}</td>
              <td class="text-left"><div class="input-group btn-block" style="width:320px;" >
              {% if product.option_select %}
-           <select name="size_name{{product.order_product_id}}"  {% if (order_status_id!=19 and order_status_id!=18) or product.total==0 %} disabled {% endif %} id="input-size" class="form-control" style="float:left; width:50%;">
-                <!--<option value="">{{ product.selected_name }}</option>-->
+           <!--<select name="size_name{{product.order_product_id}}"  {% if (order_status_id!=19 and order_status_id!=18) or product.total==0 %} disabled {% endif %} id="input-size" class="form-control" style="float:left; width:50%;">
+                
                 
                 {% for option_select in product.option_select %}
                   {% if option_select.name == product.selected_name %}
@@ -93,7 +93,7 @@
                   {% endif %}
                 {% endfor %}
               
-              </select>
+              </select>-->
                 <input type="text"  style="width:50%;" {% if (order_status_id!=19 and order_status_id!=18) or product.total==0 %} disabled {% endif %} name="quantity[{{ product.order_product_id }}]" id="input{{ product.order_product_id }}" value="{{ product.quantity }}" size="1" class="form-control" />
                 
                 {% else %}
