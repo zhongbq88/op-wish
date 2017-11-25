@@ -71,11 +71,11 @@ class ControllerSaleShipping extends Controller {
 		print_r($shippings);
 		
 		foreach ($shippings as $shipping) {
-			/*if(isset($shipping['shipping_country'])){
+			if(isset($shipping['shipping_country']) && !empty($shipping['shipping_country'])){
 				$country = $this->model_localisation_zone->getCountryMore(substr($shipping['shipping_country'],1,strlen($shipping['shipping_country'])-2));
-			}else{*/
+			}else{
 				$country='';
-			//}
+			}
 			
 			$data['shippings'][] = array(
 			'id'=>$shipping['shipping_id'],
