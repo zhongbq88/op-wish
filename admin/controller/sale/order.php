@@ -1002,6 +1002,8 @@ class ControllerSaleOrder extends Controller {
 				if(isset($order_info['shipping_code'])){
 					$this->load->model('sale/shipping');
 					$shipping = $this->model_sale_shipping->getShippingCost($order_info['shipping_code']);
+					print_r($weight);
+					print_r($shipping);
 					$shippingCost = $this->weight->formatCost($shipping,$weight);
 				}else{
 					$shippingCost = 0;
