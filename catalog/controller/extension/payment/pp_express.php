@@ -1268,6 +1268,9 @@ class ControllerExtensionPaymentPPExpress extends Controller {
 			$paymentProduct['PAYMENTREQUEST_0_AMT'] = number_format($item_total, 2, '.', '');
 			foreach ($order_product as $item) {
 				//print_r($item);
+				if($item['total']==0){
+					continue;
+				}
 					$paymentProduct['L_PAYMENTREQUEST_0_NUMBER' . $i] = $item['model'];
 					$paymentProduct['L_PAYMENTREQUEST_0_NAME' . $i] = $item['name'];
 					$paymentProduct['L_PAYMENTREQUEST_0_AMT' . $i] = $this->currency->format($item['total'], $this->session->data['currency'], false, false);
