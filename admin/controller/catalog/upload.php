@@ -8,6 +8,7 @@ set_time_limit(0);//设置PHP超时时间
 
 class ControllerCatalogUpload extends Controller {
 	private $error = array();
+	private $multiple = 10;
 	
 	public function index() {
 		$this->load->language('catalog/product');
@@ -220,7 +221,7 @@ class ControllerCatalogUpload extends Controller {
 							  'option1_id'=>$option_id1,
 							  'option2_id'=>$option_id2,
 							  'option2'=>$product[5],
-							  'quantity' => $product[6],
+							  'quantity' => $product[6]*$this->multiple,
 							  'price'=>$product[2],
 							  'sale_price'=>$product[2]*1.5,
 							  'msrp'=>$product[12]*1.5,
@@ -228,7 +229,7 @@ class ControllerCatalogUpload extends Controller {
 							  'variants_image'=>$image
 						  );
 					}
-					$quantity +=$product[6];
+					$quantity +=$product[6]*$this->multiple;
 					$productId =$product[1];
 				}
 				if(isset($productar)&&count($productar)>0){
@@ -305,7 +306,7 @@ class ControllerCatalogUpload extends Controller {
 								$skus += ",'".$rowdata[1]."'";
 								$products[$rowdata[1]] = array(
 										'price' => $rowdata[2],
-										'quantity' =>$rowdata[3],
+										'quantity' =>$rowdata[3]*$this->multiple,
 										'weight'=>$rowdata[4]
 								
 								);
@@ -314,7 +315,7 @@ class ControllerCatalogUpload extends Controller {
 							
 							$variants[] = array(
 								'variants_sku'=>$rowdata[0],
-								'quantity' => $rowdata[3],
+								'quantity' => $rowdata[3]*$this->multiple,
 								'price'=>$rowdata[2],
 								'sale_price'=>$rowdata[2]*1.5,
 							    'msrp'=>$rowdata[5]*1.5,
