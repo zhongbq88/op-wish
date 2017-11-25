@@ -11,6 +11,9 @@ class ModelToolImage extends Model {
 		$image_new = 'cache/' . utf8_substr($filename, 0, utf8_strrpos($filename, '.')) . '-' . (int)$width . 'x' . (int)$height . '.' . $extension;
 
 		if (!is_file(DIR_IMAGE . $image_new) || (filemtime(DIR_IMAGE . $image_old) > filemtime(DIR_IMAGE . $image_new))) {
+			if(!file_exists(DIR_IMAGE . $image_old)){
+				return $filename;
+			}
 			try
 			{
 				list($width_orig, $height_orig, $image_type) = getimagesize(DIR_IMAGE . $image_old);
