@@ -437,7 +437,7 @@ class ControllerCommoniplOrders extends Controller {
 					$shippingCost = 0;
 				}
 				$data['totals'][] = array(
-					'title' => "Express freight:",
+					'title' => "ePacket:",
 					'text'  => number_format($shippingCost,2),
 					'text2'  => 0
 				);

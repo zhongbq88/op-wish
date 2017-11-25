@@ -888,6 +888,15 @@ class ModelCatalogProduct extends Model {
 		return $product_id;
 	}
 	
+	public function getCategoryName($product_id){
+		$query = $this->db->query("SELECT cd.name FROM " . DB_PREFIX . "product_to_category pc LEFT JOIN " . DB_PREFIX . "category_description cd ON (pc.category_id = cd.category_id) WHERE pc.product_id = '" . (int)$product_id . "'");
+		
+		if(isset($query->row['name'])){
+			return $query->row['name'];
+		}
+		return '';
+	}
+	
 	public function getOption($name){
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "option` o LEFT JOIN " . DB_PREFIX . "option_description od ON (o.option_id = od.option_id) WHERE od.name = '" . $this->db->escape($name). "' AND od.language_id = '" . (int)$this->config->get('config_language_id') . "'");
 		$option = $query->row;
