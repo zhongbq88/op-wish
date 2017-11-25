@@ -10,6 +10,12 @@ class ModelCommoniplProduct extends Model {
 
 		return $query->rows;
 	}
+	
+	public function getMinMaxPrice($product_id){
+		$query = $this->db->query("SELECT MIN(`price`) as minprice,MAX(`price`) as maxprice FROM " . DB_PREFIX . "product_variants WHERE product_id = '" . (int)$product_id . "' ");
+
+		return $query->row;
+	}
 
 	public function getProduct($product_id) {
 		$query = $this->db->query("SELECT DISTINCT * FROM " . DB_PREFIX . "product p LEFT JOIN " . DB_PREFIX . "product_description pd ON (p.product_id = pd.product_id) WHERE p.product_id = '" . (int)$product_id . "' AND pd.language_id = '" . (int)$this->config->get('config_language_id') . "'");
