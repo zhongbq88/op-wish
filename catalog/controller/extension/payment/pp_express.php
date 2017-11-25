@@ -1273,10 +1273,10 @@ class ControllerExtensionPaymentPPExpress extends Controller {
 				}
 					$paymentProduct['L_PAYMENTREQUEST_0_NUMBER' . $i] = $item['model'];
 					$paymentProduct['L_PAYMENTREQUEST_0_NAME' . $i] = $item['name'];
-					$paymentProduct['L_PAYMENTREQUEST_0_AMT' . $i] = $this->currency->format($item['total'], $this->session->data['currency'], false, false);
+					$paymentProduct['L_PAYMENTREQUEST_0_AMT' . $i] = $this->currency->format(number_format($item['total'], 2, '.', ''), $this->session->data['currency'], false, false);
 					$paymentProduct['L_PAYMENTREQUEST_0_QTY' . $i] = 1;
 			
-					$item_total += $item['total'];
+					$item_total += number_format($item['total'], 2, '.', '');
 					$i++;
 						
 					$options = $this->model_commonipl_order->getProductSku($item['shopify_sku']);
@@ -1380,9 +1380,9 @@ class ControllerExtensionPaymentPPExpress extends Controller {
 		$this->session->data['paypal']['token'] = $result['TOKEN'];
 
 		if ($this->config->get('payment_pp_express_test') == 1) {
-			//header('Location: https://www.sandbox.paypal.com/cgi-bin/webscr?cmd=_express-checkout&token=' . $result['TOKEN'] . '&useraction=commit');
+			header('Location: https://www.sandbox.paypal.com/cgi-bin/webscr?cmd=_express-checkout&token=' . $result['TOKEN'] . '&useraction=commit');
 		} else {
-			//header('Location: https://www.paypal.com/cgi-bin/webscr?cmd=_express-checkout&token=' . $result['TOKEN'] . '&useraction=commit');
+			header('Location: https://www.paypal.com/cgi-bin/webscr?cmd=_express-checkout&token=' . $result['TOKEN'] . '&useraction=commit');
 		}
 	}
 	
