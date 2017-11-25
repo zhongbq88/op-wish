@@ -8,11 +8,18 @@
 </div>
 <script type="text/javascript"><!--
 $('#banner{{ module }}').swiper({
-	effect: 'fade',
+	mode: 'horizontal',
+	slidesPerView: 1,
+	pagination: '.banner{{ module }}',
+	paginationClickable: true,
+	nextButton: '.swiper-button-next',
+    prevButton: '.swiper-button-prev',
+    spaceBetween: 30,
 	autoplay: 2500,
-    autoplayDisableOnInteraction: false
+    autoplayDisableOnInteraction: true,
+	loop: true
 });
---></script> 
+--></script>
 
 <link href="catalog/view/javascript/jquery/swiper/css/swiper.min.css" type="text/css" rel="stylesheet" media="screen">
 
