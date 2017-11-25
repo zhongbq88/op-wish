@@ -68,7 +68,7 @@ class ControllerSaleShipping extends Controller {
 		$this->load->model('localisation/zone');
 
 		$shippings = $this->model_sale_shipping->getShippings();
-		print_r($shippings);
+		//print_r($shippings);
 		
 		foreach ($shippings as $shipping) {
 			if(isset($shipping['shipping_country'])){
