@@ -154,7 +154,7 @@ class ControllerCatalogUpload extends Controller {
 						$productar = array(
 						    "language_id" => $language_id,
 							'sku' => $product[1],
-							'price' => $product[2],
+							'price' => number_format($product[2],2),
 							'name' => $product[3],
 							'quantity' => $product[6],
 							'shipping' => $product[7],
@@ -222,9 +222,9 @@ class ControllerCatalogUpload extends Controller {
 							  'option2_id'=>$option_id2,
 							  'option2'=>$product[5],
 							  'quantity' => $product[6]*$this->multiple,
-							  'price'=>$product[2],
-							  'sale_price'=>$product[2]*1.5,
-							  'msrp'=>$product[12]*1.5,
+							  'price'=>number_format($product[2],2),
+							  'sale_price'=>number_format($product[2]*1.5,2),
+							  'msrp'=>number_format($product[12]*1.5,2),
 							  'weight'=>$product[8],
 							  'variants_image'=>$image
 						  );
@@ -305,7 +305,7 @@ class ControllerCatalogUpload extends Controller {
 							}else{
 								$skus += ",'".$rowdata[1]."'";
 								$products[$rowdata[1]] = array(
-										'price' => $rowdata[2],
+										'price' => number_format($rowdata[2],2),
 										'quantity' =>$rowdata[3]*$this->multiple,
 										'weight'=>$rowdata[4]
 								
@@ -316,9 +316,9 @@ class ControllerCatalogUpload extends Controller {
 							$variants[] = array(
 								'variants_sku'=>$rowdata[0],
 								'quantity' => $rowdata[3]*$this->multiple,
-								'price'=>$rowdata[2],
-								'sale_price'=>$rowdata[2]*1.5,
-							    'msrp'=>$rowdata[5]*1.5,
+								'price'=>number_format($rowdata[2],2),
+								'sale_price'=>number_format($rowdata[2]*1.5,2),
+							    'msrp'=>number_format($rowdata[5]*1.5,2),
 								'weight'=>$rowdata[4]
 							);
 					  }
