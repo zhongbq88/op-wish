@@ -34,7 +34,8 @@
           {% for shipping in shippings %}
           <tr id="id{{ shipping.id }}">
             <td class="text-center"><a href="javascript:addNew('{{ shipping.id }}');" >{{ shipping.name }}</a></td>
-            <td class="text-left">{{ shipping.scountry }}</td>
+            
+            <td class="text-left">{% is shipping.scountry %}{{ shipping.scountry }}{% endif %}</td>
             <td class="text-left">{{ shipping.option }}</td>
             <td class="text-center">{{ shipping.date_added }}</td>
             <td class="text-center"><a href="javascript:del('{{ shipping.delete }}','{{ shipping.id }}');" >删除</a></td>
