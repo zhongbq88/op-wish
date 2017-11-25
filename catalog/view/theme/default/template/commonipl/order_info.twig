@@ -76,7 +76,7 @@
               <div style="float: right"><a class="thumbnail" style="border:none;"><img src="{{  product.design_file }}"   style="width: auto; height: 120px;" /></a></div>
               {% endif %} </td>
             <td class="text-left">{{ product.model }}</td>
-             <td class="text-left"><div class="input-group btn-block" style="width:320px;" >
+             <td class="text-left"><div class="input-group btn-block" >
 
                
                  <input type="text"  {% if (order_status_id!=19 and order_status_id!=18) or product.total==0 %} disabled {% endif %} name="quantity[{{ product.order_product_id }}]" id="input{{ product.order_product_id }}" value="{{ product.quantity }}" size="1" class="form-control" />
