@@ -83,8 +83,8 @@ class ControllerCommoniplDashboard extends Controller{
 		$data['shipped'] = $shipped; 
 		$data['on_hold'] = $on_hold; 
 		$data['cancelled'] = $cancelled; 
-		$data['aug_total'] = $total; 
-		$data['aug_charges'] = $charges; 
+		$data['aug_total'] = number_format($total,2); 
+		$data['aug_charges'] = number_format($charges,2); 
 		$data['tabtype'] = 0;
 		
 		$this->load->language('commonipl/product');
