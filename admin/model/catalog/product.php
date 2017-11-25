@@ -797,6 +797,7 @@ class ModelCatalogProduct extends Model {
 	
 	public function addVariants($variants,$product_id){
 		//print_r($variants);
+		$this->db->query("DELETE FROM " . DB_PREFIX . "product_variants WHERE product_id = '" . (int)$product_id . "'");
 		if(isset($variants)){
 			foreach($variants as $data){
 				$this->db->query("INSERT INTO " . DB_PREFIX . "product_variants SET  option1_id = '" . (isset($data['option1_id'])?(int)$data['option1_id']:'')  . "', option2_id = '" . (isset($data['option2_id'])?(int)$data['option2_id']:'') . "', product_id = '" . (int)$product_id . "', variants_image = '" . (isset($data['variants_image'])?$this->db->escape($data['variants_image']):'') . "', variants_sku = '" . $this->db->escape($data['variants_sku']) . "', price = '" . (float)$data['price'] . "',sale_price = '" . (float)$data['sale_price'] . "', msrp = '" . (float)$data['msrp'] . "', option1 = '" . (isset($data['option1'])?$this->db->escape($data['option1']):'') . "', option2 = '" . (isset($data['option2'])?$this->db->escape($data['option2']):'') . "', quantity = '" . (int)$data['quantity'] . "',weight = '" . (float)$data['weight'] . "'");
@@ -825,21 +826,27 @@ class ModelCatalogProduct extends Model {
 	
 	public function uploadProduct($data) {
 		$query = $this->db->query("SELECT product_id  FROM " . DB_PREFIX . "product WHERE  sku = '" . $this->db->escape($data['sku']) . "'");
-
-		if(isset($query->row['product_id'])){
-			return ;
-		}
-		
-		
-		$this->db->query("INSERT INTO " . DB_PREFIX . "product SET model = '" . (isset($data['model'])?$this->db->escape($data['model']):'') . "', sku = '" . $this->db->escape($data['sku']) . "',  quantity = '" . (int)$data['quantity'] . "', shipping = '" . (int)$data['shipping'] . "', price = '" . (float)$data['price'] . "', weight = '" . (float)$data['weight'] . "', status = '1',date_added = NOW(), date_modified = NOW()");
-
-		$product_id = $this->db->getLastId();
-
+		$image = '';
+		$update = false;
 		if (isset($data['image'])) {
-			$this->db->query("UPDATE " . DB_PREFIX . "product SET image = '" . $this->db->escape($data['image']) . "' WHERE product_id = '" . (int)$product_id . "'");
+			$image =",image = '" . $this->db->escape($data['image']) . "'";
 		}
+		if(isset($query->row['product_id'])){
+			$update = true;
+			$product_id = $query->row['product_id'];
+			$this->db->query("UPDATE " . DB_PREFIX . "product SET model = '" . (isset($data['model'])?$this->db->escape($data['model']):'') . "', sku = '" . $this->db->escape($data['sku']) . "',  quantity = '" . (int)$data['quantity'] . "', shipping = '" . (int)$data['shipping'] . "', price = '" . (float)$data['price'] . "', weight = '" . (float)$data['weight'] . "'".$image." , status = '1',date_added = NOW(), date_modified = NOW() WHERE product_id = '" . (int)$product_id . "'");
+		}else{
+			$this->db->query("INSERT INTO " . DB_PREFIX . "product SET model = '" . (isset($data['model'])?$this->db->escape($data['model']):'') . "', sku = '" . $this->db->escape($data['sku']) . "',  quantity = '" . (int)$data['quantity'] . "', shipping = '" . (int)$data['shipping'] . "', price = '" . (float)$data['price'] . "', weight = '" . (float)$data['weight'] . "'".$image.", status = '1',date_added = NOW(), date_modified = NOW()");
+			$product_id = $this->db->getLastId();
+		}
+		if($update)
+		$this->db->query("DELETE FROM " . DB_PREFIX . "product_description WHERE product_id = '" . (int)$product_id . "'");
 
 		$this->db->query("INSERT INTO " . DB_PREFIX . "product_description SET product_id = '" . (int)$product_id . "', language_id = '" . (int)$data['language_id'] . "', name = '" . $this->db->escape($data['name']) . "', description = '" . $this->db->escape($data['description']) . "', tag = '" . $this->db->escape($data['tag']) . "', meta_title = '" . $this->db->escape($data['name']) . "'");
+		if($update)
+		$this->db->query("DELETE FROM " . DB_PREFIX . "product_option WHERE product_id = '" . (int)$product_id . "'");
+		if($update)
+		$this->db->query("DELETE FROM " . DB_PREFIX . "product_option_value WHERE product_id = '" . (int)$product_id . "'");
 
 		if (isset($data['product_option'])) {
 			foreach ($data['product_option'] as $product_option) {
@@ -859,12 +866,15 @@ class ModelCatalogProduct extends Model {
 			}
 		}
 
+		if($update)
+		$this->db->query("DELETE FROM " . DB_PREFIX . "product_image WHERE product_id = '" . (int)$product_id . "'");
 		if (isset($data['product_image'])) {
 			foreach ($data['product_image'] as $product_image) {
 				$this->db->query("INSERT INTO " . DB_PREFIX . "product_image SET product_id = '" . (int)$product_id . "', image = '" . $this->db->escape($product_image) . "'");
 			}
 		}
-		
+		if($update)
+		$this->db->query("DELETE FROM " . DB_PREFIX . "product_to_category WHERE product_id = '" . (int)$product_id . "'");
 		$this->db->query("INSERT INTO " . DB_PREFIX . "product_to_category SET product_id = '" . (int)$product_id . "', category_id = '" . (int)$data['category_id'] . "'");
 
 		return $product_id;
