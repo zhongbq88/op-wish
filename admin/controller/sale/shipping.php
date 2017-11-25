@@ -71,14 +71,13 @@ class ControllerSaleShipping extends Controller {
 		print_r($shippings);
 		
 		foreach ($shippings as $shipping) {
-				print_r($shipping['shipping_country']);
-			/*if(isset($shipping['shipping_country'])){
+			if(isset($shipping['shipping_country'])){
 				$country = $this->model_localisation_zone->getCountryMore(substr($shipping['shipping_country'],1,strlen($shipping['shipping_country'])-2));
 			}else{
 				$country='';
-			}*/
+			}
 			
-			/*$data['shippings'][] = array(
+			$data['shippings'][] = array(
 			'id'=>$shipping['shipping_id'],
 				'name'       => $shipping['shipping_name'],
 				'scountry'     => $country,
@@ -87,14 +86,14 @@ class ControllerSaleShipping extends Controller {
 				'href' =>$this->url->link('sale/shipping/info', 'user_token=' . $this->session->data['user_token'] . '&shipping_id=' . $shipping['shipping_id'] , true),
 				'delete' =>$this->url->link('sale/shipping/delete', 'user_token=' . $this->session->data['user_token'] . '&shipping_id=' . $shipping['shipping_id'] , true)
 				
-			);*/
+			);
 		}
 		print_r($data);
 		$data['user_token'] = $this->session->data['user_token'];
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
-		//$this->response->setOutput($this->load->view('sale/shipping', $data));
+		$this->response->setOutput($this->load->view('sale/shipping', $data));
 	}
 	
 	public function loadList(){
