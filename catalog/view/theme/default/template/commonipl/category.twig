@@ -62,7 +62,127 @@
 <!-- MAIN CONTENT
 	================================================== -->
 <div class="main-content full-width home">
-<div class="background-content"> {% if content_top %} {{ content_top }}{% endif %}</div>
+<div class="background-content"> 
+<div style="position:relative;width:100%;height:auto;margin-top:0px;margin-bottom:0px" class="forcefullwidth_wrapper_tp_banner"><div id="rev_slider_2_1_wrapper" class="rev_slider_wrapper fullwidthbanner-container" style="margin: 0px auto; padding: 0px; max-height: 500px; height: 500px; left: 0px; position: absolute; width: 2031px; overflow: visible;">
+	<div id="rev_slider_2_1" class="rev_slider fullwidthabanner revslider-initialised tp-simpleresponsive" style="max-height: 500px; height: 500px; background-color: rgba(0, 0, 0, 0); background-image: none;">
+{% if content_top %} {{ content_top }}{% endif %}
+<div class="tp-bannertimer tp-bottom" style="visibility: hidden; width: 7.44444%; transform: translate3d(0px, 0px, 0px);"></div>	<div class="tp-loader spinner0" style="display: none;"><div class="dot1"></div><div class="dot2"></div><div class="bounce1"></div><div class="bounce2"></div><div class="bounce3"></div></div></div>
+
+			<script type="text/javascript">
+
+				/******************************************
+					-	PREPARE PLACEHOLDER FOR SLIDER	-
+				******************************************/
+				
+
+				var setREVStartSize = function() {
+					var	tpopt = new Object();
+						tpopt.startwidth = 980;
+						tpopt.startheight = 500;
+						tpopt.container = jQuery('#rev_slider_2_1');
+						tpopt.fullScreen = "off";
+						tpopt.forceFullWidth="on";
+
+					tpopt.container.closest(".rev_slider_wrapper").css({height:tpopt.container.height()});tpopt.width=parseInt(tpopt.container.width(),0);tpopt.height=parseInt(tpopt.container.height(),0);tpopt.bw=tpopt.width/tpopt.startwidth;tpopt.bh=tpopt.height/tpopt.startheight;if(tpopt.bh>tpopt.bw)tpopt.bh=tpopt.bw;if(tpopt.bh<tpopt.bw)tpopt.bw=tpopt.bh;if(tpopt.bw<tpopt.bh)tpopt.bh=tpopt.bw;if(tpopt.bh>1){tpopt.bw=1;tpopt.bh=1}if(tpopt.bw>1){tpopt.bw=1;tpopt.bh=1}tpopt.height=Math.round(tpopt.startheight*(tpopt.width/tpopt.startwidth));if(tpopt.height>tpopt.startheight&&tpopt.autoHeight!="on")tpopt.height=tpopt.startheight;if(tpopt.fullScreen=="on"){tpopt.height=tpopt.bw*tpopt.startheight;var cow=tpopt.container.parent().width();var coh=jQuery(window).height();if(tpopt.fullScreenOffsetContainer!=undefined){try{var offcontainers=tpopt.fullScreenOffsetContainer.split(",");jQuery.each(offcontainers,function(e,t){coh=coh-jQuery(t).outerHeight(true);if(coh<tpopt.minFullScreenHeight)coh=tpopt.minFullScreenHeight})}catch(e){}}tpopt.container.parent().height(coh);tpopt.container.height(coh);tpopt.container.closest(".rev_slider_wrapper").height(coh);tpopt.container.closest(".forcefullwidth_wrapper_tp_banner").find(".tp-fullwidth-forcer").height(coh);tpopt.container.css({height:"100%"});tpopt.height=coh;}else{tpopt.container.height(tpopt.height);tpopt.container.closest(".rev_slider_wrapper").height(tpopt.height);tpopt.container.closest(".forcefullwidth_wrapper_tp_banner").find(".tp-fullwidth-forcer").height(tpopt.height);}
+				};
+
+				/* CALL PLACEHOLDER */
+				setREVStartSize();
+
+
+				var tpj=jQuery;
+				
+				var revapi2;
+
+				tpj(document).ready(function() {
+
+				if(tpj('#rev_slider_2_1').revolution == undefined)
+					revslider_showDoubleJqueryError('#rev_slider_2_1');
+				else
+				   revapi2 = tpj('#rev_slider_2_1').show().revolution(
+					{
+						dottedOverlay:"none",
+						delay:9000,
+						startwidth:980,
+						startheight:500,
+						hideThumbs:200,
+
+						thumbWidth:100,
+						thumbHeight:50,
+						thumbAmount:2,
+						
+												
+						simplifyAll:"off",
+
+						navigationType:"none",
+						navigationArrows:"solo",
+						navigationStyle:"round",
+
+						touchenabled:"on",
+						onHoverStop:"on",
+						nextSlideOnWindowFocus:"off",
+
+						swipe_threshold: 75,
+						swipe_min_touches: 1,
+						drag_block_vertical: false,
+						
+												
+												
+						keyboardNavigation:"off",
+
+						navigationHAlign:"center",
+						navigationVAlign:"bottom",
+						navigationHOffset:0,
+						navigationVOffset:20,
+
+						soloArrowLeftHalign:"left",
+						soloArrowLeftValign:"center",
+						soloArrowLeftHOffset:70,
+						soloArrowLeftVOffset:0,
+
+						soloArrowRightHalign:"right",
+						soloArrowRightValign:"center",
+						soloArrowRightHOffset:70,
+						soloArrowRightVOffset:0,
+
+						shadow:0,
+						fullWidth:"on",
+						fullScreen:"off",
+
+						spinner:"spinner0",
+						
+						stopLoop:"off",
+						stopAfterLoops:-1,
+						stopAtSlide:-1,
+
+						shuffle:"off",
+
+						autoHeight:"off",
+						forceFullWidth:"on",
+						
+						
+						hideTimerBar:"on",
+						hideThumbsOnMobile:"off",
+						hideNavDelayOnMobile:1500,
+						hideBulletsOnMobile:"off",
+						hideArrowsOnMobile:"off",
+						hideThumbsUnderResolution:0,
+
+												hideSliderAtLimit:0,
+						hideCaptionAtLimit:0,
+						hideAllCaptionAtLilmit:0,
+						startWithSlide:0					});
+
+
+
+					
+				});	/*ready*/
+
+			</script>
+
+
+			<div style="position: absolute; top: 250px; margin-top: -17px; left: 70px;" class="tp-leftarrow tparrows default round hidearrows"><div class="tp-arr-allwrapper"><div class="tp-arr-iwrapper"><div class="tp-arr-imgholder" style="visibility: inherit; opacity: 1; background-image: url(&quot;http://fastortheme.com/exclusive/image/catalog/revslider_media_folder/5662700_exclusive-1.png&quot;);"></div><div class="tp-arr-imgholder2"></div><div class="tp-arr-titleholder"></div><div class="tp-arr-subtitleholder"></div></div></div></div><div style="position: absolute; top: 250px; margin-top: -17px; right: 70px;" class="tp-rightarrow tparrows default round hidearrows"><div class="tp-arr-allwrapper"><div class="tp-arr-iwrapper"><div class="tp-arr-imgholder" style="visibility: inherit; opacity: 1; background-image: url(&quot;http://fastortheme.com/exclusive/image/catalog/revslider_media_folder/5662700_exclusive-1.png&quot;);"></div><div class="tp-arr-imgholder2"></div><div class="tp-arr-titleholder"></div><div class="tp-arr-subtitleholder"></div></div></div></div></div><div class="tp-fullwidth-forcer" style="width:100%;height:500px"></div></div>
+</div>
 <div class="background">
   <div class="shadow"></div>
   <div class="pattern">
