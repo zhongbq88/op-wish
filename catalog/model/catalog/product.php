@@ -546,4 +546,6 @@ class ModelCatalogProduct extends Model {
 
 		return $query->rows;
 	}
+	
+	
 }

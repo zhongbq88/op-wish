@@ -386,7 +386,7 @@ class ModelCatalogProduct extends Model {
 		}
 
 		if (!empty($data['filter_model'])) {
-			$sql .= " AND p.model LIKE '" . $this->db->escape($data['filter_model']) . "%'";
+			$sql .= " AND p.product_id IN ( SELECT pc.product_id FROM ". DB_PREFIX ."product_to_category pc LEFT JOIN ". DB_PREFIX ."category_description cd ON (pc.category_id = cd.category_id) WHERE  cd.name LIKE '" . $this->db->escape($data['filter_model']) . "%' ) ";
 		}
 
 		if (!empty($data['filter_price'])) {
@@ -668,7 +668,7 @@ class ModelCatalogProduct extends Model {
 		}
 
 		if (!empty($data['filter_model'])) {
-			$sql .= " AND p.model LIKE '" . $this->db->escape($data['filter_model']) . "%'";
+			$sql .= " AND p.product_id IN ( SELECT pc.product_id FROM ". DB_PREFIX ."product_to_category pc LEFT JOIN ". DB_PREFIX ."category_description cd ON (pc.category_id = cd.category_id) WHERE  cd.name LIKE '" . $this->db->escape($data['filter_model']) . "%' ) ";
 		}
 
 		if (isset($data['filter_price']) && !is_null($data['filter_price'])) {
