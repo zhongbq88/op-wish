@@ -224,6 +224,8 @@ class ControllerSaleOrder extends Controller {
 
 		$results = $this->model_sale_order->getOrders($filter_data);
 		
+		//$coupons =  $this->model_commonipl_product->getCoupons();
+		
 		foreach ($results as $result) {
 			$data['orders'][] = array(
 				'order_id'      => $result['order_id'],
@@ -927,6 +929,9 @@ class ControllerSaleOrder extends Controller {
 			$total=0;
 			$saletotal=0;
 			$weight = 0;
+			$viptotal =0;
+			$vipName = '';
+			$coupons =  $this->model_sale_order->getCoupons();
 			foreach ($products as $product) {
 				
 				$option_data1 = array();
@@ -954,6 +959,8 @@ class ControllerSaleOrder extends Controller {
 				if(!empty($product['options'])){
 					$selected_name = $product['options'];
 				}
+				$category = $this->model_sale_order->getProductCategorie($product['product_id']);
+				$coupon = $this->getCoupon($coupons,$category,$product);
 				$data['products'][] = array(
 				    'sku'   => $sku,
 					'order_product_id' => $product['order_product_id'],
@@ -966,12 +973,19 @@ class ControllerSaleOrder extends Controller {
 					'quantity'		   => $product['quantity'],
 					'price'    		   => $product['price'],
 					'total'    		   => $product['total'],
+					'coupon'      => $coupon,
 					'sale_total'       => $product['shopify_price']*$product['quantity'],
 					'href'     		   => $this->url->link('catalog/product/edit', 'user_token=' . $this->session->data['user_token'] . '&product_id=' . $product['product_id'], true)
 				);
 				$subtotal+= $product['total'];
 			$tax+= $product['tax'];
 			$saletotal+= $product['shopify_price']*$product['quantity'];
+				if(isset($coupon['price'])){
+					$vipName = $coupon['name'];
+					$viptotal += $coupon['total'];
+				}else{
+					$viptotal += $product['price']*$product['quantity'];
+				}
 			}
 			
 			$data['vouchers'] = array();
@@ -990,7 +1004,9 @@ class ControllerSaleOrder extends Controller {
 			$data['totals'][] = array(
 					'title' => "Sub-Total:",
 					'text'  => $subtotal,
-					'text2'  => $saletotal
+					'text2'  => $saletotal,
+					'vipname' => $vipName,
+					'viptext' => !empty($vipName)?$viptotal:false
 				);
 				
 				$data['totals'][] = array(
@@ -1017,7 +1033,9 @@ class ControllerSaleOrder extends Controller {
 				$data['totals'][] = array(
 					'title' => "Total:",
 					'text'  => $subtotal+$tax+$shippingCost,
-					'text2'  => ''
+					'text2'  => '',
+					'vipname' => $vipName,
+					'viptext' => !empty($vipName)? number_format($viptotal+$tax+$shippingCost,2):false
 				);
 
 		/*	$totals = $this->model_sale_order->getOrderTotals($this->request->get['order_id']);
@@ -1902,5 +1920,27 @@ class ControllerSaleOrder extends Controller {
 		}
 
 		$this->response->setOutput($this->load->view('sale/order_shipping', $data));
+	}
+	
+	private function getCoupon($coupons,$category,$result){
+		foreach($coupons as $coupon){
+			if(isset($category['category_id'])&&$coupon['category_id']==$category['category_id'] || $coupon['product_id'] == $result['product_id']|| empty($coupon['category_id'])&&empty($coupon['product_id'])){
+				
+				if($coupon['type']=='P'){
+					$discount = number_format($result['price']*$coupon['discount']/100.00,2);
+				}else{
+					$discount = number_format($coupon['discount'],2);
+				}
+				$price = $result['price']-$discount;
+				return array(
+					"name" =>$coupon['name'],
+					'price'    => number_format($price,2),
+					'total'    => number_format($price*$result['quantity'],2),
+					"discount"=>$discount
+				);
+			}
+		}
+		return '';
+		
 	}
 }

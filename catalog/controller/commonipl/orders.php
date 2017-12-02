@@ -533,7 +533,7 @@ class ControllerCommoniplOrders extends Controller {
 	
 	private function getCoupon($coupons,$category,$result){
 		foreach($coupons as $coupon){
-			if($coupon['category_id']==$category['category_id'] || $coupon['product_id'] == $result['product_id']|| empty($coupon['category_id'])&&empty($coupon['product_id'])){
+			if(isset($category['category_id'])&&$coupon['category_id']==$category['category_id'] || $coupon['product_id'] == $result['product_id']|| empty($coupon['category_id'])&&empty($coupon['product_id'])){
 				
 				if($coupon['type']=='P'){
 					$discount = number_format($result['price']*$coupon['discount']/100.00,2);
