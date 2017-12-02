@@ -980,9 +980,9 @@ class ControllerCustomerCustomer extends Controller {
 			}
 		}
 
-		if ((utf8_strlen($this->request->post['telephone']) < 3) || (utf8_strlen($this->request->post['telephone']) > 32)) {
+		/*if ((utf8_strlen($this->request->post['telephone']) < 3) || (utf8_strlen($this->request->post['telephone']) > 32)) {
 			$this->error['telephone'] = $this->language->get('error_telephone');
-		}
+		}*/
 
 		// Custom field validation
 		$this->load->model('customer/custom_field');
@@ -1002,9 +1002,9 @@ class ControllerCustomerCustomer extends Controller {
 				$this->error['password'] = $this->language->get('error_password');
 			}
 
-			if ($this->request->post['password'] != $this->request->post['confirm']) {
+			/*if ($this->request->post['password'] != $this->request->post['confirm']) {
 				$this->error['confirm'] = $this->language->get('error_confirm');
-			}
+			}*/
 		}
 
 		if (isset($this->request->post['address'])) {

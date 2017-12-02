@@ -1256,8 +1256,10 @@ class ControllerExtensionPaymentPPExpress extends Controller {
 	}
 	
 	public function paymentRequestInfo() {
+		$this->load->model('commonipl/product');
 		$this->load->model('commonipl/order');
 		$order_product = $this->model_commonipl_order->getOrderProductsByIdList($this->session->data['order_id']);
+		$coupons =  $this->model_commonipl_product->getCoupon($this->customer->getGroupId());
 		//print_r($weight);
 		$paymentProduct = array();
 		$i = 0;
@@ -1271,12 +1273,13 @@ class ControllerExtensionPaymentPPExpress extends Controller {
 				if($item['total']==0){
 					continue;
 				}
+				 	$total = $this->getCoupon($coupons,$item['product_id'],$item['total'],$item['quantity']);
 					$paymentProduct['L_PAYMENTREQUEST_0_NUMBER' . $i] = $item['model'];
 					$paymentProduct['L_PAYMENTREQUEST_0_NAME' . $i] = $item['name'];
-					$paymentProduct['L_PAYMENTREQUEST_0_AMT' . $i] = $this->currency->format(number_format($item['total'], 2, '.', ''), $this->session->data['currency'], false, false);
+					$paymentProduct['L_PAYMENTREQUEST_0_AMT' . $i] = $this->currency->format(number_format($total, 2, '.', ''), $this->session->data['currency'], false, false);
 					$paymentProduct['L_PAYMENTREQUEST_0_QTY' . $i] = 1;
 			
-					$item_total += number_format($item['total'], 2, '.', '');
+					$item_total += number_format($total, 2, '.', '');
 					$i++;
 						
 					$options = $this->model_commonipl_order->getProductSku($item['shopify_sku']);
@@ -1318,6 +1321,28 @@ class ControllerExtensionPaymentPPExpress extends Controller {
 		$paymentProduct['PAYMENTREQUEST_0_ITEMAMT'] = $item_total ;
 		$paymentProduct['PAYMENTREQUEST_0_AMT']  = $item_total;
 		return $paymentProduct;
+	}
+	
+	private function getCoupon($coupons,$product_id,$total,$quantity){
+		
+		if(isset($coupons)&&count($coupons)>0){
+			$category_ids =  $this->model_commonipl_product->getProductCategories($product_id);
+			foreach($coupons as $coupon){
+			if(in_array($coupon['category_id'],$category_ids) || $coupon['product_id'] == $product_id|| empty($coupon['category_id'])&&empty($coupon['product_id'])){
+				
+				if($coupon['type']=='P'){
+					$discount = number_format($total*$coupon['discount']/100.00,2);
+				}else{
+					$discount = number_format($coupon['discount']*$quantity,2);
+				}
+				return $total-$discount;
+				
+			}
+			}
+		}
+		
+		return $total;
+		
 	}
 	
 	public function checkout() {

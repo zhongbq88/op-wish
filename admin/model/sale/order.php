@@ -492,4 +492,32 @@ class ModelSaleOrder extends Model {
 
 		return $query->row;
 	}
+	
+	public function getCoupon($customer_group_id) {
+		$query = $this->db->query("SELECT c.type,c.discount,cc.category_id,cp.product_id FROM " . DB_PREFIX . "coupon c LEFT JOIN " . DB_PREFIX . "coupon_category cc ON (c.coupon_id = cc.coupon_id) LEFT JOIN " . DB_PREFIX . "coupon_product cp ON (c.coupon_id = cp.coupon_id)  WHERE customer_group_id = '" . (int)$customer_group_id . "' AND ((c.date_start = '0000-00-00' OR c.date_start < NOW()) AND (c.date_end = '0000-00-00' OR c.date_end > NOW())) ");
+
+		return $query->rows;
+	}
+	
+	public function getCoupons() {
+		$query = $this->db->query("SELECT c.type,c.discount,cc.category_id,cp.product_id,cg.name FROM " . DB_PREFIX . "coupon c LEFT JOIN " . DB_PREFIX . "coupon_category cc ON (c.coupon_id = cc.coupon_id) LEFT JOIN " . DB_PREFIX . "coupon_product cp ON (c.coupon_id = cp.coupon_id) LEFT JOIN " . DB_PREFIX . "customer_group_description cg ON (c.customer_group_id = cg.customer_group_id)  WHERE c.customer_group_id > 0  AND ((c.date_start = '0000-00-00' OR c.date_start < NOW()) AND (c.date_end = '0000-00-00' OR c.date_end > NOW())) ");
+
+		return $query->rows;
+	}
+	
+		public function getProductCategories($product_id) {
+		$product_category_data = array();
+
+		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "product_to_category WHERE product_id = '" . (int)$product_id . "'");
+
+		foreach ($query->rows as $result) {
+			$product_category_data[] = $result['category_id'];
+		}
+
+		return $product_category_data;
+	}
+	public function getProductCategorie($product_id) {
+		$query = $this->db->query("SELECT pc.category_id,cd.name FROM " . DB_PREFIX . "product_to_category pc LEFT JOIN " . DB_PREFIX . "category_description cd ON (pc.category_id = cd.category_id) WHERE product_id = '" . (int)$product_id . "'");
+		return $query->row;
+	}
 }

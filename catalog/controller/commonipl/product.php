@@ -341,7 +341,7 @@ class ControllerCommoniplProduct extends Controller {
 				}else{
 					$discount = number_format($coupon['discount'],2);
 				}
-				$price =  $this->currency->format($this->tax->calculate($result['price'], $result['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency']);
+				$price =  $this->currency->format($this->tax->calculate($result['price']-$discount, $result['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency']);
 				return array(
 					"name" =>$coupon['name'],
 					"price"=>$price,

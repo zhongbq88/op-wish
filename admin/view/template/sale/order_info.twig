@@ -156,7 +156,7 @@
           
           {% for product in products %}
           <tr>
-            <td class="text-left"><a href="{{ product.href }}">{{ product.name }}</a>
+            <td class="text-left" style="max-width:400px;"><a href="{{ product.href }}">{{ product.name }}</a>
             <br />
              
               &nbsp;<small> - {{ product.sku }}</small>
@@ -176,8 +176,18 @@
               </td>
             <td class="text-left">{{ product.model }}</td>
             <td class="text-right">{{ product.quantity }}</td>
-            <td class="text-right">{{ product.price }}</td>
-            <td class="text-right">{{ product.total }}</td>
+            <td class="text-right">{{ product.price }}
+            {% if product.coupon %}
+      
+      <div ><label>{{ product.coupon.name }}:&nbsp;&nbsp; </label><font class="price" style="color:#F00"> {{product.coupon.price}}</font> </div>
+      {% endif %}
+            </td>
+            <td class="text-right">{{ product.total }}
+            {% if product.coupon %}
+      
+      <div ><label>{{ product.coupon.name }}:&nbsp;&nbsp; </label><font class="price" style="color:#F00"> {{product.coupon.total}}</font> </div>
+      {% endif %}
+            </td>
              <td class="text-right">{{ product.sale_total }}</td>
           </tr>
           {% endfor %}
@@ -194,7 +204,12 @@
           <tr>
             <td colspan="4" class="text-right">{{ total.title }}</td>
             <td class="text-right">{{ total.text }}</td>
-               <td class="text-right">{{ total.text2 }}</td>
+               <td class="text-right">{{ total.text2 }} 
+               {% if total.viptext %}
+      
+      <div ><label>{{ total.vipname }}:&nbsp;&nbsp; </label><font class="price" style="color:#F00"> {{total.viptext}}</font> </div>
+      {% endif %}
+               </td>
           </tr>
           {% endfor %}
             </tbody>
