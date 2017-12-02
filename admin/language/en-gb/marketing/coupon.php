@@ -25,6 +25,7 @@ $_['column_date_added']   = 'Date Added';
 $_['column_action']       = 'Action';
 
 // Entry
+$_['entry_customer_group']      = 'Customer Group';
 $_['entry_name']          = 'Coupon Name';
 $_['entry_code']          = 'Code';
 $_['entry_type']          = 'Type';

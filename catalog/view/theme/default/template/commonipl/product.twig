@@ -129,7 +129,12 @@
                                 <li>
                                   <h2>{{ special }}</h2>
                                 </li>
+                                
                                 {% endif %}
+                                 {% if coupon %}
+      
+       <li><h2>{{ coupon.name }}:&nbsp;&nbsp;<font class="price" style="color:#F00"> {{coupon.price}}</font><font size="1px" color="#F00">&nbsp;&nbsp;&nbsp;&nbsp;(You Save:&nbsp;{{ coupon.discount }} ) </font> </h2>  <li>
+      {% endif %}
                                 {% if tax %}
                                 <li>{{ text_tax }} {{ tax }}</li>
                                 {% endif %}

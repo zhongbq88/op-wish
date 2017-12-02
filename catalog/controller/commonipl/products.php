@@ -15,6 +15,7 @@ class ControllerCommoniplProducts extends Controller {
 		} else {
 			$category_id = '';
 		}
+		$coupons =  $this->model_commonipl_product->getCoupons();
 
 		$data['products'] = array();
 		$this->load->model('account/wishlist');
@@ -28,14 +29,8 @@ class ControllerCommoniplProducts extends Controller {
 			}
 			
 			$ninMaxPrice = $this->model_commonipl_product->getMinMaxPrice($result['product_id']);
-
-			if ($this->customer->isLogged() || !$this->config->get('config_customer_price')) {
-				$price = $this->currency->format($this->tax->calculate($ninMaxPrice['minprice'], $result['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency']);
-				if($ninMaxPrice['minprice']!=$ninMaxPrice['maxprice'])
-				$price .= "——".$this->currency->format($this->tax->calculate($ninMaxPrice['maxprice'], $result['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency']);
-			} else {
-				$price = false;
-			}
+			
+			$price = $this->getPriceFormat($result,0,$ninMaxPrice);
 
 			if (isset($result['special'])&&(float)$result['special']) {
 				$special = $this->currency->format($this->tax->calculate($result['special'], $result['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency']);
@@ -63,6 +58,7 @@ class ControllerCommoniplProducts extends Controller {
 				'price'       => $price,
 				'special'     => $special,
 				'tax'         => $tax,
+				'coupon'      => $this->getCoupon($coupons,$category_id,$result,$ninMaxPrice),
 				'minimum'     => $result['minimum'] > 0 ? $result['minimum'] : 1,
 				'rating'      => isset($result['rating'])?$result['rating']:0,
 				'added'       => $this->inArray($result['product_id'],$wishlistProductId),
@@ -83,6 +79,41 @@ class ControllerCommoniplProducts extends Controller {
 		
 		return $this->load->view('commonipl/products', $data);	
 
+	}
+	
+	
+	private function getPriceFormat($result,$discount,$ninMaxPrice){
+			
+
+			if ($this->customer->isLogged() || !$this->config->get('config_customer_price')) {
+				$price = $this->currency->format($this->tax->calculate($ninMaxPrice['minprice']-$discount, $result['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency']);
+				if($ninMaxPrice['minprice']!=$ninMaxPrice['maxprice'])
+				$price .= "——".$this->currency->format($this->tax->calculate($ninMaxPrice['maxprice']-$discount, $result['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency']);
+			} else {
+				$price = false;
+			}
+			return $price;
+		
+	}
+	
+	
+	private function getCoupon($coupons,$category_id,$result,$ninMaxPrice){
+		foreach($coupons as $coupon){
+			if($coupon['category_id'] == $category_id || $coupon['product_id'] == $result['product_id']|| empty($coupon['category_id'])&&empty($coupon['product_id'])){
+				if($coupon['type']=='P'){
+					$discount = number_format($ninMaxPrice['minprice']*$coupon['discount']/100.00,2);
+				}else{
+					$discount = number_format($coupon['discount'],2);
+				}
+				return array(
+					"name" =>$coupon['name'],
+					"price"=>$this->getPriceFormat($result,$discount,$ninMaxPrice),
+					"discount"=>$discount
+				);
+			}
+		}
+		return '';
+		
 	}
 	
 	private function inArray($product_id,$array){
