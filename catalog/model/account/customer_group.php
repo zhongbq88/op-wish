@@ -17,4 +17,21 @@ class ModelAccountCustomerGroup extends Model {
 
 		return $query->rows;
 	}
+	
+	
+	public function getCustomerGroupCharge() {
+		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "customer_group cg WHERE cg.config_charging<>'' and cg.config_charging<>'null'  ORDER BY cg.sort_order ASC");
+
+		return $query->row;
+	}
+	
+	public function updateCustomerGroupCharge($customer_group_id, $data){
+		$this->db->query("UPDATE " . DB_PREFIX . "customer_group SET config_charging = '" . $this->db->escape(json_encode($data, true)) . "' WHERE customer_group_id = '" . (int)$customer_group_id . "'");
+
+	}
+	
+	public function updateCustomer($customer_group_id, $customer_id){
+		$this->db->query("UPDATE " . DB_PREFIX . "customer SET customer_group_id = '" . (int)$customer_group_id. "' WHERE customer_id = '" . (int)$customer_id . "'");
+
+	}
 }

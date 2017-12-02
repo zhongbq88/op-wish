@@ -9,8 +9,11 @@ class ControllerCommoniplDashboard extends Controller{
 			$this->response->redirect($this->url->link('shopify/connect', '', true));
 		}*/
 		//print_r($this->session->data['home']);
-		
-		/*if($this->load->controller('shopify/oauth/checkChargeApp')==false){
+		$charging = $this->config->get('config_charging');
+		if($charging['install']&&$this->load->controller('shopify/oauth/checkChargeApp')==false){
+			$this->response->redirect($this->url->link('commonipl/declined', '', true));
+		}
+		/*if(){
 			/*die('<script> top.location.href="https://'.$this->session->data['shop'].'/admin/apps"</script>');
 			//return;
 			$this->response->redirect($this->url->link('commonipl/declined', '', true));

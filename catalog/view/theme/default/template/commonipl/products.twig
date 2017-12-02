@@ -18,7 +18,7 @@ display: -webkit-box;-webkit-line-clamp: 2;-webkit-box-orient: vertical;">{{ pro
       <div style="float:left;"><label style="width:80px; text-align:right;">{{ product.coupon.name }}:&nbsp;&nbsp; </label><font class="price" style="color:#F00"> {{product.coupon.price}}</font> <font size="1px" color="#F00">&nbsp;&nbsp;(You Save:&nbsp;{{ product.coupon.discount }} ) </font> </div>
       {% endif %}
       <div class="only-hover">
-        <ul>
+        <ul style="top:0px; margin-bottom:10px;">
           {%if home %}
           <li style="width:100%;"><a onclick="cart.add('{{ product.product_id }}');" style="width:100%;" data-toggle="tooltip" data-original-title="{{ button_cart }}">{{ button_cart }}</a></li>
           {% else %}
@@ -27,6 +27,9 @@ display: -webkit-box;-webkit-line-clamp: 2;-webkit-box-orient: vertical;">{{ pro
           {% else %}
           <li style="width:100%;"><a onclick="wishlist.add('{{ product.product_id }}');" style="width:100%;" data-toggle="tooltip" id="button_add_wishlist{{ product.product_id }}" data-original-title="{{ button_wishlist }}">{{ button_wishlist }}</a></li>
           {% endif %}
+          {% endif %}
+           {% if product.vipdiscount %}
+          <li style="width:100%;"><a href="index.php?route=shopify/vipdiscount" style="width:100%;background-color: #bc985c;color: #fff;" data-toggle="tooltip" id="button_vip_discount{{ product.product_id }}" data-original-title="Get VIP Discount Now!">Get VIP Discount Now!</a></li>
           {% endif %}
         </ul>
       </div>

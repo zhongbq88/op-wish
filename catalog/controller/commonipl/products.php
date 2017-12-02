@@ -16,7 +16,7 @@ class ControllerCommoniplProducts extends Controller {
 			$category_id = '';
 		}
 		$coupons =  $this->model_commonipl_product->getCoupons();
-
+		$charging = $this->config->get('config_charging');
 		$data['products'] = array();
 		$this->load->model('account/wishlist');
 		$wishlistProductId = $this->model_account_wishlist->getWishlistProductId();
@@ -62,6 +62,7 @@ class ControllerCommoniplProducts extends Controller {
 				'minimum'     => $result['minimum'] > 0 ? $result['minimum'] : 1,
 				'rating'      => isset($result['rating'])?$result['rating']:0,
 				'added'       => $this->inArray($result['product_id'],$wishlistProductId),
+				'vipdiscount' => $charging['open'],
 				'href'        => $this->url->link('commonipl/product','product_id=' . $result['product_id'])
 			);
 			

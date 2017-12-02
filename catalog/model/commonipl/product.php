@@ -606,12 +606,21 @@ class ModelCommoniplProduct extends Model {
 	}
 	
 	public function getCoupon($customer_group_id) {
+		$charging = $this->config->get('config_charging');
+		if(!$charging['open']){
+			return array();
+		}
 		$query = $this->db->query("SELECT c.type,c.discount,cc.category_id,cp.product_id FROM " . DB_PREFIX . "coupon c LEFT JOIN " . DB_PREFIX . "coupon_category cc ON (c.coupon_id = cc.coupon_id) LEFT JOIN " . DB_PREFIX . "coupon_product cp ON (c.coupon_id = cp.coupon_id)  WHERE customer_group_id = '" . (int)$customer_group_id . "' AND ((c.date_start = '0000-00-00' OR c.date_start < NOW()) AND (c.date_end = '0000-00-00' OR c.date_end > NOW())) ");
 
 		return $query->rows;
 	}
 	
 	public function getCoupons() {
+		
+		$charging = $this->config->get('config_charging');
+		if(!$charging['open']){
+			return array();
+		}
 		$query = $this->db->query("SELECT c.type,c.discount,cc.category_id,cp.product_id,cg.name FROM " . DB_PREFIX . "coupon c LEFT JOIN " . DB_PREFIX . "coupon_category cc ON (c.coupon_id = cc.coupon_id) LEFT JOIN " . DB_PREFIX . "coupon_product cp ON (c.coupon_id = cp.coupon_id) LEFT JOIN " . DB_PREFIX . "customer_group_description cg ON (c.customer_group_id = cg.customer_group_id)  WHERE c.customer_group_id > 0  AND ((c.date_start = '0000-00-00' OR c.date_start < NOW()) AND (c.date_end = '0000-00-00' OR c.date_end > NOW())) ");
 
 		return $query->rows;

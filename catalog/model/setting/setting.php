@@ -25,4 +25,10 @@ class ModelSettingSetting extends Model {
 			return null;	
 		}
 	}	
+	
+	public function updateSettingValue($key, $value) {
+		$this->db->query("UPDATE " . DB_PREFIX . "setting SET value = '" . $this->db->escape(json_encode($value, true)) . "' WHERE `key` = '" . $this->db->escape($key) . "'");
+
+		
+	}	
 }
