@@ -50,6 +50,8 @@ class ControllerAccountWishList extends Controller {
 		if(isset($results)){
 			$data['collection'] = $this->load->controller('shopify/loadorders/collection');
 		}
+		
+		$coupons =  $this->model_commonipl_product->getCoupons();
 
 		foreach ($results as $result) {
 			$product_info = $this->model_commonipl_product->getProduct($result['product_id']);
@@ -101,6 +103,7 @@ class ControllerAccountWishList extends Controller {
 				foreach($variants_datas as $variant){
 					$variant['src'] =$variant['variants_image'];
 					$variant['thumb'] = $this->model_tool_image->resize($variant['variants_image'], $this->config->get('theme_' . $this->config->get('config_theme') . '_image_additional_width'), $this->config->get('theme_' . $this->config->get('config_theme') . '_image_additional_height'));
+					$variant['coupon'] = $this->getCoupon($coupons,$product_info['product_id'],$variant['price'],$product_info['tax_class_id']);
 					$variant['price'] = $this->currency->format($this->tax->calculate($variant['price'], $product_info['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency']);
 					$variant['sale_price'] = $this->tax->calculate($variant['sale_price'], $product_info['tax_class_id'], $this->config->get('config_tax'));
 					$variant['compare_price'] = $this->tax->calculate($variant['msrp'], $product_info['tax_class_id'], $this->config->get('config_tax'));
@@ -185,6 +188,7 @@ class ControllerAccountWishList extends Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 	
+	
 	public function remove(){
 		$this->load->model('account/wishlist');
 		$this->load->language('account/wishlist');
@@ -199,5 +203,27 @@ class ControllerAccountWishList extends Controller {
 			
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
+	}
+	
+	private function getCoupon($coupons,$product_id,$cost,$tax_class_id){
+		$category_ids =  $this->model_commonipl_product->getProductCategories($product_id);
+		foreach($coupons as $coupon){
+			if(in_array($coupon['category_id'],$category_ids) || $coupon['product_id'] == $product_id|| empty($coupon['category_id'])&&empty($coupon['product_id'])){
+				
+				if($coupon['type']=='P'){
+					$discount = number_format($cost*$coupon['discount']/100.00,2);
+				}else{
+					$discount = number_format($coupon['discount'],2);
+				}
+				$price =  $this->currency->format($this->tax->calculate($cost-$discount, $tax_class_id, $this->config->get('config_tax')), $this->session->data['currency']);
+				return array(
+					"name" =>$coupon['name'],
+					"price"=>$price,
+					"discount"=>$discount
+				);
+			}
+		}
+		return false;
+		
 	}
 }

@@ -267,6 +267,11 @@ class ModelCommoniplProduct extends Model {
 
 		return $product_category_data;
 	}
+	
+	public function getProductCategorie($product_id) {
+		$query = $this->db->query("SELECT pc.category_id,cd.name FROM " . DB_PREFIX . "product_to_category pc LEFT JOIN " . DB_PREFIX . "category_description cd ON (pc.category_id = cd.category_id) WHERE product_id = '" . (int)$product_id . "'");
+		return $query->row;
+	}
 
 	public function getProductFilters($product_id) {
 		$product_filter_data = array();

@@ -87,11 +87,14 @@ class ControllerCommoniplOrders extends Controller {
 		$data['orders'] = array();
 
 		$this->load->model('commonipl/order');
+		
+		$this->load->model('commonipl/product');
 
 		$order_total = $this->model_commonipl_order->geFiltertTotalOrders($filter);
 
 		$results = $this->model_commonipl_order->getFilterOrders(($page - 1) * 10, 10,$filter);
-
+		
+		$coupons =  $this->model_commonipl_product->getCoupons();
         //print_r($results);
 		foreach ($results as $result) {
 			//echo $result['order_id'];
@@ -102,6 +105,8 @@ class ControllerCommoniplOrders extends Controller {
 			$quantity = 0;
 			$selfProduct = 0;
 			$otherProduct =0;
+			$viptotal =0;
+			$vipName = '';
 			foreach($orderProducts as $orderProduct){
 				$product = $this->model_commonipl_order->checkProduct($orderProduct['product_id']);
 				if(isset($product['sku'])){
@@ -111,6 +116,14 @@ class ControllerCommoniplOrders extends Controller {
 					  //print_r($qty);
 					  $total += isset($orderProduct)?$orderProduct['price']*$qty:0;
 					  $quantity += $qty;
+					  $category = $this->model_commonipl_product->getProductCategorie($product['product_id']);
+					  $coupon = $this->getCoupon($coupons,$category,$orderProduct);
+					 if(isset($coupon['price'])){
+						$vipName = $coupon['name'];
+						$viptotal += $coupon['total'];
+					}else{
+						$viptotal += $product['price']*$product['quantity'];
+					}
 				}else {
 					$otherProduct = 1;
 				}
@@ -134,6 +147,8 @@ class ControllerCommoniplOrders extends Controller {
 				'cancel' => 'cancel',
 				'quantity'   => $quantity,
 				'total'      => "$".$total,
+				'vipname' => $vipName,
+				'viptext' => !empty($vipName)?"$". number_format($viptotal,2):false,
 				'product_status'=> ($selfProduct == 1?($otherProduct==1?2:1):0),
 				'total_paid' => $total,
 				'view'       => $this->url->link('commonipl/orders/info', 'order_id=' . $result['order_id'], true),
@@ -320,7 +335,7 @@ class ControllerCommoniplOrders extends Controller {
 
 			$this->load->model('catalog/product');
 			$this->load->model('tool/upload');
-
+			$this->load->model('commonipl/product');
 			// Products
 			$data['products'] = array();
 			$orderid = $this->request->get['order_id'];
@@ -344,6 +359,9 @@ class ControllerCommoniplOrders extends Controller {
 			$total=0;
 			$saletotal=0;
 			$weight = 0;
+			$viptotal =0;
+			$vipName = '';
+			$coupons =  $this->model_commonipl_product->getCoupons();
 			foreach ($products as $product) {
 				
 				$option_select = array();
@@ -391,10 +409,12 @@ class ControllerCommoniplOrders extends Controller {
 				} else {
 					$reorder = '';
 				}
-
+				
+				$category = $this->model_commonipl_product->getProductCategorie($product['product_id']);
+				$coupon = $this->getCoupon($coupons,$category,$product);
 				$data['products'][] = array(
 					'name'     => $product['name'],
-					'model'    => $product_info['model'],
+					'model'    => $category['name'],
 					'option'   => $option_data,
 					'option_select'   => $option_select,
 					'selected_name'    => trim($selected_name),
@@ -403,11 +423,18 @@ class ControllerCommoniplOrders extends Controller {
 					'price'    => number_format($product['price'],2),
 					'sale_total'    => number_format($product['shopify_price']*$product['quantity'],2),
 					'total'    => number_format($product['price']*$product['quantity'],2),
+					'coupon'      => $coupon,
 					'order_product_id'    => $product['order_product_id'],
 					'reorder'  => $reorder,
 					'return'   => $this->url->link('account/return/add', 'order_id=' . $order_info['order_id'] . '&product_id=' . $product['product_id'], true)
 				);
 				$subtotal+= $product['price']*$product['quantity'];
+				if(isset($coupon['price'])){
+					$vipName = $coupon['name'];
+					$viptotal += $coupon['total'];
+				}else{
+					$viptotal += $product['price']*$product['quantity'];
+				}
 				$tax+= $product['tax'];
 				$saletotal+= $product['shopify_price']*$product['quantity'];
 				if(isset($options)&& isset($options['weight'])){
@@ -420,7 +447,9 @@ class ControllerCommoniplOrders extends Controller {
 			$data['totals'][] = array(
 					'title' => "Sub-Total:",
 					'text'  => number_format($subtotal,2),
-					'text2'  => number_format($saletotal,2)
+					'text2'  => number_format($saletotal,2),
+					'vipname' => $vipName,
+					'viptext' => !empty($vipName)?$viptotal:false
 				);
 				
 				$data['totals'][] = array(
@@ -444,7 +473,9 @@ class ControllerCommoniplOrders extends Controller {
 				$data['totals'][] = array(
 					'title' => "Total:",
 					'text'  => number_format($subtotal+$tax+$shippingCost,2),
-					'text2'  => ''
+					'text2'  => '',
+					'vipname' => $vipName,
+					'viptext' => !empty($vipName)? number_format($viptotal+$tax+$shippingCost,2):false
 				);
 			// Voucher
 			$data['vouchers'] = array();
@@ -497,6 +528,29 @@ class ControllerCommoniplOrders extends Controller {
 		} else {
 			return new Action('error/not_found');
 		}
+	}
+	
+	
+	private function getCoupon($coupons,$category,$result){
+		foreach($coupons as $coupon){
+			if($coupon['category_id']==$category['category_id'] || $coupon['product_id'] == $result['product_id']|| empty($coupon['category_id'])&&empty($coupon['product_id'])){
+				
+				if($coupon['type']=='P'){
+					$discount = number_format($result['price']*$coupon['discount']/100.00,2);
+				}else{
+					$discount = number_format($coupon['discount'],2);
+				}
+				$price = $result['price']-$discount;
+				return array(
+					"name" =>$coupon['name'],
+					'price'    => number_format($price,2),
+					'total'    => number_format($price*$result['quantity'],2),
+					"discount"=>$discount
+				);
+			}
+		}
+		return '';
+		
 	}
 	
 	

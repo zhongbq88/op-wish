@@ -67,7 +67,7 @@
           
           {% for product in products %}
           <tr>
-            <td class="text-left"><div style="float:left">{{ product.name }}
+            <td class="text-left"><div style="float:left ; max-width:400px;">{{ product.name }}
                 {% for option in product.option %} <br />
                 &nbsp;<small>{{ option.value }}</small> {% endfor %}
                  {% if product.price==0 %} <br /><span style="color:#F00">{{text_not_customdr_order}}</span> {% endif %}
@@ -90,8 +90,14 @@
                 <i class="fa fa-times-circle"></i>
                 </button>
                 </span></div></td>
-            <td class="text-right">{{ product.price }}</td>
-            <td class="text-right" style="width:100px;">{{ product.total }}</td>
+            <td class="text-right">{{ product.price }}  {% if product.coupon %}
+      
+      <div ><label>{{ product.coupon.name }}:&nbsp;&nbsp; </label><font class="price" style="color:#F00"> {{product.coupon.price}}</font> </div>
+      {% endif %}</td>
+            <td class="text-right" style="width:120px;">{{ product.total }}{% if product.coupon %}
+      
+      <div ><label>{{ product.coupon.name }}:&nbsp;&nbsp; </label><font class="price" style="color:#F00"> {{product.coupon.total}}</font> </div>
+      {% endif %}</td>
             <td class="text-right"  style="display:none;" >{{ product.sale_total }}</td>
             <!--<td class="text-right" style="white-space: nowrap;">{% if product.reorder %} <a href="{{ product.reorder }}" data-toggle="tooltip" title="{{ button_reorder }}" class="btn btn-primary"><i class="fa fa-shopping-cart"></i></a> {% endif %} <a href="{{ product.return }}" data-toggle="tooltip" title="{{ button_return }}" class="btn btn-danger"><i class="fa fa-reply"></i></a></td>--> 
           </tr>
@@ -116,7 +122,10 @@
           <tr>
             <td colspan="3"></td>
             <td class="text-right"><b>{{ total.title }}</b></td>
-            <td class="text-right">{{ total.text }}</td>
+            <td class="text-right">{{ total.text }}{% if total.viptext %}
+      
+      <div ><label>{{ total.vipname }}:&nbsp;&nbsp; </label><font class="price" style="color:#F00"> {{total.viptext}}</font> </div>
+      {% endif %}</td>
             <!--<td class="text-right">{{ total.text2 }}</td>-->
             
             <!--{% if products %}

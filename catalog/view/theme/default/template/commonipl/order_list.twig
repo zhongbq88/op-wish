@@ -31,7 +31,11 @@
   <td class="text-left">{{ order.name }}</td>
   <!--<td class="text-left">{{ order.products }}</td>-->
   <td class="text-left" id="status{{order.order_id}}" >{{ order.status }} {% if order.product_status == 0 %} <span style="background:#CCC">{{text_not_customdr_order}}</span> {% elseif order.product_status == 2 %} <span style="background:#CCC">{{text_part_customdr_order}}</span>{% endif %}</td>
-  <td class="text-right">{{ order.total }}</td>
+  <td class="text-right">{{ order.total }}
+  {% if order.viptext %}
+      
+      <div ><label>{{ order.vipname }}:&nbsp;&nbsp; </label><font class="price" style="color:#F00"> {{order.viptext}}</font> </div>
+      {% endif %}</td>
   <td class="text-left">{{ order.date_added }}</td>
   
   <!--<td class="text-left">{{ order.date_modified }}</td>-->
