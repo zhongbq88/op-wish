@@ -77,6 +77,86 @@
               <input type="text" name="sort_order" value="{{ sort_order }}" placeholder="{{ entry_sort_order }}" id="input-sort-order" class="form-control" />
             </div>
           </div>
+          <div class="tab-pane" id="tab-app">
+           <h3>Charging for your app</h3>
+              
+             
+            
+              
+              <div class="form-group">
+                  <label class="col-sm-2 control-label" for="input-name">Name</label>
+                <div class="col-sm-10">
+                  <input type="text" name="config_charging[name]" value="{{ config_charging.name }}" id="input-price" class="form-control" />
+                </div>
+              </div>
+               <div class="form-group">
+                  <label class="col-sm-2 control-label" for="input-name">Price</label>
+                <div class="col-sm-10">
+                  <input type="text" name="config_charging[price]" value="{{ config_charging.price }}" id="input-price" class="form-control" />
+                </div>
+              </div>
+               <div class="form-group">
+                <label class="col-sm-2 control-label">Charge type</label>
+                <div class="col-sm-10">
+                 <label class="radio-inline"> {% if config_charging.charge_type %}
+                      <input type="radio" name="config_charging[charge_type]" value="1" checked="checked" />
+                      one-time charge
+                      {% else %}
+                      <input type="radio" name="config_charging[charge_type]" value="1" />
+                      one-time charge
+                      {% endif %} </label>
+                    <label class="radio-inline"> {% if not config_charging.charge_type %}
+                      <input type="radio" name="config_charging[charge_type]" value="0" checked="checked" />
+                      per-month charge
+                      {% else %}
+                      <input type="radio" name="config_charging[charge_type]" value="0" />
+                     per-month charge
+                      {% endif %}</label>
+                  
+                  
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-2 control-label">SendBox</label>
+                <div class="col-sm-10">
+                 <label class="radio-inline"> {% if config_charging.sendbox %}
+                      <input type="radio" name="config_charging[sendbox]" value="1" checked="checked" />
+                      {{ text_yes }}
+                      {% else %}
+                      <input type="radio" name="config_charging[sendbox]" value="1" />
+                      {{ text_yes }}
+                      {% endif %} </label>
+                    <label class="radio-inline"> {% if not config_charging.sendbox %}
+                      <input type="radio" name="config_charging[sendbox]" value="0" checked="checked" />
+                      {{ text_no }}
+                      {% else %}
+                      <input type="radio" name="config_charging[sendbox]" value="0" />
+                      {{ text_no }}
+                      {% endif %}</label>
+                  
+                  
+                </div>
+              </div>
+               <div class="form-group">
+                  <label class="col-sm-2 control-label" for="input-name">Return Url</label>
+                <div class="col-sm-10">
+                  <input type="text" name="config_charging[retrun_url]" value="{{ config_charging.retrun_url }}" id="input-price" class="form-control" />
+                </div>
+              </div>
+              <div class="form-group">
+                  <label class="col-sm-2 control-label" for="input-name">Trial days</label>
+                <div class="col-sm-10">
+                  <input type="text" name="config_charging[trial_days]" value="{{ config_charging.trial_days }}" id="input-price" class="form-control" />
+                </div>
+              </div>
+              <div class="form-group">
+                  <label class="col-sm-2 control-label" for="input-name">放弃购买提示：</label>
+                <div class="col-sm-10">
+                  <input type="text" name="config_charging[tips]" value="{{ config_charging.tips }}" id="input-price" class="form-control" />
+                </div>
+              </div>
+              </div>
+            
         </form>
       </div>
     </div>

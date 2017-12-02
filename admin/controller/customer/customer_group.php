@@ -317,6 +317,14 @@ class ControllerCustomerCustomerGroup extends Controller {
 		} else {
 			$data['approval'] = '';
 		}
+		
+		if (isset($this->request->post['config_charging'])) {
+			$data['config_charging'] = $this->request->post['config_charging'];
+		}elseif (!empty($customer_group_info)) {
+			$data['config_charging'] = json_decode($customer_group_info['config_charging'], true);
+		} else {
+			$data['config_charging'] = $this->config->get('config_charging');
+		}
 
 		if (isset($this->request->post['sort_order'])) {
 			$data['sort_order'] = $this->request->post['sort_order'];

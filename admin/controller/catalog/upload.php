@@ -224,8 +224,8 @@ class ControllerCatalogUpload extends Controller {
 							  'option2'=>$product[5],
 							  'quantity' => $product[6]*$this->multiple,
 							  'price'=>$price,
-							  'sale_price'=>$price*2+2,
-							  'msrp'=>$price*4+2,
+							  'sale_price'=>$price*2,
+							  'msrp'=>$price*4,
 							  'weight'=>$product[8],
 							  'variants_image'=>$image
 						  );
@@ -318,8 +318,8 @@ class ControllerCatalogUpload extends Controller {
 								'variants_sku'=>$rowdata[0],
 								'quantity' => $rowdata[3]*$this->multiple,
 								'price'=>$price,
-							  	'sale_price'=>$price*2+2,
-							  	'msrp'=>$price*4+2,
+							  	'sale_price'=>$price*2,
+							  	'msrp'=>$price*4,
 								'weight'=>$rowdata[4]
 							);
 					  }
