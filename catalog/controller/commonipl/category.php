@@ -30,9 +30,9 @@ class ControllerCommoniplCategory extends Controller {
 					$image = $this->model_tool_image->resize('placeholder.png', $this->config->get('theme_' . $this->config->get('config_theme') . '_image_product_width'), $this->config->get('theme_' . $this->config->get('config_theme') . '_image_product_height'));
 				}*/
 				$data['categories'][] = array(
-					'name' => $result['name'],
+					'name' => $result['name']
 					/*'thumb' =>$image,*/
-					'productlist' =>  $this->load->controller('commonipl/products/load',$result['category_id'])
+					//'productlist' =>  $this->load->controller('commonipl/products/load',$result['category_id'])
 				);
 			}
 		}
