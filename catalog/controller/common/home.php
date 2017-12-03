@@ -25,7 +25,7 @@ class ControllerCommonHome extends Controller {
 			foreach ($category_info as $result) {
 				$data['categories'][] = array(
 					'name' => $result['name'],
-					'productlist' => $this->load->controller('commonipl/category/load',$result['category_id'])
+					'productlist' => $this->load->controller('commonipl/products/load',$result['category_id'])
 				);
 			}
 		}
