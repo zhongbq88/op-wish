@@ -3,60 +3,54 @@
 require 'vendor/autoload.php';
 use phpish\shopify;
 
-class ControllerShopifyConnect extends Controller {
+class ControllerShopifyVipdiscount extends Controller {
 	
 	public function index(){
-		$this->session->data['store'] = 'shopify';
-		if(empty($this->session->data['shop'])||empty($this->customer->getId())||!$this->customer->isLogged()){
-			$this->getToken();
+		
+		$this->load->model("account/customer_group");
+		$customerGroup = $this->model_account_customer_group->getCustomerGroupCharge();
+		
+		if(isset($customerGroup['config_charging'])&&!empty($customerGroup['config_charging'])){
+			$this->chargeApp(json_decode($customerGroup['config_charging'],true),$customerGroup['customer_group_id']);
+		}else{
+			$this->response->redirect($this->url->link('commonipl/category&shopify=true', '', true));
 		}
-		if (!$this->customer->isLogged()) {
-			$this->session->data['redirect'] = $this->url->link('commonipl/dashboard', '', true);
-			$this->response->redirect($this->url->link('account/login', '', true));
-		}
-		$this->chargeApp();
-		//
+		
 	}
 	
-	public function chargeApp(){
+	public function chargeApp($charging,$customer_group_id){
 		
 		try
 		
 		{
-			$charging = $this->config->get('config_charging');
-			if(!$charging['install']){
-				$this->response->redirect($this->url->link('commonipl/dashboard', '', true));
-				return;
-			}
-			
-			//print_r($charging);
-			//return;
+
 			$url = ($charging['charge_type']==1)?'':'recurring_';
 			$shopify = shopify\client($this->session->data['shop'], SHOPIFY_APP_API_KEY,$this->session->data['oauth_token']);
-			if(!isset($_GET['code'])&&isset($charging['charge_id'])){
-				$result =  $shopify('GET /admin/'.$url.'application_charges/'.$charging['charge_id'].'.json');
-			//print_r($result);
-			if(isset($result)){
-				
-				foreach($result as $charge){
-					if($charge['status']=='accepted'){
-						$this->response->redirect($this->url->link('commonipl/dashboard', '', true));
-						
-					}else{
-						if($charge['status']=='pending'){
-							$confirmation_url = $charge['confirmation_url'];
-							die("<script> top.location.href='".$confirmation_url."'</script>");
+			if(isset($charging['charge_id'])){
+				$result =  $shopify('GET /admin/'.$url.'application_charges'.$charging['charge_id'].'.json');
+			//print_r($this->session->data['install']);
+				if(isset($result)){
+					
+					foreach($result as $charge){
+						if($charge['status']=='accepted'){
+							$this->model_account_customer_group->updateCustomer($customer_group_id,$this->customer->getId());
+							$this->response->redirect($this->url->link('commonipl/category&shopify=true', '', true));
+							
+						}else{
+							if($charge['status']=='pending'){
+								$confirmation_url = $charge['confirmation_url'];
+								die("<script> top.location.href='".$confirmation_url."'</script>");
+							}
 						}
+						break;
 					}
-					break;
 				}
-			}
 			}
 			
 			$data = array(
 					"name"=>$charging['name'],
 					"price"=> $charging['price'],
-					"return_url"=> isset($charging['retrun_url'])?$charging['retrun_url']:'https://www.jewelryegg.com/index.php?route=commonipl/dashboard'
+					"return_url"=> isset($charging['retrun_url'])?$charging['retrun_url']:'https://127.0.0.1/index.php?route=commonipl/dashboard'
 			);
 			if($charging['sendbox']==1){
 				$data["test"]=true;
@@ -67,11 +61,8 @@ class ControllerShopifyConnect extends Controller {
 			//print_r($data);
 			$result =  $shopify('POST /admin/'.$url.'application_charges.json', array(), array($url.'application_charge'=>$data));
 			if(isset($result['id'])){
-				
 				$charging['charge_id'] = $result['id'];
-				$this->load->model("setting/setting");
-				$this->model_setting_setting->updateSettingValue('config_charging',$charging);
-			
+				$this->model_account_customer_group->updateCustomerGroupCharge($customer_group_id,$charging);
 			}
 			$confirmation_url = $result['confirmation_url'];
 			die("<script> top.location.href='".$confirmation_url."'</script>");
@@ -98,6 +89,7 @@ class ControllerShopifyConnect extends Controller {
 			print_r($e->getResponse());
 			
 		}
+		$this->response->redirect($this->url->link('commonipl/category&shopify=true', '', true));
 	}
 	
 	public function getToken(){
