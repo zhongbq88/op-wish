@@ -83,7 +83,8 @@ class ControllerCommoniplProducts extends Controller {
 	}
 	
 	public function load($category_id) {
-	
+	print_r($category_id);
+		$this->load->model('tool/image');
 		$this->load->model('commonipl/product');
 		$data['products'] = array();
 		$this->load->model('account/wishlist');
@@ -136,6 +137,7 @@ class ControllerCommoniplProducts extends Controller {
 				'href'        => $this->url->link('commonipl/product','product_id=' . $result['product_id'])
 			);
 		}
+		print_r($data);
 		return $this->load->view('commonipl/products', $data);	
 
 	}
