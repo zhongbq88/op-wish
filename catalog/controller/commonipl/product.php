@@ -85,6 +85,8 @@ class ControllerCommoniplProduct extends Controller {
 			$coupons =  $this->model_commonipl_product->getCoupons();
 			
 			$data['coupon'] = $this->getCoupon($coupons,$category_ids,$product_info,$product_info['price']);
+			
+			$data['vipdiscount'] = $charging['open'];
 
 			if (isset($product_info['special'])&&(float)$product_info['special']) {
 				$data['special'] = $this->currency->format($this->tax->calculate($product_info['special'], $product_info['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency']);
