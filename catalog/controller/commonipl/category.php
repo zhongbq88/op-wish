@@ -32,15 +32,8 @@ class ControllerCommoniplCategory extends Controller {
 				$data['categories'][] = array(
 					'name' => $result['name'],
 					/*'thumb' =>$image,*/
-<<<<<<< HEAD
-<<<<<<< HEAD
 					'productlist' => $this->load->controller('commonipl/products/load',$result['category_id'])
-=======
-					'productlist' =>  $this->load($result['category_id'])
->>>>>>> 9dd8eccdc866d7d8eac8fed21fda40e83d297853
-=======
-					'productlist' =>  $this->load->controller('commonipl/products/load',$result['category_id'])
->>>>>>> fbf68de773a1e39640d17b2a6348c892ae987ad4
+
 				);
 			}
 		}
@@ -68,11 +61,4 @@ class ControllerCommoniplCategory extends Controller {
 		$data['header'] = $this->load->controller($this->session->data['store'].'/header');
 		$this->response->setOutput($this->load->view('commonipl/category', $data));
 	}
-	
-<<<<<<< HEAD
-=======
-	
-	
-	
->>>>>>> 9dd8eccdc866d7d8eac8fed21fda40e83d297853
 }
