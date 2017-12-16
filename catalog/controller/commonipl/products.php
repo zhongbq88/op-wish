@@ -9,9 +9,7 @@ class ControllerCommoniplProducts extends Controller {
 		$this->load->model('commonipl/product');
 
 		$this->load->model('tool/image');
-		if (isset($this->request->get['page'])) {
-			$url .= '&page=' . $this->request->get['page'];
-		}
+	
 		
 
 		if (isset($this->request->get['page'])) {
@@ -181,7 +179,6 @@ class ControllerCommoniplProducts extends Controller {
 		$pagination->url = $this->url->link('commonipl/category', 'page={page}', true);
 
 		$data['pagination'] = $pagination->render();
-		//print_r($data);
 		return $this->load->view('commonipl/products', $data);	
 
 	}
