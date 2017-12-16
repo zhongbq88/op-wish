@@ -140,7 +140,7 @@ function pushAll(){
 	var category_id = curItem.split('-');
 	category_id = category_id[2];
 	$.ajax({
-		url: 'index.php?route=account/wishList/add',
+		url: 'index.php?route=account/wishList/addmore',
 		type: 'post',
 		data: $('input[name^=\'product['+category_id+']\']'),
 		dataType: 'json',
