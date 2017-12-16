@@ -146,28 +146,25 @@ class ControllerAccountWishList extends Controller {
 	
 	public function addmore(){
 		$json = array();
-		if (isset($this->request->post['product'])) {
-			$product_ids = array_filter($this->request->post['product']);
-			foreach($product_ids as $values){
-				$this->load->language('account/wishlist');
-				$this->load->model('account/wishlist');
-				foreach($values as $product_id){
-					$this->model_account_wishlist->addWishlist($product_id);
-				}
-				$json['success'] = sprintf($this->language->get('text_success'),'','', $this->url->link('account/wishlist'));
-				
-				break;
-			}
-		}
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
 	}
 
 	public function add() {
 		$this->load->language('account/wishlist');
-
-		
-
+		$this->load->model('account/wishlist');
+		if (isset($this->request->post['product'])) {
+			$product_ids = array_filter($this->request->post['product']);
+			foreach($product_ids as $values){
+				
+				foreach($values as $product_id){
+					$this->model_account_wishlist->addWishlist($product_id);
+				}
+				$json['success'] = sprintf($this->language->get('text_success'),'','', $this->url->link('account/wishlist'));
+				$this->response->addHeader('Content-Type: application/json');
+				$this->response->setOutput(json_encode($json));
+				break;
+			}
+			return;
+		}
 		if (isset($this->request->post['product_id'])) {
 			$product_id = $this->request->post['product_id'];
 		} else {
@@ -181,7 +178,7 @@ class ControllerAccountWishList extends Controller {
 		if ($product_info) {
 			if ($this->customer->isLogged()) {
 				// Edit customers cart
-				$this->load->model('account/wishlist');
+				
 
 				$this->model_account_wishlist->addWishlist($this->request->post['product_id']);
 
