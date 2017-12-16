@@ -111,7 +111,7 @@ class ControllerShopifyLoadorders extends Controller {
 				'shipping_company'        => isset($order['shipping_address'])?$order['shipping_address']['company']:'',
 				'shipping_address_1'      => isset($order['shipping_address'])?$order['shipping_address']['address1']:'',
 				'shipping_address_2'      => isset($order['shipping_address'])?$order['shipping_address']['address2']:'',
-				'shipping_postcode'       => '',
+				'shipping_postcode'       => isset($order['shipping_address'])?$order['shipping_address']['zip']:'',
 				'shipping_city'           => isset($order['shipping_address'])?$order['shipping_address']['city']:'',
 				'shipping_zone_id'        => 0,
 				'shipping_zone'           => isset($order['shipping_address'])?$order['shipping_address']['province_code']:'',

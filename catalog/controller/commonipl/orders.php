@@ -292,44 +292,7 @@ class ControllerCommoniplOrders extends Controller {
 
 			$data['payment_method'] = $order_info['payment_method'];
 
-			if ($order_info['shipping_address_format']) {
-				$format = $order_info['shipping_address_format'];
-			} else {
-				$format =  '{email}' . "\n" . '{telephone}' . "\n" .'{firstname} {lastname}' . "\n" . '{company}' . "\n" . '{address_1}' . "\n" . '{address_2}' . "\n" . '{city} {postcode}' . "\n" . '{zone}' . "\n" . '{country}';
-			}
-
-			$find = array(
-				'{email}',
-				'{telephone}',
-				'{firstname}',
-				'{lastname}',
-				'{company}',
-				'{address_1}',
-				'{address_2}',
-				'{city}',
-				'{postcode}',
-				'{zone}',
-				'{zone_code}',
-				'{country}'
-			);
-			
-			$replace = array(
-				'email' => $this->language->get('entry_email').': '.$order_info['email'],
-				'telephone' => $this->language->get('entry_telephone').': '.$order_info['telephone'],
-				'firstname' => $this->language->get('entry_name').': '.$order_info['shipping_firstname'],
-				'lastname'  => $order_info['shipping_lastname'],
-				'company'   => $this->language->get('entry_company').': '.$order_info['shipping_company'],
-				'address_1' => $this->language->get('entry_address_1').': '.$order_info['shipping_address_1'],
-				'address_2' => $this->language->get('entry_address_2').': '.$order_info['shipping_address_2'],
-				'city'      => $this->language->get('entry_city').': '.$order_info['shipping_city'],
-				'postcode'  => $order_info['shipping_postcode'],
-				'zone'      => $order_info['shipping_zone'],
-				'zone_code' => $order_info['shipping_zone_code'],
-				'country'   => $this->language->get('entry_country').': '.$order_info['shipping_country']
-			);
-
-
-			$data['shipping_address'] = str_replace(array("\r\n", "\r", "\n"), '<br />', preg_replace(array("/\s\s+/", "/\r\r+/", "/\n\n+/"), '<br />', trim(str_replace($find, $replace, $format))));
+			$data['shipping_address'] = $this->shippingFormat($order_info);
 
 			$data['shipping_method'] = $order_info['shipping_method'];
 
@@ -528,6 +491,70 @@ class ControllerCommoniplOrders extends Controller {
 		} else {
 			return new Action('error/not_found');
 		}
+	}
+	
+	private function shippingFormat($order_info){
+		if(isset($order_info['shipping_custom_field'])){
+			$shipping = json_decode($order_info['shipping_custom_field'],true);
+			if(isset($shipping)){
+				$format =  $shipping['first_name'].' '.$shipping['last_name']. "\n" ;			if(!empty($shipping['address1'])){
+					$format .=  $shipping['address1']."\n" ;			
+				}
+				if(!empty($shipping['address2'])){
+					$format .=  $shipping['address2']."\n" ;			
+				}
+				if(!empty($shipping['city'])){
+					$format .=  $shipping['city'].' '.$shipping['province'].' '.$shipping['zip']."\n" ;			
+				}
+				if(!empty($shipping['country'])){
+					$format .=  $shipping['country']."\n" ;			
+				}
+				if(!empty($shipping['phone'])){
+					$format .=  $shipping['phone']."\n" ;			
+				}
+				return $format;
+				
+			}
+		}
+		if ($order_info['shipping_address_format']) {
+				$format = $order_info['shipping_address_format'];
+			} else {
+				$format =  '{firstname} {lastname}' . "\n" . '{company}' . "\n" . '{address_1}' . "\n" . '{address_2}' . "\n" . '{city} {postcode}' . "\n" . "\n" . '{country}'. "\n". '{telephone}' . "\n" ;
+			}
+
+			$find = array(
+				'{email}',
+				'{telephone}',
+				'{firstname}',
+				'{lastname}',
+				'{company}',
+				'{address_1}',
+				'{address_2}',
+				'{city}',
+				'{postcode}',
+				'{zone}',
+				'{zone_code}',
+				'{country}'
+			);
+			
+			$replace = array(
+				'email' => $order_info['email'],
+				'telephone' => $order_info['telephone'],
+				'firstname' => $order_info['shipping_firstname'],
+				'lastname'  => $order_info['shipping_lastname'],
+				'company'   => $order_info['shipping_company'],
+				'address_1' => $order_info['shipping_address_1'],
+				'address_2' => $order_info['shipping_address_2'],
+				'city'      => $order_info['shipping_city'],
+				'postcode'  => $order_info['shipping_postcode'],
+				'zone'      => $order_info['shipping_zone'],
+				'zone_code' => $order_info['shipping_zone_code'],
+				'country'   => $order_info['shipping_country']
+			);
+			
+			
+
+			return str_replace(array("\r\n", "\r", "\n"), '<br />', preg_replace(array("/\s\s+/", "/\r\r+/", "/\n\n+/"), '<br />', trim(str_replace($find, $replace, $format))));
 	}
 	
 	
