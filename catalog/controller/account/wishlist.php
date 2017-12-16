@@ -144,7 +144,7 @@ class ControllerAccountWishList extends Controller {
 		$this->response->setOutput($this->load->view('account/wishlist', $data));
 	}
 	
-	public function addMore(){
+	public function addmore(){
 		
 		if (isset($this->request->post['product'])) {
 			$product_ids = array_filter($this->request->post['product']);
