@@ -145,7 +145,7 @@ class ControllerAccountWishList extends Controller {
 	}
 	
 	public function addmore(){
-		
+		$json = array();
 		if (isset($this->request->post['product'])) {
 			$product_ids = array_filter($this->request->post['product']);
 			foreach($product_ids as $values){
@@ -155,17 +155,18 @@ class ControllerAccountWishList extends Controller {
 					$this->model_account_wishlist->addWishlist($product_id);
 				}
 				$json['success'] = sprintf($this->language->get('text_success'),'','', $this->url->link('account/wishlist'));
-				$this->response->addHeader('Content-Type: application/json');
-				$this->response->setOutput(json_encode($json));
+				
 				break;
 			}
 		}
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
 	}
 
 	public function add() {
 		$this->load->language('account/wishlist');
 
-		$json = array();
+		
 
 		if (isset($this->request->post['product_id'])) {
 			$product_id = $this->request->post['product_id'];
