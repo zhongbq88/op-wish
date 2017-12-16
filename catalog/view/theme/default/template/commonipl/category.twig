@@ -164,27 +164,8 @@ function pushAll(){
 				  if(result){
 						window.location.href="index.php?route=account/wishlist&shopify=true";  
 				  }else{
-					  var args = new Object();
 
-
-
-					  args = GetUrlParms();
-					  
-					  //如果要查找参数key:
-					  
-					  if(args["page"]!=undefined)
-					  
-					  {
-					  
-					  //如果要查找参数key:
-					  
-					  		var page = args["page"] ;
-					  		
-					  	   $('#product_row_'+category_id).load('index.php?route=commonipl/products/loadNextPage&page='+page+'&shopify=true');
-					  
-					  }else{
-						   $(curItem).remove();
-					 }
+					  $('#product_row_'+category_id).load('index.php?route=commonipl/products/loadNextPage&shopify=true');
 					
 				  }
 				  
