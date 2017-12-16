@@ -171,6 +171,18 @@ function pushAll(){
 				  
 				});
 				
+			}else if(json['vipProduct']){
+				ShopifyApp.Modal.confirm({
+				title: "Vip Product!",
+				message: "You want to VIP ?",
+				okButton: "Yes",
+				cancelButton: "No",
+				style: "accept"
+				}, function(result){
+					if(result){
+						  window.location.href="index.php?route=shopify/vipdiscount";  
+					}
+				});
 			}
 			//alert(json['success']);
 			/*$('.alert-dismissible').remove();

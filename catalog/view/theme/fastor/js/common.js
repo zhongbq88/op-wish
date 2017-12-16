@@ -366,7 +366,19 @@ var wishlist = {
 							'<a href="{3}" target="{4}" data-notify="url"></a>' +
 						'</div>' 
 					});
-				}   
+				}  else if(json['vipProduct']){
+				ShopifyApp.Modal.confirm({
+				title: "Vip Product!",
+				message: "You want to VIP ?",
+				okButton: "Yes",
+				cancelButton: "No",
+				style: "accept"
+				}, function(result){
+					if(result){
+						  window.location.href="index.php?route=shopify/vipdiscount";  
+					}
+				});
+			} 
 				
 				if (json['info']) {
 					$.notify({

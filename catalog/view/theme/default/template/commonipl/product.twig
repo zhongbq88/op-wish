@@ -285,9 +285,9 @@
                                   <button type="button" data-toggle="tooltip"  data-loading-text="{{ text_loading }}" class="btn btn-primary btn-lg btn-block" title="{{ button_cart }}" onclick="cart.add('{{ product_id }}');"><span class="hidden-xs hidden-sm hidden-md">{{ button_cart }}</span></button>
                                   {%else%}
                                   {% if added %}
-                                   <button type="button" id="button_add_wishlist{{ product_id }}" data-toggle="tooltip"  data-loading-text="{{ text_loading }}" class="btn btn-primary btn-lg btn-block" title="Added" onclick="wishlist.add('{{ product_id }}');"><span class="hidden-xs hidden-sm hidden-md"><i class="fa fa-check-circle"></i> Added</span></button>
+                                   <button type="button" id="button_add_wishlist{{ product_id }}" data-toggle="tooltip"  data-loading-text="{{ text_loading }}" class="btn btn-primary btn-lg btn-block" title="Added" onclick="addwish('{{ product_id }}');"><span class="hidden-xs hidden-sm hidden-md"><i class="fa fa-check-circle"></i> Added</span></button>
                                   {%else%}
-                                  <button type="button" data-toggle="tooltip"  data-loading-text="{{ text_loading }}" class="btn btn-primary btn-lg btn-block" title="{{ button_wishlist }}" id="button_add_wishlist{{ product_id }}" onclick="wishlist.add('{{ product_id }}');"><span class="hidden-xs hidden-sm hidden-md">{{ button_wishlist }}</span></button>
+                                  <button type="button" data-toggle="tooltip"  data-loading-text="{{ text_loading }}" class="btn btn-primary btn-lg btn-block" title="{{ button_wishlist }}" id="button_add_wishlist{{ product_id }}" onclick="addwish('{{ product_id }}');"><span class="hidden-xs hidden-sm hidden-md">{{ button_wishlist }}</span></button>
                                    {%endif%}
                                   {%endif%}
                                   <!--  <button type="button" id="button-cart" data-loading-text="{{ text_loading }}" class="btn btn-primary btn-lg btn-block">{{ button_cart }}</button>--> 
