@@ -34,7 +34,6 @@ class ControllerCommoniplProducts extends Controller {
 		$total = $this->model_commonipl_product->geFiltertTotalProductsByCategoryIdFilter($category_id,$filterProdectIds);
 		
 		$results = $this->model_commonipl_product->getProductsByCategoryIdFilter(($page - 1) * 20, 20,$category_id,$filterProdectIds);
-		print_r($total);
 		foreach ($results as $result) {
 			if ($result['image']) {
 				$image = $this->model_tool_image->resize($result['image'], $this->config->get('theme_' . $this->config->get('config_theme') . '_image_product_width'), $this->config->get('theme_' . $this->config->get('config_theme') . '_image_product_height'));
@@ -91,7 +90,7 @@ class ControllerCommoniplProducts extends Controller {
 			
 		}
 		$pagination = new Pagination();
-		$pagination->total = $total;
+		$pagination->total = 100;
 		$pagination->page = $page;
 		$pagination->limit = 10;
 		$pagination->url = $this->url->link('commonipl/category', 'page={page}', true);
