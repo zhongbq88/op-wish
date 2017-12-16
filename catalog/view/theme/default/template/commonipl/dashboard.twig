@@ -16,16 +16,9 @@
             <div class="alert alert-warning">
               <button type="button" class="close" data-dismiss="alert" aria-label="Close" onclick="RPC('store/dismiss-welcome', {storeId: 481485});"> <span aria-hidden="true">×</span> </button>
               <p class="text-center" style=" padding-top:15px;">
-              {% if content_top %}
-              <dip style="float:left;">
-                <iframe width="560" height="315" src="https://www.youtube.com/embed/liVVsZ2JAog?rel=0" frameborder="0" allowfullscreen></iframe>
-              </dip>
-               <dip>
-               {{ content_top }}
-              </dip>
-              {% else %}
+             
               <iframe width="560" height="315" src="https://www.youtube.com/embed/liVVsZ2JAog?rel=0" frameborder="0" allowfullscreen></iframe>
-              {% endif %}
+             
               </p>
             </div>
           </div>
@@ -36,14 +29,14 @@
     <div style="background-color:#F8F8F8;border:1px solid #DDD;padding:15px 5px 5px 5px;margin-top:15px; " class="vc_span12 wpb_column column_container "> <b style="margin-left:25px;">{{your_vivajean_profits_orders}}</b>:
       <div class="wpb_row  vc_row-fluid  mk-fullwidth-false add-padding-0 attched-false" style="margin-top:10px;margin-bottom:20px; padding-left:20px; padding-right:20px;">
         <div class="vc_span2 wpb_column column_container" style="float:left; width:20%; padding:10px;">
-          <div  class="orderib" data-filter="Pending">
+          <div  class="orderib" data-filter="To-Order">
             <div style=" margin-bottom:10px;text-align: center;font-size:24px"> <i class="mk-moon-file-9"></i> </div>
             <div style=" margin-bottom:10px;text-align: center;font-size:16px"> {{text_pending}} </div>
             <div style=" margin-bottom:10px;text-align: center;font-size:32px;"> {{pending}} </div>
           </div>
         </div>
         <div class="vc_span2 wpb_column column_container"  style="float:left; width:20%; padding:10px;">
-          <div  class="orderib" data-filter="InProd">
+          <div  class="orderib" data-filter="In-Processing">
             <div style=" margin-bottom:10px;text-align: center;font-size:24px"> <i class="mk-moon-file-9"></i> </div>
             <div style=" margin-bottom:10px;text-align: center;font-size:16px"> {{text_processing}} </div>
             <div style=" margin-bottom:10px;text-align: center;font-size:32px;"> {{processing}} </div>
@@ -57,7 +50,7 @@
           </div>
         </div>
         <div class="vc_span2 wpb_column column_container"  style="float:left; width:20%; padding:10px;">
-          <div  class="orderib" data-filter="OnHold">
+          <div  class="orderib" data-filter="On-Hold">
             <div style=" margin-bottom:10px;text-align: center;font-size:24px"> <i class="mk-moon-file-9"></i> </div>
             <div style=" margin-bottom:10px;text-align: center;font-size:16px"> {{text_on_hold}} </div>
             <div style=" margin-bottom:10px;text-align: center;font-size:32px;"> {{on_hold}} </div>
