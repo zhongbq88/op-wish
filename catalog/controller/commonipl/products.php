@@ -34,7 +34,7 @@ class ControllerCommoniplProducts extends Controller {
 		$total = $this->model_commonipl_product->geFiltertTotalProductsByCategoryIdFilter($category_id,$filterProdectIds);
 		
 		$results = $this->model_commonipl_product->getProductsByCategoryIdFilter(($page - 1) * 20, 20,$category_id,$filterProdectIds);
-		//print_r(count($results));
+		print_r($total);
 		foreach ($results as $result) {
 			if ($result['image']) {
 				$image = $this->model_tool_image->resize($result['image'], $this->config->get('theme_' . $this->config->get('config_theme') . '_image_product_width'), $this->config->get('theme_' . $this->config->get('config_theme') . '_image_product_height'));
