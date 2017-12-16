@@ -86,13 +86,14 @@ class ControllerCommoniplProducts extends Controller {
 			
 		}
 		$pagination = new Pagination();
-		$pagination->total = 100;
+		$pagination->total = $total;
 		$pagination->page = $page;
 		$pagination->limit = 10;
 		$pagination->url = $this->url->link('commonipl/products/pageTo', 'page={page}', true);
 
 		$data['pagination'] = $pagination->render2();
 		$data['category_id'] = $category_id;
+		$data['page'] = $page;
 		return $this->load->view('commonipl/products', $data);	
 
 	}
@@ -108,7 +109,15 @@ class ControllerCommoniplProducts extends Controller {
 		$json['success'] = $this->load($category_id);
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
-
+	}
+	
+	public function loadNextPage(){
+		if (isset($this->request->get['category_id'])) {
+			$category_id = $this->request->get['category_id'];
+		} else {
+			$category_id = 0;
+		}
+		$this->response->setOutput($this->load($category_id));
 	}
 	
 	public function load($category_id) {
@@ -179,6 +188,7 @@ class ControllerCommoniplProducts extends Controller {
 				'href'        => $this->url->link('commonipl/product','product_id=' . $result['product_id'])
 			);
 		}
+		$data['page'] = $page;
 		$data['category_id'] = $category_id;
 		$pagination = new Pagination();
 		$pagination->total = $total;
