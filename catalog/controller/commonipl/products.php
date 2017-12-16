@@ -93,7 +93,7 @@ class ControllerCommoniplProducts extends Controller {
 		$pagination->total = $total;
 		$pagination->page = $page;
 		$pagination->limit = 10;
-		$pagination->url = $this->url->link('commonipl/category', 'page={page}', true);
+		$pagination->url = $this->url->link('commonipl/category', 'category_id={category_id}&page={page}', true);
 
 		$data['pagination'] = $pagination->render();
 		$data['category_id'] = $category_id;
@@ -175,7 +175,7 @@ class ControllerCommoniplProducts extends Controller {
 		$pagination->total = $total;
 		$pagination->page = $page;
 		$pagination->limit = 10;
-		$pagination->url = $this->url->link('commonipl/category', 'page={page}', true);
+		$pagination->url = $this->url->link('commonipl/category', 'category_id={category_id}&page={page}', true);
 
 		$data['pagination'] = $pagination->render();
 		return $this->load->view('commonipl/products', $data);	

@@ -265,7 +265,7 @@ class ModelCommoniplProduct extends Model {
 		
 		if(isset($category_id)&&!empty($category_id)){
 			
-		$sql =("SELECT *,p.product_id,pd.name FROM " . DB_PREFIX . "product p LEFT JOIN " . DB_PREFIX . "product_description pd ON (p.product_id = pd.product_id) LEFT JOIN " . DB_PREFIX . "product_to_category p2c ON (p.product_id = p2c.product_id) LEFT JOIN ". DB_PREFIX . "category_description cd ON (p2c.category_id=cd.category_id) WHERE ".$filter." p.status = '1' AND pd.language_id = '" . (int)$this->config->get('config_language_id') . "' AND p2c.category_id = '" . (int)$category_id."'  ");
+		  $sql = "SELECT *,p.product_id,pd.name FROM " . DB_PREFIX . "product p LEFT JOIN " . DB_PREFIX . "product_description pd ON (p.product_id = pd.product_id) LEFT JOIN " . DB_PREFIX . "product_to_category p2c ON (p.product_id = p2c.product_id) LEFT JOIN ". DB_PREFIX . "category_description cd ON (p2c.category_id=cd.category_id) WHERE ".$filter." p.status = '1' AND pd.language_id = '" . (int)$this->config->get('config_language_id') . "' AND p2c.category_id = '" . (int)$category_id."'  ";
 		}else{
 			$sql = "SELECT *,p.product_id,pd.name FROM " . DB_PREFIX . "product p LEFT JOIN " . DB_PREFIX . "product_description pd ON (p.product_id = pd.product_id) LEFT JOIN " . DB_PREFIX . "product_to_category p2c ON (p.product_id = p2c.product_id) LEFT JOIN ". DB_PREFIX . "category_description cd ON (p2c.category_id=cd.category_id) WHERE ".$filter." p.status = '1' AND pd.language_id = '" . (int)$this->config->get('config_language_id') . "'  ";
 		}
