@@ -29,6 +29,7 @@ class ControllerCommoniplCategory extends Controller {
 				} else {
 					$image = $this->model_tool_image->resize('placeholder.png', $this->config->get('theme_' . $this->config->get('config_theme') . '_image_product_width'), $this->config->get('theme_' . $this->config->get('config_theme') . '_image_product_height'));
 				}*/
+				//print_r($result['category_id']);
 				$data['categories'][] = array(
 					'name' => $result['name'],
 					'category_id' => $result['category_id'],
