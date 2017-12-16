@@ -1,4 +1,5 @@
-<div class="row">
+<div id="product_row_{{ category_id }}">
+<div class="row" >
  {% if products %}
                             {% for product in products %}
                             <input type="hidden" name="product[{{ category_id }}][]" value="{{ product.product_id }}" />
@@ -45,4 +46,31 @@ display: -webkit-box;-webkit-line-clamp: 2;-webkit-box-orient: vertical;">{{ pro
                              <div class="row pagination-results" style="margin-top:45px;">
                 <div class="col-sm-6 text-left">{{ pagination }}</div>
                 <!-- <div class="col-sm-6 text-right">{{ results }}</div>--> 
-              </div>     
+              </div>    
+              </div>  
+            <script type="text/javascript">
+			function pageTo(url){
+				
+				$.ajax({
+					url: url,
+					dataType: 'json',
+					beforeSend: function() {
+						//$('#gopublish').button('loading');
+						//$('#loader').addClass("loader loader-clock is-active");
+					},
+					complete: function() {
+						//$('#loader').removeClass();
+						//$('#gopublish').button('reset');
+					},
+					success: function(json) {
+						if(json['success']){
+							$('#product_row_'+json['category_id']).html(json['success']);
+						}
+					},
+					error: function(xhr, ajaxOptions, thrownError) {
+						//alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+					}
+				});
+				
+			}
+			</script>
