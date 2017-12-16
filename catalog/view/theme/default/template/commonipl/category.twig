@@ -165,7 +165,7 @@ function pushAll(){
 						window.location.href="index.php?route=account/wishlist&shopify=true";  
 				  }else{
 
-					  $('#product_row_'+category_id).load('index.php?route=commonipl/products/loadNextPage&shopify=true');
+					  $('#product_row_'+category_id).load('index.php?route=commonipl/products/loadNextPage&category_id='+category_id+'&shopify=true');
 					
 				  }
 				  
