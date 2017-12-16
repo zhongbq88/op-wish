@@ -618,9 +618,23 @@ class ModelCommoniplProduct extends Model {
 		}
 	}
 	
+	public function getPublishProductTotals() {
+		$query = $this->db->query("SELECT COUNT(*) AS total FROM " . DB_PREFIX . "shopify_add_product WHERE customer_id = '" . (int)$this->customer->getId() . "' AND status='1' ");
+
+		return $query->row['total'];
+	}
 	
-	public function getPublishProduct(){
-		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "shopify_add_product WHERE customer_id = '" . (int)$this->customer->getId() . "' AND status='1'  ORDER BY date_added DESC ");
+	public function getPublishProduct($start = 0, $limit = 20) {
+		if ($start < 0) {
+			$start = 0;
+		}
+
+		if ($limit < 1) {
+			$limit = 1;
+		}
+		$sql = ("SELECT * FROM " . DB_PREFIX . "shopify_add_product WHERE customer_id = '" . (int)$this->customer->getId() . "' AND status='1' ");
+		$sql .="ORDER BY date_added DESC LIMIT " . (int)$start . "," . (int)$limit;
+		$query = $this->db->query($sql);
 
 		return $query->rows;
 	}

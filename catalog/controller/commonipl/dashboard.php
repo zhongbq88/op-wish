@@ -89,11 +89,16 @@ class ControllerCommoniplDashboard extends Controller{
 		$data['aug_total'] = number_format($total,2); 
 		$data['aug_charges'] = number_format($charges,2); 
 		$data['tabtype'] = 0;
-		
+		if (isset($this->request->get['page'])) {
+			$page = $this->request->get['page'];
+		} else {
+			$page = 1;
+		}
 		$this->load->language('commonipl/product');
 		$this->load->model('commonipl/product');
 		$this->load->model('tool/image');
-		$products = $this->model_commonipl_product->getPublishProduct();
+		$total = $this->model_commonipl_product->getPublishProductTotals();
+		$products = $this->model_commonipl_product->getPublishProduct(($page - 1) * 10, 10);
 		$productList = array();
 		//$productIds ='';
 		foreach($products as $product){
@@ -148,6 +153,13 @@ class ControllerCommoniplDashboard extends Controller{
 				);
 			}
 		}
+		$pagination = new Pagination();
+		$pagination->total = $total;
+		$pagination->page = $page;
+		$pagination->limit = 10;
+		$pagination->url = $this->url->link('commonipl/dashboard', 'page={page}', true);
+
+		$data['pagination'] = $pagination->render();
 		//print_r($productList);
 		$data['products'] = $productList;
 		$this->load->model('setting/module');
