@@ -90,7 +90,7 @@ class ControllerCommoniplProducts extends Controller {
 			
 		}
 		$pagination = new Pagination();
-		$pagination->total = 100;
+		$pagination->total = $total;
 		$pagination->page = $page;
 		$pagination->limit = 10;
 		$pagination->url = $this->url->link('commonipl/category', 'page={page}', true);
