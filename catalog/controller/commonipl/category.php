@@ -31,6 +31,7 @@ class ControllerCommoniplCategory extends Controller {
 				}*/
 				$data['categories'][] = array(
 					'name' => $result['name'],
+					'category_id' => $result['category_id'],
 					/*'thumb' =>$image,*/
 					'productlist' => $this->load->controller('commonipl/products/load',$result['category_id'])
 

@@ -72,16 +72,23 @@
           <div class="fashionsimple-page-title text-center" style="padding:0px;"> {% if content_top %} {{ content_top }}{% endif %} </div>
           <div class="filter-product">
             <div class="filter-tabs" style="padding-top:0px;">
+           
               <div class="bg-filter-tabs">
+ 				
                 <div class="bg-filter-tabs2 clearfix">
+                  
                   <ul id="tab27832924">
+                 
                     <li class="active"><a href="#latest-27832924-0">All</a></li>
                     {% if categories%}
                     {% for categorie in categories%}
-                    <li><a href="#{{ categorie.name }}-27832924-{{ loop.index }}">{{ categorie.name }}</a></li>
+                    <li><a href="#{{ categorie.name }}-27832924-{{ categorie.category_id }}">{{ categorie.name }}</a></li>
                     {% endfor %}
                     {% endif %}
                   </ul>
+                  <div style="float:left; margin-top:-45px; display: flex;  position: relative; margin-left:-25px;">
+                <a href="javascript:pushAll();" style="color:#FFF" class="push-product" ><i class="fa fa-plus"></i>&nbsp;Push All Products to Import List</a>     
+                </div>
                 </div>
               </div>
             </div>
@@ -102,9 +109,9 @@
               </div>
               {% if categories%}
               {% for categorie in categories%}
-              <div class="tab-pane" id="{{ categorie.name }}-27832924-{{loop.index}}">
+              <div class="tab-pane" id="{{ categorie.name }}-27832924-{{categorie.category_id}}">
                 <div class="box-product">
-                  <div id="myCarousel27832924-{{loop.index}}" > 
+                  <div id="myCarousel27832924-{{categorie.category_id}}" > 
                     <!-- Carousel items -->
                     <div class="carousel-inner">
                       <div class="active item">
@@ -129,6 +136,62 @@ $('#tab27832924 a').click(function (e) {
    $(this).parent().addClass('active');
 })
 
+function pushAll(){
+	var category_id = curItem.split('-');
+	category_id = category_id[2];
+	$.ajax({
+		url: 'index.php?route=Account/WishList/addMore',
+		type: 'post',
+		data: $('input[name^=\'product['+category_id+']\']'),
+		dataType: 'json',
+		beforeSend: function() {
+			//$('#gopublish').button('loading');
+			//$('#loader').addClass("loader loader-clock is-active");
+		},
+		complete: function() {
+			//$('#loader').removeClass();
+			//$('#gopublish').button('reset');
+		},
+		success: function(json) {
+			if (json['success']) {
+				ShopifyApp.Modal.confirm({
+				title: "Successfully!",
+				message: "You have pushed All Products to your Import List.",
+				okButton: "Import List",
+				cancelButton: "Cancel",
+				style: "accept"
+				}, function(result){
+				  if(result){
+						window.location.href="index.php?route=account/wishlist&shopify=true";  
+				  }
+				   $(curItem).find('.row').remove();
+				});
+				
+			}
+			//alert(json['success']);
+			/*$('.alert-dismissible').remove();
+			if (json['success']) {
+				var result = json['success'];
+				
+				for(var id in result){
+					if(result[id]){
+						$('#product_item'+id).remove();
+					}
+				}
+				if(json['text']){
+					$('#content').parent().before('<div class="alert alert-success alert-dismissible"><i class="fa fa-check-circle"></i> '+json['text']+' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				
+					$('html, body').animate({ scrollTop: 0 }, 'slow');
+				}
+			}*/
+			
+			
+		},
+        error: function(xhr, ajaxOptions, thrownError) {
+            //alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+        }
+	});
+}
 /*$('#tab27832924 a').click(function (e) {
   
   e.preventDefault();
@@ -176,5 +239,23 @@ $('#tab27832924 a').click(function (e) {
     text-align: center;
     cursor: pointer;
 }
+.push-product{
+	border: 1px solid #d2dce8;
+    padding: 5px 8px;
+    border-radius: 4px;
+    font-size: 14px;
+    line-height: 20px;
+    width: 100%;
+    color: inherit;
+    min-width: 160px;
+    background-color: #82c853;
+    color: #fff;
+    background-color: #82c853;
+    background-image: none;
+    outline: none;
+    border: 1px solid #e1e8f0;
+
+}
+
     </style>
 {{ footer }} 

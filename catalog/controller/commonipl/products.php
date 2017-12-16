@@ -9,18 +9,34 @@ class ControllerCommoniplProducts extends Controller {
 		$this->load->model('commonipl/product');
 
 		$this->load->model('tool/image');
+		if (isset($this->request->get['page'])) {
+			$url .= '&page=' . $this->request->get['page'];
+		}
+		
 
+		if (isset($this->request->get['page'])) {
+			$page = $this->request->get['page'];
+		} else {
+			$page = 1;
+		}
 		if (isset($this->request->get['category_id'])) {
 			$category_id = $this->request->get['category_id'];
 		} else {
-			$category_id = '';
+			$category_id = 0;
 		}
 		$coupons =  $this->model_commonipl_product->getCoupons();
 		$charging = $this->config->get('config_charging');
 		$data['products'] = array();
 		$this->load->model('account/wishlist');
 		$wishlistProductId = $this->model_account_wishlist->getWishlistProductId();
-		$results = $this->model_commonipl_product->getProductsByCategoryId($category_id);
+		$publicProductIds =  $this->model_commonipl_product->getPublishProductIds();
+		$filterProdectIds = array_merge ($wishlistProductId,$publicProductIds);
+		
+		
+		$total = $this->model_commonipl_product->geFiltertTotalProductsByCategoryIdFilter($category_id,$filterProdectIds);
+		
+		$results = $this->model_commonipl_product->getProductsByCategoryIdFilter(($page - 1) * 10, 10,$category_id,$filterProdectIds);
+		//print_r(count($results));
 		foreach ($results as $result) {
 			if ($result['image']) {
 				$image = $this->model_tool_image->resize($result['image'], $this->config->get('theme_' . $this->config->get('config_theme') . '_image_product_width'), $this->config->get('theme_' . $this->config->get('config_theme') . '_image_product_height'));
@@ -76,14 +92,30 @@ class ControllerCommoniplProducts extends Controller {
 			$data['home'] = true;
 			
 		}
-		
-		
+		$pagination = new Pagination();
+		$pagination->total = $total;
+		$pagination->page = $page;
+		$pagination->limit = 10;
+		$pagination->url = $this->url->link('commonipl/category', 'page={page}', true);
+
+		$data['pagination'] = $pagination->render();
+		$data['category_id'] = $category_id;
 		return $this->load->view('commonipl/products', $data);	
 
 	}
 	
 	public function load($category_id) {
 //	print_r($category_id);
+	if (isset($this->request->get['page'])) {
+			$page = $this->request->get['page'];
+		} else {
+			$page = 1;
+		}
+		if (isset($this->request->get['category_id'])) {
+			$category_id = $this->request->get['category_id'];
+		} else {
+			$category_id = 0;
+		}
 		$this->load->model('tool/image');
 		$this->load->model('commonipl/product');
 		$data['products'] = array();
@@ -91,7 +123,11 @@ class ControllerCommoniplProducts extends Controller {
 		$coupons =  $this->model_commonipl_product->getCoupons();
 		$charging = $this->config->get('config_charging');
 		$wishlistProductId = $this->model_account_wishlist->getWishlistProductId();
-		$results = $this->model_commonipl_product->getProductsByCategoryId($category_id);
+		$publicProductIds =  $this->model_commonipl_product->getPublishProductIds();
+		$filterProdectIds = array_merge ($wishlistProductId,$publicProductIds);
+		$total = $this->model_commonipl_product->geFiltertTotalProductsByCategoryIdFilter($category_id,$filterProdectIds);
+		
+		$results = $this->model_commonipl_product->getProductsByCategoryIdFilter(($page - 1) * 10, 10,$category_id,$filterProdectIds);
 		foreach ($results as $result) {
 			if ($result['image']) {
 				$image = $this->model_tool_image->resize($result['image'], $this->config->get('theme_' . $this->config->get('config_theme') . '_image_product_width'), $this->config->get('theme_' . $this->config->get('config_theme') . '_image_product_height'));
@@ -137,6 +173,14 @@ class ControllerCommoniplProducts extends Controller {
 				'href'        => $this->url->link('commonipl/product','product_id=' . $result['product_id'])
 			);
 		}
+		$data['category_id'] = $category_id;
+		$pagination = new Pagination();
+		$pagination->total = $total;
+		$pagination->page = $page;
+		$pagination->limit = 10;
+		$pagination->url = $this->url->link('commonipl/category', 'page={page}', true);
+
+		$data['pagination'] = $pagination->render();
 		//print_r($data);
 		return $this->load->view('commonipl/products', $data);	
 

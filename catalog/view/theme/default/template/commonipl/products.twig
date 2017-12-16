@@ -1,5 +1,6 @@
  {% if products %}
                             {% for product in products %}
+                            <input type="hidden" name="product[{{ category_id }}][]" value="{{ product.product_id }}" />
 <div class="col-sm-2 col-xs-6 col-md-25 col-lg-2 col-sm-3  "> 
   
   <!-- Product -->
@@ -36,5 +37,10 @@ display: -webkit-box;-webkit-line-clamp: 2;-webkit-box-orient: vertical;">{{ pro
     </div>
   </div>
 </div>
+
 {% endfor %}
                             {% endif %} 
+                             <div class="row pagination-results">
+                <div class="col-sm-6 text-left">{{ pagination }}</div>
+                <!-- <div class="col-sm-6 text-right">{{ results }}</div>--> 
+              </div>     

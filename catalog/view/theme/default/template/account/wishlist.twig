@@ -99,6 +99,7 @@
                     {% for variant in product.variants %}
                     {% if loop.index ==1 %}
                     <thead>
+                    
                       <tr>
                         <td class="text-center"><input type="checkbox" checked="checked" onclick="$('input[name*=\'product[{{product.product_id}}][variant][selected]\']').prop('checked', this.checked);" /></td>
                         <td class="text-center">{{ column_image }}</td>
@@ -112,11 +113,34 @@
                         <input  type="hidden" name="product[{{product.product_id}}][option2]" value="Size"/>
                         {% endif %}
                         <td class="text-center">Cost</td>
-                        <td class="text-center">Sale Price</td>
-                        <td class="text-center">MSRP</td>
+                        <td class="text-center"><div class="arrow-box-top " id="arrow-box-top-price{{product.product_id}}"><div class="container-flex"><div><input type="text" placeholder="Enter Value" name="new_value_price{{product.product_id}}" class="form-control"></div> <div><button onclick="updateValue({{product.product_id}},'price')" class="btn btn-success margin-small-left">
+          Apply
+        </button></div> <div><a href="javascript:cancel();" class="close btn-sm btn-icon-only btn-transparent margin-small-left"><span class="fa fa-times"></span></a></div></div></div>
+        
+        <div class="btn-group open"> Sale Price
+        <button  type="button" data-toggle="dropdown" class="dropdown-toggle" style="background:none;border: 1px solid #e1e8f0;" aria-expanded="true"><span class="caret"></span></button>
+        <ul class="dropdown-menu dropdown-menu-right">
+                    <li><a href="javascript:setNewValue({{product.product_id}},'price');" data-toggle="tooltip">Set New Value</a></li>
+                    <li><a href="javascript:multiplyBy({{product.product_id}},'price');" data-toggle="tooltip">Multiply by</a></li>
+        
+        </ul>
+      </div></td>
+                        <td class="text-center">
+                        <div class="arrow-box-top " id="arrow-box-top-compare_price{{product.product_id}}"><div class="container-flex"><div><input type="text" placeholder="Enter Value" name="new_value_compare_price{{product.product_id}}" class="form-control"></div> <div><button onclick="updateValue({{product.product_id}},'compare_price')" class="btn btn-success margin-small-left">
+          Apply
+        </button></div> <div><a href="javascript:cancel();" class="close btn-sm btn-icon-only btn-transparent margin-small-left"><span class="fa fa-times"></span></a></div></div></div>
+                        
+                        <div class="btn-group open"> MSRP
+        <button  type="button" data-toggle="dropdown" class="dropdown-toggle" style="background:none;border: 1px solid #e1e8f0;" aria-expanded="true"><span class="caret"></span></button>
+        <ul class="dropdown-menu dropdown-menu-right">
+              <li><a href="javascript:setNewValue({{product.product_id}},'compare_price');" data-toggle="tooltip">Set New Value</a></li>
+                    <li><a href="javascript:multiplyBy({{product.product_id}},'compare_price');" data-toggle="tooltip">Multiply by</a></li>
+        </ul>
+      </div></td>
                         <td class="text-center">Quantity</td>
                         <td class="text-center">Weight</td>
                       </tr>
+                      
                     </thead>
                     <tbody>
                     
@@ -235,6 +259,78 @@ a:hover {
 	border-bottom-color: transparent;
     border-radius: 0px 0px 0 0;
 }
+.arrow-box-top.opened {
+    display: block;
+}
+.arrow-box-top {
+    position: absolute;
+    top: -60px;
+    margin-left: -135px;
+    background: #f9fafb;
+    border: 1px solid #e1e8f0;
+    padding: 10px;
+    min-width: 275px;
+    border-radius: 4px;
+    display: none;
+}
+
+*, :after, :before {
+    box-sizing: border-box;
+}
+.container-flex {
+    display: flex;
+    align-items: center;
+}
+.arrow-box-top input[type=text], .arrow-box-top textarea {
+    color: #202e3c;
+}
+
+.form-control:not(select) {
+    background: #fff;
+}
+
+.form-control, input[type=email], input[type=number], input[type=password], input[type=tel], input[type=text], textarea {
+    border: 1px solid #d2dce8;
+    padding: 5px 8px;
+    border-radius: 4px;
+    font-size: 14px;
+    line-height: 20px;
+    width: 100%;
+    color: inherit;
+	min-width:160px;
+	height:30px;
+}
+.margin-small-left {
+    margin-left: 10px;
+}
+
+.btn-default {
+    color: #202e3c;
+    background-color: #fff;
+    background-image: none;
+    outline: none;
+    border: 1px solid #d2dce8;
+}
+
+.btn, .btn-danger, .btn-default, .btn-info, .btn-primary, .btn-sm, .btn-success, .btn-transparent, .btn-warning {
+    position: relative;
+    display: inline-block;
+    font-weight: 600;
+    line-height: 20px;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    cursor: pointer;
+    user-select: none;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    padding: 5px 16px;
+    font-size: 14px;
+    -webkit-transition: background-color .2s ease-in-out;
+    -o-transition: background-color .2s ease-in-out;
+    transition: background-color .2s ease-in-out;
+}
+
 </style>
 <link rel="stylesheet" href="catalog/view/theme/default/stylesheet/css-loader.css">
 <script type="text/javascript" src="catalog/view/javascript/editor/wangEditor.min.js"></script> 
@@ -334,5 +430,57 @@ function remove(reqUrl){
             //alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
         }
 	});
+}
+
+var multiply = false;
+function cancel(){
+	$('.opened').removeClass('opened');
+}
+
+function setNewValue(product_id,type){
+	$('#arrow-box-top-'+type+product_id).addClass('opened');
+	multiply = false;
+}
+
+function multiplyBy(product_id,type){
+	$('#arrow-box-top-'+type+product_id).addClass('opened');
+	multiply = true;
+}
+
+function updateValue(product_id,type){
+	cancel();
+	var value = $('input[name=\'new_value_'+type+product_id+'\']').val();
+	if (isNaN(value)) { 
+       return; 
+    } 
+	value = changeTwoDecimal_f(value);
+	var price = $('input[name^=\'product['+product_id+'][variant]['+type+']\']');
+	for (i = 0; i < price.length; i++) {
+		if(multiply){
+			$(price[i]).val(changeTwoDecimal_f($(price[i]).val()*value));
+		}else{
+			$(price[i]).val(value);
+		}
+		
+	}
+	$('input[name=\'new_value_'+type+product_id+'\']').val("");
+}
+function changeTwoDecimal_f(x) {
+    var f_x = parseFloat(x);
+    if (isNaN(f_x)) {
+        alert('function:changeTwoDecimal->parameter error');
+        return false;
+    }
+    var f_x = Math.round(x * 100) / 100;
+    var s_x = f_x.toString();
+    var pos_decimal = s_x.indexOf('.');
+    if (pos_decimal < 0) {
+        pos_decimal = s_x.length;
+        s_x += '.';
+    }
+    while (s_x.length <= pos_decimal + 2) {
+        s_x += '0';
+    }
+    return s_x;
 }
 //--></script>

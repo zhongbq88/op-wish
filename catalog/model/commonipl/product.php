@@ -225,6 +225,54 @@ class ModelCommoniplProduct extends Model {
 
 		return $query->rows;
 	}
+	
+	public function geFiltertTotalProductsByCategoryIdFilter($category_id,$filter_product_ids) {
+		
+		$filter = '';
+		if(isset($filter_product_ids)){
+			foreach($filter_product_ids as $value){
+				$filter .= ',\''.$value['product_id'].'\'';
+			}
+			$filter = substr($filter,1);
+			$filter = " p.product_id NOT IN (" .$filter. ") AND ";
+		}
+		
+		if(isset($category_id)&&!empty($category_id)){
+			
+		$query = $this->db->query("SELECT  COUNT(*) AS total FROM " . DB_PREFIX . "product p LEFT JOIN " . DB_PREFIX . "product_description pd ON (p.product_id = pd.product_id) LEFT JOIN " . DB_PREFIX . "product_to_category p2c ON (p.product_id = p2c.product_id) LEFT JOIN ". DB_PREFIX . "category_description cd ON (p2c.category_id=cd.category_id) WHERE ".$filter." p.status = '1' AND pd.language_id = '" . (int)$this->config->get('config_language_id') . "' AND p2c.category_id = '" . (int)$category_id."'  ORDER BY p.date_added DESC");
+		}else{
+			$query = $this->db->query("SELECT  COUNT(*) AS total FROM " . DB_PREFIX . "product p LEFT JOIN " . DB_PREFIX . "product_description pd ON (p.product_id = pd.product_id) LEFT JOIN " . DB_PREFIX . "product_to_category p2c ON (p.product_id = p2c.product_id) LEFT JOIN ". DB_PREFIX . "category_description cd ON (p2c.category_id=cd.category_id) WHERE ".$filter." p.status = '1' AND pd.language_id = '" . (int)$this->config->get('config_language_id') . "'  ORDER BY p.date_added DESC");
+		}
+		return $query->row['total'];
+	}
+	
+	public function getProductsByCategoryIdFilter($start = 0, $limit = 20,$category_id,$filter_product_ids) {
+		if ($start < 0) {
+			$start = 0;
+		}
+
+		if ($limit < 1) {
+			$limit = 1;
+		}
+		$filter = '';
+		if(isset($filter_product_ids)){
+			foreach($filter_product_ids as $value){
+				$filter .= ',\''.$value['product_id'].'\'';
+			}
+			$filter = substr($filter,1);
+			$filter = " p.product_id NOT IN (" .$filter. ") AND ";
+		}
+		
+		if(isset($category_id)&&!empty($category_id)){
+			
+		$sql =("SELECT *,p.product_id,pd.name FROM " . DB_PREFIX . "product p LEFT JOIN " . DB_PREFIX . "product_description pd ON (p.product_id = pd.product_id) LEFT JOIN " . DB_PREFIX . "product_to_category p2c ON (p.product_id = p2c.product_id) LEFT JOIN ". DB_PREFIX . "category_description cd ON (p2c.category_id=cd.category_id) WHERE ".$filter." p.status = '1' AND pd.language_id = '" . (int)$this->config->get('config_language_id') . "' AND p2c.category_id = '" . (int)$category_id."'  ");
+		}else{
+			$sql = "SELECT *,p.product_id,pd.name FROM " . DB_PREFIX . "product p LEFT JOIN " . DB_PREFIX . "product_description pd ON (p.product_id = pd.product_id) LEFT JOIN " . DB_PREFIX . "product_to_category p2c ON (p.product_id = p2c.product_id) LEFT JOIN ". DB_PREFIX . "category_description cd ON (p2c.category_id=cd.category_id) WHERE ".$filter." p.status = '1' AND pd.language_id = '" . (int)$this->config->get('config_language_id') . "'  ";
+		}
+		$sql .="ORDER BY p.date_added DESC LIMIT " . (int)$start . "," . (int)$limit;
+		$query = $this->db->query($sql);
+		return $query->rows;
+	}
 
 	public function getProductsByCategoryId($category_id) {
 		if(isset($category_id)&&!empty($category_id)){
@@ -573,6 +621,12 @@ class ModelCommoniplProduct extends Model {
 	
 	public function getPublishProduct(){
 		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "shopify_add_product WHERE customer_id = '" . (int)$this->customer->getId() . "' AND status='1'  ORDER BY date_added DESC ");
+
+		return $query->rows;
+	}
+	
+	public function getPublishProductIds(){
+		$query = $this->db->query("SELECT product_id FROM " . DB_PREFIX . "shopify_add_product WHERE customer_id = '" . (int)$this->customer->getId() . "' AND status='1'  ORDER BY date_added DESC ");
 
 		return $query->rows;
 	}
