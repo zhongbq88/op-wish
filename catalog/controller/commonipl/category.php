@@ -70,13 +70,18 @@ class ControllerCommoniplCategory extends Controller {
 		$this->load->language('account/wishlist');
 		if (isset($this->request->post['product'])) {
 			$product_ids = array_filter($this->request->post['product']);
-			foreach($product_ids as $values){
-
-				$this->load->model('account/wishlist');
-				foreach($values as $product_id){
-					$this->model_account_wishlist->addWishlist($product_id);
+			foreach($product_ids as $key => $values){
+				$needVip = $this->load->controller('commonipl/products/needVip',$key);
+				if($needVip){
+					$json['vipProduct'] = true;
+				}else{
+					$this->load->model('account/wishlist');
+					foreach($values as $product_id){
+						$this->model_account_wishlist->addWishlist($product_id);
+					}
+					$json['success'] = sprintf($this->language->get('text_success'),'','', $this->url->link('account/wishlist'));
 				}
-				$json['success'] = sprintf($this->language->get('text_success'),'','', $this->url->link('account/wishlist'));
+				
 				break;
 			}
 		}

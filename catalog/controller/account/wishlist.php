@@ -166,15 +166,22 @@ class ControllerAccountWishList extends Controller {
 	}
 
 	public function add() {
-		$this->load->language('account/wishlist');
-
 		if (isset($this->request->post['product_id'])) {
 			$product_id = $this->request->post['product_id'];
 		} else {
 			$product_id = 0;
 		}
-		//print_r('product_id='.$product_id);
 		$this->load->model('commonipl/product');
+		$Categorie = $this->model_commonipl_product->getProductCategorie($product_id);
+		$needVip = (isset($Categorie['category_id']))?$this->load->controller('commonipl/products/needVip',$Categorie['category_id']):false;
+				if($needVip){
+					$json['vipProduct'] = true;
+				}else{
+		$this->load->language('account/wishlist');
+
+		
+		//print_r('product_id='.$product_id);
+		
 
 		$product_info = $this->model_commonipl_product->getProduct($product_id);
 
@@ -202,7 +209,7 @@ class ControllerAccountWishList extends Controller {
 				$json['total'] = sprintf($this->language->get('text_wishlist'), (isset($this->session->data['wishlist']) ? count($this->session->data['wishlist']) : 0));
 			}
 		}
-
+				}
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}

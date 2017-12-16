@@ -236,6 +236,24 @@ class ControllerCommoniplProducts extends Controller {
 		
 	}
 	
+	public function needVip($category_id){
+		$this->load->model('commonipl/product');
+		$coupons =  $this->model_commonipl_product->getCoupon($this->customer->getGroupId());
+		foreach($coupons as $coupon){
+			if($coupon['category_id'] == $category_id){
+				return false;
+			}
+		}
+		$coupons =  $this->model_commonipl_product->getCoupons();
+		foreach($coupons as $coupon){
+			if($coupon['category_id'] == $category_id){
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	
 	private function inArray($product_id,$array){
 		
 		foreach($array as $value){

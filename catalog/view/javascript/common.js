@@ -286,7 +286,19 @@ var wishlist = {
 				if (json['success']) {
 					$('#button_add_wishlist' + product_id).html('<i class="fa fa-check-circle"></i> Added');
 					/*$('#content').parent().before('<div class="alert alert-success alert-dismissible"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');*/
-				}
+				}else if(json['vipProduct']){
+				ShopifyApp.Modal.confirm({
+				title: "Vip Product!",
+				message: "You want to VIP ?",
+				okButton: "Yes",
+				cancelButton: "No",
+				style: "accept"
+				}, function(result){
+					if(result){
+						  window.location.href="index.php?route=shopify/vipdiscount";  
+					}
+				});
+			}
 
 				/*$('#wishlist-total span').html(json['total']);
 				$('#wishlist-total').attr('title', json['total']);*/
