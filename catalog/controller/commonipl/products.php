@@ -9,18 +9,14 @@ class ControllerCommoniplProducts extends Controller {
 		$this->load->model('commonipl/product');
 
 		$this->load->model('tool/image');
-	
-		
-
+		$category_id = 0;
+		$page = 1;
 		if (isset($this->request->get['page'])) {
-			$page = $this->request->get['page'];
-		} else {
-			$page = 1;
-		}
-		if (isset($this->request->get['category_id'])) {
-			$category_id = $this->request->get['category_id'];
-		} else {
-			$category_id = 0;
+			if (isset($this->request->get['category_id'])) {
+			 	if($this->request->get['category_id']==$category_id){
+					$page = $this->request->get['page'];
+				}
+			}
 		}
 		$coupons =  $this->model_commonipl_product->getCoupons();
 		$charging = $this->config->get('config_charging');
@@ -93,7 +89,7 @@ class ControllerCommoniplProducts extends Controller {
 		$pagination->total = $total;
 		$pagination->page = $page;
 		$pagination->limit = 10;
-		$pagination->url = $this->url->link('commonipl/category', 'category_id={category_id}&page={page}', true);
+		$pagination->url = $this->url->link('commonipl/category', 'page={page}', true);
 
 		$data['pagination'] = $pagination->render();
 		$data['category_id'] = $category_id;
@@ -103,10 +99,13 @@ class ControllerCommoniplProducts extends Controller {
 	
 	public function load($category_id) {
 //	print_r($category_id);
-	if (isset($this->request->get['page'])) {
-			$page = $this->request->get['page'];
-		} else {
-			$page = 1;
+		$page = 1;
+		if (isset($this->request->get['page'])) {
+			if (isset($this->request->get['category_id'])) {
+			 	if($this->request->get['category_id']==$category_id){
+					$page = $this->request->get['page'];
+				}
+			}
 		}
 		/*if (isset($this->request->get['category_id'])) {
 			$category_id = $this->request->get['category_id'];
@@ -175,7 +174,7 @@ class ControllerCommoniplProducts extends Controller {
 		$pagination->total = $total;
 		$pagination->page = $page;
 		$pagination->limit = 10;
-		$pagination->url = $this->url->link('commonipl/category', 'category_id={category_id}&page={page}', true);
+		$pagination->url = $this->url->link('commonipl/category', 'category_id='.$category_id.'&page={page}', true);
 
 		$data['pagination'] = $pagination->render();
 		return $this->load->view('commonipl/products', $data);	
