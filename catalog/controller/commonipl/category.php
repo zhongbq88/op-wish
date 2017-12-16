@@ -62,4 +62,26 @@ class ControllerCommoniplCategory extends Controller {
 		$data['header'] = $this->load->controller($this->session->data['store'].'/header');
 		$this->response->setOutput($this->load->view('commonipl/category', $data));
 	}
+	
+	
+	public function pushToWishList(){
+		$json = array();
+		$this->load->language('account/wishlist');
+		/*if (isset($this->request->post['product'])) {
+			$product_ids = array_filter($this->request->post['product']);
+			foreach($product_ids as $values){
+				$this->load->language('account/wishlist');
+				$this->load->model('account/wishlist');
+				foreach($values as $product_id){
+					$this->model_account_wishlist->addWishlist($product_id);
+				}
+				$json['success'] = sprintf($this->language->get('text_success'),'','', $this->url->link('account/wishlist'));
+				
+				break;
+			}
+		}*/
+		$json['success'] = sprintf($this->language->get('text_success'),'','', $this->url->link('account/wishlist'));
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
+	}
 }
