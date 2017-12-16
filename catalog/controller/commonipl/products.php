@@ -108,11 +108,11 @@ class ControllerCommoniplProducts extends Controller {
 		} else {
 			$page = 1;
 		}
-		if (isset($this->request->get['category_id'])) {
+		/*if (isset($this->request->get['category_id'])) {
 			$category_id = $this->request->get['category_id'];
 		} else {
 			$category_id = 0;
-		}
+		}*/
 		$this->load->model('tool/image');
 		$this->load->model('commonipl/product');
 		$data['products'] = array();
@@ -123,7 +123,7 @@ class ControllerCommoniplProducts extends Controller {
 		$publicProductIds =  $this->model_commonipl_product->getPublishProductIds();
 		$filterProdectIds = array_merge ($wishlistProductId,$publicProductIds);
 		$total = $this->model_commonipl_product->geFiltertTotalProductsByCategoryIdFilter($category_id,$filterProdectIds);
-		
+		//print_r($category_id);
 		$results = $this->model_commonipl_product->getProductsByCategoryIdFilter(($page - 1) * 20, 20,$category_id,$filterProdectIds);
 		foreach ($results as $result) {
 			if ($result['image']) {
