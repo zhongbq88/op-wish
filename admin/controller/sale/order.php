@@ -872,39 +872,7 @@ class ControllerSaleOrder extends Controller {
 			$data['payment_address'] = str_replace(array("\r\n", "\r", "\n"), '<br />', preg_replace(array("/\s\s+/", "/\r\r+/", "/\n\n+/"), '<br />', trim(str_replace($find, $replace, $format))));
 
 			// Shipping Address
-			if ($order_info['shipping_address_format']) {
-				$format = $order_info['shipping_address_format'];
-			} else {
-				$format = '{firstname} {lastname}' . "\n" . '{company}' . "\n" . '{address_1}' . "\n" . '{address_2}' . "\n" . '{city} {postcode}' . "\n" . '{zone}' . "\n" . '{country}';
-			}
-
-			$find = array(
-				'{firstname}',
-				'{lastname}',
-				'{company}',
-				'{address_1}',
-				'{address_2}',
-				'{city}',
-				'{postcode}',
-				'{zone}',
-				'{zone_code}',
-				'{country}'
-			);
-
-			$replace = array(
-				'firstname' => $order_info['shipping_firstname'],
-				'lastname'  => $order_info['shipping_lastname'],
-				'company'   => $order_info['shipping_company'],
-				'address_1' => $order_info['shipping_address_1'],
-				'address_2' => $order_info['shipping_address_2'],
-				'city'      => $order_info['shipping_city'],
-				'postcode'  => $order_info['shipping_postcode'],
-				'zone'      => $order_info['shipping_zone'],
-				'zone_code' => $order_info['shipping_zone_code'],
-				'country'   => $order_info['shipping_country']
-			);
-
-			$data['shipping_address'] = str_replace(array("\r\n", "\r", "\n"), '<br />', preg_replace(array("/\s\s+/", "/\r\r+/", "/\n\n+/"), '<br />', trim(str_replace($find, $replace, $format))));
+			$data['shipping_address'] = $this->shippingFormat($order_info);
 			//echo $data['shipping_address'];
 			// Uploaded files
 			$this->load->model('tool/upload');
@@ -1329,6 +1297,66 @@ class ControllerSaleOrder extends Controller {
 		} else {
 			return new Action('error/not_found');
 		}
+	}
+	
+	private function shippingFormat($order_info){
+		$replace = array(
+				'firstname' => $order_info['shipping_firstname'],
+				'lastname'  => $order_info['shipping_lastname'],
+				'company'   => $order_info['shipping_company'],
+				'address_1' => $order_info['shipping_address_1'],
+				'address_2' => $order_info['shipping_address_2'],
+				'city'      => $order_info['shipping_city'],
+				'province'      => '',
+				'postcode'  => $order_info['shipping_postcode'],
+				'zone'      => $order_info['shipping_zone'],
+				'zone_code' => $order_info['shipping_zone_code'],
+				'country'   => $order_info['shipping_country'],
+				'telephone'   => $order_info['telephone']
+			);
+		if(isset($order_info['shipping_custom_field'])){
+			$shipping = json_decode($order_info['shipping_custom_field'],true);
+			if(isset($shipping)){
+				$replace = array(
+				'firstname' => $shipping['first_name'],
+				'lastname'  => $shipping['last_name'],
+				'company'   => $shipping['company'],
+				'address_1' => $shipping['address1'],
+				'address_2' => $shipping['address2'],
+				'city'      => $shipping['city'],
+				'province'  => $shipping['province'],
+				'postcode'  => $shipping['zip'],
+				'zone'      => $order_info['shipping_zone'],
+				'zone_code' => $order_info['shipping_zone_code'],
+				'country'   => $shipping['country'],
+				'telephone'   => $shipping['phone']
+			);
+				
+			}
+		}
+		// Shipping Address
+			if ($order_info['shipping_address_format']) {
+				$format = $order_info['shipping_address_format'];
+			} else {
+				$format = '{firstname} {lastname}' . "\n" . '{company}' . "\n" . '{address_1}' . "\n" . '{address_2}' . "\n" . '{city} {province} {zone} {postcode}' . "\n" . '{country}'. "\n" . '{telephone}';
+			}
+
+			$find = array(
+				'{firstname}',
+				'{lastname}',
+				'{company}',
+				'{address_1}',
+				'{address_2}',
+				'{city}',
+				'{province}',
+				'{postcode}',
+				'{zone}',
+				'{zone_code}',
+				'{country}',
+				'{telephone}'
+			);
+
+			return str_replace(array("\n"), '<br />', preg_replace(array("/\n\n+/"), '<br />', trim(str_replace($find, $replace, $format))));
 	}
 	
 	protected function validate() {

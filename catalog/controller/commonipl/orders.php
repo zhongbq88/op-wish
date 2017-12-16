@@ -494,67 +494,63 @@ class ControllerCommoniplOrders extends Controller {
 	}
 	
 	private function shippingFormat($order_info){
-		if(isset($order_info['shipping_custom_field'])){
-			$shipping = json_decode($order_info['shipping_custom_field'],true);
-			if(isset($shipping)){
-				$format =  $shipping['first_name'].' '.$shipping['last_name']. "\n" ;			if(!empty($shipping['address1'])){
-					$format .=  $shipping['address1']."\n" ;			
-				}
-				if(!empty($shipping['address2'])){
-					$format .=  $shipping['address2']."\n" ;			
-				}
-				if(!empty($shipping['city'])){
-					$format .=  $shipping['city'].' '.$shipping['province'].' '.$shipping['zip']."\n" ;			
-				}
-				if(!empty($shipping['country'])){
-					$format .=  $shipping['country']."\n" ;			
-				}
-				if(!empty($shipping['phone'])){
-					$format .=  $shipping['phone']."\n" ;			
-				}
-				return $format;
-				
-			}
-		}
-		if ($order_info['shipping_address_format']) {
-				$format = $order_info['shipping_address_format'];
-			} else {
-				$format =  '{firstname} {lastname}' . "\n" . '{company}' . "\n" . '{address_1}' . "\n" . '{address_2}' . "\n" . '{city} {postcode}' . "\n" . "\n" . '{country}'. "\n". '{telephone}' . "\n" ;
-			}
-
-			$find = array(
-				'{email}',
-				'{telephone}',
-				'{firstname}',
-				'{lastname}',
-				'{company}',
-				'{address_1}',
-				'{address_2}',
-				'{city}',
-				'{postcode}',
-				'{zone}',
-				'{zone_code}',
-				'{country}'
-			);
-			
-			$replace = array(
-				'email' => $order_info['email'],
-				'telephone' => $order_info['telephone'],
+		$replace = array(
 				'firstname' => $order_info['shipping_firstname'],
 				'lastname'  => $order_info['shipping_lastname'],
 				'company'   => $order_info['shipping_company'],
 				'address_1' => $order_info['shipping_address_1'],
 				'address_2' => $order_info['shipping_address_2'],
 				'city'      => $order_info['shipping_city'],
+				'province'      => '',
 				'postcode'  => $order_info['shipping_postcode'],
 				'zone'      => $order_info['shipping_zone'],
 				'zone_code' => $order_info['shipping_zone_code'],
-				'country'   => $order_info['shipping_country']
+				'country'   => $order_info['shipping_country'],
+				'telephone'   => $order_info['telephone']
 			);
-			
-			
+		if(isset($order_info['shipping_custom_field'])){
+			$shipping = json_decode($order_info['shipping_custom_field'],true);
+			if(isset($shipping)){
+				$replace = array(
+				'firstname' => $shipping['first_name'],
+				'lastname'  => $shipping['last_name'],
+				'company'   => $shipping['company'],
+				'address_1' => $shipping['address1'],
+				'address_2' => $shipping['address2'],
+				'city'      => $shipping['city'],
+				'province'  => $shipping['province'],
+				'postcode'  => $shipping['zip'],
+				'zone'      => $order_info['shipping_zone'],
+				'zone_code' => $order_info['shipping_zone_code'],
+				'country'   => $shipping['country'],
+				'telephone'   => $shipping['phone']
+			);
+				
+			}
+		}
+		// Shipping Address
+			if ($order_info['shipping_address_format']) {
+				$format = $order_info['shipping_address_format'];
+			} else {
+				$format = '{firstname} {lastname}' . "\n" . '{company}' . "\n" . '{address_1}' . "\n" . '{address_2}' . "\n" . '{city} {province} {zone} {postcode}' . "\n" . '{country}'. "\n" . '{telephone}';
+			}
 
-			return str_replace(array("\r\n", "\r", "\n"), '<br />', preg_replace(array("/\s\s+/", "/\r\r+/", "/\n\n+/"), '<br />', trim(str_replace($find, $replace, $format))));
+			$find = array(
+				'{firstname}',
+				'{lastname}',
+				'{company}',
+				'{address_1}',
+				'{address_2}',
+				'{city}',
+				'{province}',
+				'{postcode}',
+				'{zone}',
+				'{zone_code}',
+				'{country}',
+				'{telephone}'
+			);
+
+			return str_replace(array("\n"), '<br />', preg_replace(array("/\n\n+/"), '<br />', trim(str_replace($find, $replace, $format))));
 	}
 	
 	

@@ -84,6 +84,7 @@ class ModelCommoniplOrder extends Model {
 				'shipping_iso_code_2'     => $shipping_iso_code_2,
 				'shipping_iso_code_3'     => $shipping_iso_code_3,
 				'shipping_address_format' => $order_query->row['shipping_address_format'],
+				'shipping_custom_field'   => json_decode($order_query->row['shipping_custom_field'], true),
 				'shipping_method'         => $order_query->row['shipping_method'],
 				'comment'                 => $order_query->row['comment'],
 				'total'                   => $order_query->row['total'],
