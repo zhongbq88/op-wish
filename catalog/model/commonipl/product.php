@@ -229,11 +229,12 @@ class ModelCommoniplProduct extends Model {
 	public function geFiltertTotalProductsByCategoryIdFilter($category_id,$filter_product_ids) {
 		
 		$filter = '';
-		if(isset($filter_product_ids)){
+		if(isset($filter_product_ids)&&count($filter_product_ids)>0){
 			foreach($filter_product_ids as $value){
 				$filter .= ',\''.$value['product_id'].'\'';
 			}
 			$filter = substr($filter,1);
+			if(!empty($filter))
 			$filter = " p.product_id NOT IN (" .$filter. ") AND ";
 		}
 		
@@ -255,11 +256,12 @@ class ModelCommoniplProduct extends Model {
 			$limit = 1;
 		}
 		$filter = '';
-		if(isset($filter_product_ids)){
+		if(isset($filter_product_ids)&& count($filter_product_ids)>0){
 			foreach($filter_product_ids as $value){
 				$filter .= ',\''.$value['product_id'].'\'';
 			}
 			$filter = substr($filter,1);
+			if(!empty($filter))
 			$filter = " p.product_id NOT IN (" .$filter. ") AND ";
 		}
 		

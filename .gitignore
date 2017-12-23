@@ -2,5 +2,6 @@ config.php
 *.cache
 *.log
 *.json
+image
 tshirtecommerce/uploaded
 

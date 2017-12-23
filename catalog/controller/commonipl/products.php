@@ -88,7 +88,7 @@ class ControllerCommoniplProducts extends Controller {
 		$pagination = new Pagination();
 		$pagination->total = $total;
 		$pagination->page = $page;
-		$pagination->limit = 10;
+		$pagination->limit = 20;
 		$pagination->url = $this->url->link('commonipl/products/pageTo', 'page={page}', true);
 
 		$data['pagination'] = $pagination->render2();
@@ -121,7 +121,7 @@ class ControllerCommoniplProducts extends Controller {
 	}
 	
 	public function load($category_id) {
-//	print_r($category_id);
+//	print_r($category_id.'</br>');
 		$page = 1;
 		if (isset($this->request->get['page'])) {		
 			$page = $this->request->get['page'];	
@@ -142,6 +142,9 @@ class ControllerCommoniplProducts extends Controller {
 		$filterProdectIds = array_merge ($wishlistProductId,$publicProductIds);
 		$total = $this->model_commonipl_product->geFiltertTotalProductsByCategoryIdFilter($category_id,$filterProdectIds);
 		//print_r($category_id);
+//		print_r($filterProdectIds)
+//		;
+//		print_r('</br>'.$total);
 		$results = $this->model_commonipl_product->getProductsByCategoryIdFilter(($page - 1) * 20, 20,$category_id,$filterProdectIds);
 		foreach ($results as $result) {
 			if ($result['image']) {
@@ -193,10 +196,11 @@ class ControllerCommoniplProducts extends Controller {
 		$pagination = new Pagination();
 		$pagination->total = $total;
 		$pagination->page = $page;
-		$pagination->limit = 10;
+		$pagination->limit = 20;
 		$pagination->url = $this->url->link('commonipl/products/pageTo', 'category_id='.$category_id.'&page={page}', true);
 
 		$data['pagination'] = $pagination->render2();
+//		print_r($data);
 		return $this->load->view('commonipl/products', $data);	
 
 	}

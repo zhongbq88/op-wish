@@ -1,6 +1,7 @@
 <?php
 class ControllerCommoniplOrders extends Controller {
 	public function index() {
+		$this->document->setTitle("orders");
 		if (!$this->customer->isLogged()) {
 			$this->session->data['redirect'] = $this->url->link('account/order', '', true);
 			$this->response->redirect($this->url->link('account/login', '', true));

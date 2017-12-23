@@ -12,7 +12,7 @@ class ControllerCommoniplCategory extends Controller {
 		$category_info = $this->model_catalog_category->getCategories();
 		$this->load->language('commonipl/category');
 
-		
+		$this->document->setTitle("products");		
 
 		$this->load->model('tool/image');
 		//print_r($category_info);
